@@ -2933,7 +2933,7 @@
             this.KeysMailMacroBar.Size = new System.Drawing.Size(39, 20);
             this.KeysMailMacroBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.KeysMailMacroBar.TabIndex = 257;
-            this.KeysMailMacroBar.Visible = false;
+            this.KeysMailMacroBar.Visible = true;
             // 
             // bar1
             // 
@@ -2982,7 +2982,7 @@
             this.KeysMailMacroKey.Size = new System.Drawing.Size(39, 20);
             this.KeysMailMacroKey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.KeysMailMacroKey.TabIndex = 259;
-            this.KeysMailMacroKey.Visible = false;
+            this.KeysMailMacroKey.Visible = true;
             // 
             // key1
             // 
@@ -3037,7 +3037,7 @@
             this.labelX45.Size = new System.Drawing.Size(112, 23);
             this.labelX45.TabIndex = 258;
             this.labelX45.Text = "Macro (Bar and Key)";
-            this.labelX45.Visible = false;
+            this.labelX45.Visible = true;
             // 
             // MacroForMail
             // 
@@ -3052,7 +3052,7 @@
             this.MacroForMail.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.MacroForMail.TabIndex = 189;
             this.MacroForMail.Text = "Use macro for mail";
-            this.MacroForMail.Visible = false;
+            this.MacroForMail.Visible = true;
             this.MacroForMail.CheckedChanged += new System.EventHandler(this.MacroForMail_CheckedChanged);
             // 
             // labelX40

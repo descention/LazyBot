@@ -1,4 +1,3 @@
-﻿
 ﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
@@ -23,6 +22,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.Wow;
+using LazyLib;
+using LazyLib.Helpers;
 
 namespace LazyLib.Helpers
 {
@@ -36,43 +37,33 @@ namespace LazyLib.Helpers
             BaseAddress = baseAddress;
         }
 
-        /*
-        public Boolean IsMouseOver
-        {
-            get
-            {
-                return (FrameMouseOverPtr == this.baseAddress);
-            }
-        } */
-
         public bool IsVisible
         {
             get
             {
-                return ((Memory.Read<int>(BaseAddress + (uint) Pointers.UiFrame.Visible) >> (int) Pointers.UiFrame.Visible1) & (int) Pointers.UiFrame.Visible2) == 1;
+                return ((Memory.Read<int>(BaseAddress + (uint)Pointers.UiFrame.Visible) >> (int)Pointers.UiFrame.Visible1) & (int)Pointers.UiFrame.Visible2) == 1;
             }
         }
 
         public bool IsButtonChecked
         {
-            get { return (Memory.Read<uint>(BaseAddress + (uint) Pointers.UiFrame.ButtonChecked) > 0); }
+            get { return (Memory.Read<uint>(BaseAddress + (uint)Pointers.UiFrame.ButtonChecked) > 0); }
         }
 
         public bool IsEnabled
         {
             get
             {
-                return ((Memory.Read<uint>(BaseAddress + (uint) 200) & (uint) 0xF) == 0);
+                return ((Memory.Read<uint>(BaseAddress + (uint)200) & (uint)0xF) == 0);
             }
         }
 
-        //TODO: Optimize this paste from ida
         public bool Enabled
         {
             get
             {
-                int num1 = Memory.Read<byte>(BaseAddress + (uint) Pointers.UiFrame.ButtonEnabledPointer);
-                const int num4 = (int) Pointers.UiFrame.ButtonEnabledMask;
+                int num1 = Memory.Read<byte>(BaseAddress + (uint)Pointers.UiFrame.ButtonEnabledPointer);
+                const int num4 = (int)Pointers.UiFrame.ButtonEnabledMask;
                 num1 &= num4;
                 const int num5 = 0;
                 num1 = num1 == num5 ? 1 : 0;
@@ -82,6 +73,7 @@ namespace LazyLib.Helpers
         }
 
 
+
         public string GetName
         {
             get { return Memory.ReadUtf8(Memory.Read<uint>(BaseAddress + (uint)Pointers.UiFrame.Name), 132); }
@@ -89,7 +81,7 @@ namespace LazyLib.Helpers
 
         public string GetText
         {
-            get { return Memory.ReadUtf8(Memory.Read<uint>(BaseAddress + (uint) Pointers.UiFrame.LabelText), byte.MaxValue); }
+            get { return Memory.ReadUtf8(Memory.Read<uint>(BaseAddress + (uint)Pointers.UiFrame.LabelText), byte.MaxValue); }
         }
 
         public string GetEditBoxText
@@ -101,8 +93,8 @@ namespace LazyLib.Helpers
         {
             get
             {
-                var a1 = Memory.Read<float>(BaseAddress + (uint) Pointers.UiFrame.FrameLeft);
-                return (a1*InterfaceHelper.WindowWidth/Memory.ReadRelative<float>((uint) Pointers.UiFrame.ScrWidth));
+                var a1 = Memory.Read<float>(BaseAddress + (uint)Pointers.UiFrame.FrameLeft);
+                return (a1 * InterfaceHelper.WindowWidth / Memory.ReadRelative<float>((uint)Pointers.UiFrame.ScrWidth));
             }
         }
 
@@ -110,8 +102,8 @@ namespace LazyLib.Helpers
         {
             get
             {
-                var a1 = Memory.Read<float>(BaseAddress + (uint) Pointers.UiFrame.FrameRight);
-                return (a1*InterfaceHelper.WindowWidth/Memory.ReadRelative<float>((uint) Pointers.UiFrame.ScrWidth));
+                var a1 = Memory.Read<float>(BaseAddress + (uint)Pointers.UiFrame.FrameRight);
+                return (a1 * InterfaceHelper.WindowWidth / Memory.ReadRelative<float>((uint)Pointers.UiFrame.ScrWidth));
             }
         }
 
@@ -119,8 +111,8 @@ namespace LazyLib.Helpers
         {
             get
             {
-                var a1 = Memory.Read<float>(BaseAddress + (uint) Pointers.UiFrame.FrameTop);
-                return (a1*InterfaceHelper.WindowHeight/Memory.ReadRelative<float>((uint) Pointers.UiFrame.ScrHeight));
+                var a1 = Memory.Read<float>(BaseAddress + (uint)Pointers.UiFrame.FrameTop);
+                return (a1 * InterfaceHelper.WindowHeight / Memory.ReadRelative<float>((uint)Pointers.UiFrame.ScrHeight));
             }
         }
 
@@ -128,8 +120,8 @@ namespace LazyLib.Helpers
         {
             get
             {
-                var a1 = Memory.Read<float>(BaseAddress + (uint) Pointers.UiFrame.FrameBottom);
-                return (a1*InterfaceHelper.WindowHeight/Memory.ReadRelative<float>((uint) Pointers.UiFrame.ScrHeight));
+                var a1 = Memory.Read<float>(BaseAddress + (uint)Pointers.UiFrame.FrameBottom);
+                return (a1 * InterfaceHelper.WindowHeight / Memory.ReadRelative<float>((uint)Pointers.UiFrame.ScrHeight));
             }
         }
 
@@ -149,7 +141,7 @@ namespace LazyLib.Helpers
             {
                 var p = new Point();
                 ScreenToClient(Memory.WindowHandle, ref p);
-                return Math.Abs(p.X) + (int) Left + (int) (Width/2);
+                return Math.Abs(p.X) + (int)Left + (int)(Width / 2);
             }
         }
 
@@ -159,7 +151,7 @@ namespace LazyLib.Helpers
             {
                 var p = new Point();
                 ScreenToClient(Memory.WindowHandle, ref p);
-                return (Math.Abs(p.Y) + InterfaceHelper.WindowHeight - (int) Top + (int) (Height/2));
+                return (Math.Abs(p.Y) + InterfaceHelper.WindowHeight - (int)Top + (int)(Height / 2));
             }
         }
 
@@ -168,21 +160,15 @@ namespace LazyLib.Helpers
             get
             {
                 var result = new List<Frame>();
-
-                var child = Memory.Read<uint>(BaseAddress + (uint) Pointers.UiFrame.RegionsFirst);
-
+                var child = Memory.Read<uint>(BaseAddress + (uint)Pointers.UiFrame.RegionsFirst);
                 while (child != 0 && (child & 1) == 0)
                 {
                     String s = Memory.ReadUtf8(Memory.Read<uint>(child + (uint)Pointers.UiFrame.Name), 99);
-
                     if (s.Length > 0)
                         result.Add(new Frame(child));
 
-                    child =
-                        Memory.Read<uint>(child + Memory.Read<uint>(BaseAddress + (uint) Pointers.UiFrame.RegionsNext) +
-                                          4);
+                    child = Memory.Read<uint>(child + Memory.Read<uint>(BaseAddress + (uint)Pointers.UiFrame.RegionsNext) + 4);
                 }
-
                 return result;
             }
         }

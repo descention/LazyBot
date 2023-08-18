@@ -26,6 +26,7 @@ using LazyEvo.LGrindEngine.States;
 using LazyEvo.Public;
 using LazyLib;
 using LazyLib.FSM;
+using LazyLib.Helpers;
 using LazyLib.IEngine;
 using LazyLib.LazyRadar;
 using LazyLib.LazyRadar.Drawer;
@@ -164,11 +165,10 @@ namespace LazyEvo.LGrindEngine
             _death = 0;
             _xpInitial = ObjectManager.MyPlayer.Experience;
             _startTime = DateTime.Now;
-            /*
             if (GrindingSettings.ShouldTrain)
             {
                 ShouldTrain = GrindingShouldTrain.ShouldTrain();
-            }*/
+            }
             PullController.Start();
             return true;
         }
@@ -235,13 +235,13 @@ namespace LazyEvo.LGrindEngine
                 _xpInitial = ObjectManager.MyPlayer.Experience;
                 _xpCurrent = _xpInitial;
                 _startTime = DateTime.Now;
-                /*if (GrindingSettings.ShouldTrain)
+                if (GrindingSettings.ShouldTrain)
                 {
                     Navigator.Stop();
                     MoveHelper.ReleaseKeys();
                     ShouldTrain = false;
-                    //ShouldTrain = GrindingShouldTrain.ShouldTrain();
-                }*/
+                    ShouldTrain = GrindingShouldTrain.ShouldTrain();
+                }
             }
             else
             {

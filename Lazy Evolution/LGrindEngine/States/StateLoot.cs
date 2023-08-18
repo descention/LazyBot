@@ -67,7 +67,8 @@ namespace LazyEvo.LGrindEngine.States
             PUnit toReturn = null;
             foreach (PUnit pUnit in ObjectManager.GetUnits)
             {
-                if (pUnit.IsLootable && pUnit.DistanceToSelf < 30 && !PBlackList.IsBlacklisted(pUnit))
+                if ((pUnit.IsLootable || ((pUnit.GetSkinnableType() == Constants.SkinnableType.Skining) && GrindingSettings.Skin)) && ((pUnit.DistanceToSelf < 70.0) && !PBlackList.IsBlacklisted(pUnit)))
+                // old if (pUnit.IsLootable && pUnit.DistanceToSelf < 30 && !PBlackList.IsBlacklisted(pUnit))
                 {
                     if (toReturn != null)
                     {

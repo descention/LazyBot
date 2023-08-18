@@ -99,7 +99,7 @@ namespace LazyEvo.LGrindEngine.Helpers
 
         private static bool IsValidTarget(PUnit unitTofind)
         {
-            if (unitTofind.IsPlayer || unitTofind.IsTagged || unitTofind.IsDead || unitTofind.IsTotem)
+            if (unitTofind.IsPlayer || unitTofind.IsTagged || unitTofind.IsDead || unitTofind.IsTotem || unitTofind.IsNotSelectable)
             {
                 return false;
             }

@@ -23,12 +23,12 @@ namespace LazyEvo.Plugins.LazyData
 
         public void PluginLoad()
         {
-            //creating a static instance to the form we don't need anymore
-            settingsForm = new frmProfessions();
-            professionsLoaded = false;
-            
-            Logging.Write("LazyData demo started");
-            Chat.NewChatMessage += ChatNewChatMessage;
+                //creating a static instance to the form we don't need anymore
+                settingsForm = new frmProfessions();
+                professionsLoaded = false;
+
+                Logging.Write("LazyData demo started");
+                Chat.NewChatMessage += ChatNewChatMessage;
             
         }
         /**
@@ -36,17 +36,20 @@ namespace LazyEvo.Plugins.LazyData
          **/
         public static void professionsReady(Professions p)
         {
-            //setting the professions to the form
-            settingsForm.Professions = p;
-            //telling the form to change the labels to the returned results
-            settingsForm.createDisplay();
-            //creating a local reference to the professions
-            professions = p;
-            professionsLoaded = true;
-            //start live updating
-            if (!workerThread.IsAlive)
+            if (professionsLoaded != true)
             {
-                workerThread.Start();
+                //setting the professions to the form
+                settingsForm.Professions = p;
+                //telling the form to change the labels to the returned results
+                settingsForm.createDisplay();
+                //creating a local reference to the professions
+                professions = p;
+                professionsLoaded = true;
+                //start live updating
+                if (!workerThread.IsAlive)
+                {
+                    workerThread.Start();
+                }
             }
         }
 
@@ -113,7 +116,7 @@ namespace LazyEvo.Plugins.LazyData
         private void ChatNewChatMessage(object sender, GChatEventArgs e)
         {
             
-            //Logging.Write("Plugin got chat message: " + e.Msg.Player + " " + e.Msg.Msg);
+            Logging.Write("Plugin got chat message: " + e.Msg.Player + " " + e.Msg.Msg);
         }        
     }
 

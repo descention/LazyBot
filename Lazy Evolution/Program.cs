@@ -23,6 +23,7 @@ using LazyEvo.Forms.Helpers;
 using LazyEvo.Plugins;
 using LazyLib;
 using LazyLib.Dialogs.UnhandledExceptionDlg;
+using System.Threading;
 
 namespace LazyEvo
 {
@@ -59,8 +60,8 @@ namespace LazyEvo
             LazyForms.Load();
             //Load license settings
             //Start update check
-            // var check = new Thread(CheckUpdate.CheckForUpdate) {IsBackground = true};
-            //  check.Start();
+           // var check = new Thread(CheckUpdate.CheckForUpdate) {IsBackground = true};
+           // check.Start();
             //Start license check
             LazySettings.LoadSettings();
             ReloggerSettings.LoadSettings();

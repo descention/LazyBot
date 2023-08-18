@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 ﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
@@ -90,6 +90,7 @@ namespace LazyLib.Helpers.Mail
                 Application.DoEvents();
                 answer = ClickItems(false, 12);
             }
+            KeyHelper.SendKey("ESC");
             MailFrame.Close();
             MouseHelper.ReleaseMouse();
             CloseAllBags();
@@ -119,7 +120,8 @@ namespace LazyLib.Helpers.Mail
                 MailFrame.SetReceiverHooked(LazySettings.MailTo);
                 Thread.Sleep(500);
                 return true;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Logging.Write("Exception MakeMailReady: " + e);
                 return false;

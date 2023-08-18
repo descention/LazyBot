@@ -30,7 +30,7 @@ namespace LazyEvo.LGrindEngine.Helpers
         {
             try
             {
-                /*
+                
                 Logging.Write("Checking if we should train");
                 if (!InterfaceHelper.GetFrameByName("SpellBookFrame").IsVisible)
                 {
@@ -43,7 +43,7 @@ namespace LazyEvo.LGrindEngine.Helpers
                 if (CheckPages()) return true;
                 InterfaceHelper.GetFrameByName("SpellBookSkillLineTab4").LeftClick();
                 if (CheckPages()) return true;
-                CloseFrame(); */
+                CloseFrame(); 
                 return false;
             }
             catch (Exception e)

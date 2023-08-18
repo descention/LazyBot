@@ -1,63 +1,72 @@
-﻿
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
+﻿// Type: LazyLib.ActionBar.BarMapper
+// Assembly: LazyLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: A92FE1A9-C28E-4E6F-9BAC-5C48387A25CC
+// Assembly location: E:\VeryOldLazyBots\Lazy Evolution\LazyLib.dll
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
-#region
-
+using LazyLib;
+using LazyLib.Helpers;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using LazyLib.Helpers;
-using LazyLib.Wow;
-
-#endregion
+using System.Threading;
 
 namespace LazyLib.ActionBar
 {
-    [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
+    [Obfuscation(ApplyToMembers = true, Feature = "renaming")]
+    [Obfuscation(ApplyToMembers = true, Feature = "renaming")]
     public class BarMapper
     {
-        private static Dictionary<Int32, String> _spellDatabase;
         private static readonly List<WowKey> LoadedKeys = new List<WowKey>();
         private static readonly List<BarItem> BarItems = new List<BarItem>();
-        private static readonly IDictionary<string, BarSpell> Spells = new Dictionary<string, BarSpell>();
-        private static readonly Dictionary<Int32, String> SpellsUsed = new Dictionary<int, string>();
+        private static readonly IDictionary<string, BarSpell> Spells = (IDictionary<string, BarSpell>)new Dictionary<string, BarSpell>();
+        private static readonly Dictionary<int, string> SpellsUsed = new Dictionary<int, string>();
+        private static Dictionary<int, string> _spellDatabase;
+
         public static int SpellsLoaded
         {
-            get { return Spells.Count; }
+            get
+            {
+                return BarMapper.Spells.Count;
+            }
         }
 
-        #region LoadKeys
+        static BarMapper()
+        {
+        }
 
+        public static void ResetBar()
+        {
+            Logging.Write(LogType.Info, "Reset bar to first", new object[0]);
+            KeyLowHelper.PostMessage(Memory.WindowHandle, 256U, (IntPtr)16L, (IntPtr)0);
+            KeyLowHelper.PostMessage(Memory.WindowHandle, 256U, (IntPtr)49L, (IntPtr)0);
+            KeyLowHelper.PostMessage(Memory.WindowHandle, 257U, (IntPtr)16L, (IntPtr)0);
+            KeyLowHelper.PostMessage(Memory.WindowHandle, 257U, (IntPtr)49L, (IntPtr)0);
+            Thread.Sleep(500);
+        }
+
+        public static void ResetBar1()
+        {
+            Logging.Debug("AddKey Reset Bars");
+            KeyHelper.AddKey("ResetBars", "None", "1", "Indifferent");
+            Logging.Debug("SendKey Reset Bars");
+            KeyHelper.SendKey("ResetBars");
+        }
         public static string GetNameFromSpell(int spellId)
         {
-            Load();
+            BarMapper.Load();
             try
             {
-                if (_spellDatabase.ContainsKey(spellId))
-                {
-                    return _spellDatabase[spellId];
-                }
-                return string.Empty;
-            } catch (Exception)
+                if (BarMapper._spellDatabase.ContainsKey(spellId))
+                    return BarMapper._spellDatabase[spellId];
+                else
+                    return string.Empty;
+            }
+            catch (Exception)
             {
-                Logging.Write("Error find name of spell: " + spellId);
+                Logging.Write("Error find name of spell: " + (object)spellId, new object[0]);
                 return string.Empty;
             }
         }
@@ -91,24 +100,29 @@ namespace LazyLib.ActionBar
 
         public static void MapBars()
         {
+            ResetBar();
+            //ResetBar1();
             LoadedKeys.Clear();
             BarItems.Clear();
             Spells.Clear();
-            const int barSize = 0x30;
-            int maxSlots = 5*12;
+            const int barSize = 0x60;
+            int maxSlots = 60;
             switch (ObjectManager.MyPlayer.UnitClass)
             {
                 case Constants.UnitClass.UnitClass_Warrior:
-                    maxSlots = 8 * 12;
+                    maxSlots = 0x60;
                     break;
                 case Constants.UnitClass.UnitClass_Rogue:
-                    maxSlots = 6 * 12;
+                    maxSlots = 0x48;
                     break;
                 case Constants.UnitClass.UnitClass_Priest:
-                    maxSlots = 6 * 12;
+                    maxSlots = 0x48;
+                    break;
+                case Constants.UnitClass.UnitClass_Monk:
+                    maxSlots = 0x54;
                     break;
                 case Constants.UnitClass.UnitClass_Druid:
-                    maxSlots = 8 * 12;
+                    maxSlots = 0x60;
                     break;
             }
             Int32 currentSlot = 1;
@@ -120,22 +134,23 @@ namespace LazyLib.ActionBar
                     currentBar++;
                     currentSlot = 1;
                 }
-                var actionId = Memory.ReadRelative<UInt32>((uint) Pointers.ActionBar.ActionBarFirstSlot + (0x4*i) + barSize);
+                var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + barSize);
+
                 if (actionId != 0)
                 {
                     LoadedKeys.Add(new WowKey(actionId, currentBar, currentSlot));
                 }
                 currentSlot++;
             }
-            var bonusBar = Memory.ReadRelative<Int32>((uint) Pointers.ActionBar.ActionBarBonus);
+            var bonusBar = Memory.ReadRelative<Int32>((uint)Pointers.ActionBar.ActionBarBonus);
             if (bonusBar == 0)
             {
                 for (uint i = 0; i < 12; i++)
                 {
-                    var actionId = Memory.ReadRelative<UInt32>((uint) Pointers.ActionBar.ActionBarFirstSlot + (0x4*i));
+                    var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i));
                     if (actionId != 0)
                     {
-                        LoadedKeys.Add(new WowKey(actionId, 0, (int) i + 1));
+                        LoadedKeys.Add(new WowKey(actionId, 0, (int)i + 1));
                     }
                     currentSlot++;
                 }
@@ -144,14 +159,14 @@ namespace LazyLib.ActionBar
             {
                 for (uint i = 0; i < 12; i++)
                 {
-                    var actionId = Memory.ReadRelative<UInt32>((uint) Pointers.ActionBar.ActionBarFirstSlot + (0x4*i) + (uint) barSize*6 + (((uint) bonusBar - 1)*barSize));
+                    var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + (uint)barSize * 6 + (((uint)bonusBar - 1) * barSize));
                     if (actionId != 0)
                     {
-                        LoadedKeys.Add(new WowKey(actionId, 0, (int) i + 1));
+                        LoadedKeys.Add(new WowKey(actionId, 0, (int)i + 1));
                     }
                     currentSlot++;
                 }
-            } 
+            }
             //Load all spells 
             Load();
             LoadedKeys.Reverse(); //Reverse the list to get bar 1 first
@@ -160,7 +175,7 @@ namespace LazyLib.ActionBar
             {
                 string name = String.Empty;
                 //First udjust the bar and the 0 key
-                if(wowKey.Bar > 5)
+                if (wowKey.Bar > 5)
                 {
                     wowKey.Bar = 0;
                 }
@@ -189,32 +204,32 @@ namespace LazyLib.ActionBar
                 if (wowKey.Type.Equals(KeyType.Item))
                 {
                     BarItems.Add(new BarItem(wowKey.ItemId, wowKey.Bar, wowKey.Key));
-                    Logging.Debug(string.Format("Found item: {0} : {1} : {2}", ItemHelper.GetNameById((uint) wowKey.ItemId), wowKey.Bar, wowKey.Key));
+                    Logging.Debug(string.Format("Found item: {0} : {1} : {2}", ItemHelper.GetNameById((uint)wowKey.ItemId), wowKey.Bar, wowKey.Key));
                 }
             }
             LoadedKeys.Clear();
             GC.Collect();
         }
-        #endregion
 
-        public static Boolean HasSpellById(int spellId)
+
+        public static bool HasSpellById(int spellId)
         {
-            return Spells.Any(spell => spell.Value.SpellId.Equals(spellId));
+            return Enumerable.Any<KeyValuePair<string, BarSpell>>((IEnumerable<KeyValuePair<string, BarSpell>>)BarMapper.Spells, (Func<KeyValuePair<string, BarSpell>, bool>)(spell => spell.Value.SpellId.Equals(spellId)));
         }
 
-        public static Boolean HasSpellByName(String spellName)
+        public static bool HasSpellByName(string spellName)
         {
-            return (from barSpell in Spells where barSpell.Key == spellName select barSpell.Value).FirstOrDefault() != null;
+            return Enumerable.FirstOrDefault<BarSpell>(Enumerable.Select<KeyValuePair<string, BarSpell>, BarSpell>(Enumerable.Where<KeyValuePair<string, BarSpell>>((IEnumerable<KeyValuePair<string, BarSpell>>)BarMapper.Spells, (Func<KeyValuePair<string, BarSpell>, bool>)(barSpell => barSpell.Key == spellName)), (Func<KeyValuePair<string, BarSpell>, BarSpell>)(barSpell => barSpell.Value))) != null;
         }
 
-        public static Boolean HasItemById(Int32 itemId)
+        public static bool HasItemById(int itemId)
         {
-            return BarItems.Any(a => a.ItemId.Equals(itemId));
+            return Enumerable.Any<BarItem>((IEnumerable<BarItem>)BarMapper.BarItems, (Func<BarItem, bool>)(a => a.ItemId.Equals(itemId)));
         }
 
-        public static BarSpell GetSpellById(Int32 spellId)
+        public static BarSpell GetSpellById(int spellId)
         {
-            return (from spell in Spells where spell.Value.SpellId.Equals(spellId) select spell.Value).FirstOrDefault();
+            return Enumerable.FirstOrDefault<BarSpell>(Enumerable.Select<KeyValuePair<string, BarSpell>, BarSpell>(Enumerable.Where<KeyValuePair<string, BarSpell>>((IEnumerable<KeyValuePair<string, BarSpell>>)BarMapper.Spells, (Func<KeyValuePair<string, BarSpell>, bool>)(spell => spell.Value.SpellId.Equals(spellId))), (Func<KeyValuePair<string, BarSpell>, BarSpell>)(spell => spell.Value)));
         }
 
         public static BarSpell GetSpellByName(String spellName)
@@ -222,33 +237,31 @@ namespace LazyLib.ActionBar
             return (from barSpell in Spells where barSpell.Key == spellName select barSpell.Value).FirstOrDefault() ?? new BarSpell(0, 0, 0, "Unknown Spell");
         }
 
-        public static BarItem GetItemById(Int32 itemId)
+        public static BarItem GetItemById(int itemId)
         {
-            return BarItems.FirstOrDefault(barItem => barItem.ItemId.Equals(itemId));
+            return Enumerable.FirstOrDefault<BarItem>((IEnumerable<BarItem>)BarMapper.BarItems, (Func<BarItem, bool>)(barItem => barItem.ItemId.Equals(itemId)));
         }
 
         public static bool IsSpellReadyByName(string name)
         {
-            if ((from barSpell in Spells where barSpell.Key == name select barSpell.Value).FirstOrDefault() != null)
-            {
-                return IsSpellReady(GetSpellByName(name).SpellId);
-            }
-            return false;
+            if (Enumerable.FirstOrDefault<BarSpell>(Enumerable.Select<KeyValuePair<string, BarSpell>, BarSpell>(Enumerable.Where<KeyValuePair<string, BarSpell>>((IEnumerable<KeyValuePair<string, BarSpell>>)BarMapper.Spells, (Func<KeyValuePair<string, BarSpell>, bool>)(barSpell => barSpell.Key == name)), (Func<KeyValuePair<string, BarSpell>, BarSpell>)(barSpell => barSpell.Value))) != null)
+                return BarMapper.IsSpellReady(BarMapper.GetSpellByName(name).SpellId);
+            else
+                return false;
         }
 
         public static bool IsSpellReadyById(int id)
         {
-            return IsSpellReady(id);
+            return BarMapper.IsSpellReady(id);
         }
 
         public static void CastSpell(string spellName)
         {
-            BarSpell spell = (from barSpell in Spells where barSpell.Key == spellName select barSpell.Value).FirstOrDefault();
-            if (spell != null)
-            {
-                Logging.Write("[Mapper]Casting " + spellName);
-                spell.CastSpell();
-            }
+            BarSpell Spell = Enumerable.FirstOrDefault<BarSpell>(Enumerable.Select<KeyValuePair<string, BarSpell>, BarSpell>(Enumerable.Where<KeyValuePair<string, BarSpell>>((IEnumerable<KeyValuePair<string, BarSpell>>)BarMapper.Spells, (Func<KeyValuePair<string, BarSpell>, bool>)(barSpell => barSpell.Key == spellName)), (Func<KeyValuePair<string, BarSpell>, BarSpell>)(barSpell => barSpell.Value)));
+            if (Spell == null)
+                return;
+            Logging.Write("[Mapper]Casting " + spellName, new object[0]);
+            Spell.CastSpell();
         }
 
         [DllImport("KERNEL32")]
@@ -257,6 +270,7 @@ namespace LazyLib.ActionBar
         [DllImport("Kernel32.dll")]
         private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
+
         private static bool IsSpellReady(int spellidToCheck)
         {
             long frequency;
@@ -264,9 +278,9 @@ namespace LazyLib.ActionBar
             QueryPerformanceFrequency(out frequency);
             QueryPerformanceCounter(out perfCount);
             //Current time in ms
-            long currentTime = (perfCount*1000)/frequency;
+            long currentTime = (perfCount * 1000) / frequency;
             //Get first list object
-            var currentListObject = Memory.ReadRelative<uint>((uint) Pointers.SpellCooldown.CooldPown + 0x8);
+            var currentListObject = Memory.ReadRelative<uint>((uint)Pointers.SpellCooldown.CooldPown + 0x8);
             while ((currentListObject != 0) && ((currentListObject & 1) == 0))
             {
                 var spellId = Memory.Read<uint>(currentListObject + 0x8);
@@ -290,60 +304,33 @@ namespace LazyLib.ActionBar
             return true;
         }
 
-        /*
-        internal static bool IsUsabelAction(int slot)
-        {
-            var foo = (uint)Pointers.ActionBar.IsUsableAction + (uint)slot * 0x04;
-            var isUsabelAction = Memory.Read<int>(ObjectManager.BaseAddressModule + foo);
-            foo = (uint)Pointers.ActionBar.IsUsableActionNoMana + (uint)slot * 0x04;
-            var isUsabelActionNoMana = Memory.Read<int>(ObjectManager.BaseAddressModule + foo);
-
-            if (isUsabelAction == 0 && isUsabelActionNoMana == 0)
-            {
-                Logging.Write("Slot: " + slot + " is usabel");
-                return true;
-            }
-            Logging.Write("Slot: " + slot + " is not usabel");
-            return false;
-        }
-         */
-
         public static bool HasBuff(PUnit check, string name)
         {
-            List<int> ids = GetIdsFromName(name);
-            if (ObjectManager.Initialized)
-                if (check.HasBuff(ids))
-                    return true;
-            return false;
+            List<int> idsFromName = BarMapper.GetIdsFromName(name);
+            return ObjectManager.Initialized && check.HasBuff(idsFromName);
         }
 
         public static bool DoesBuffExist(string name)
         {
-            if (GetIdsFromName(name).Count != 0)
-            {
-                return true;
-            }
-            return false;
+            return BarMapper.GetIdsFromName(name).Count != 0;
         }
-        
+
         public static int GetIdByName(string spellName)
         {
-            var list = GetIdsFromName(spellName);
-            if (list.Count != 0)
-            {
-                return list[0];
-            }
-            return 0;
+            List<int> idsFromName = BarMapper.GetIdsFromName(spellName);
+            if (idsFromName.Count != 0)
+                return idsFromName[0];
+            else
+                return 0;
         }
-        
+
         public static int GetIdFromName(string name)
         {
-            var list = GetIdsFromName(name);
-            if (list.Count != 0)
-            {
-                return list[0];
-            }
-            return 0;
+            List<int> idsFromName = BarMapper.GetIdsFromName(name);
+            if (idsFromName.Count != 0)
+                return idsFromName[0];
+            else
+                return 0;
         }
 
         public static List<int> GetIdsFromName(string name)
@@ -364,7 +351,7 @@ namespace LazyLib.ActionBar
             }
             catch (Exception)
             {
-                return new List<int> {0};
+                return new List<int> { 0 };
             }
         }
     }

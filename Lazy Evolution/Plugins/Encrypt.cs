@@ -322,7 +322,7 @@ namespace LazyEvo.Plugins
             }
             catch (Exception e)
             {
-                throw new Exception("Could not decrypt relogging information");
+                throw new Exception("Could not decrypt relogging information:" + e);
             }
             //return Encryptor.Decrypt(input, "lazy_evo", "evolution", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
         }

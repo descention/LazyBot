@@ -1,20 +1,85 @@
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
+﻿using LazyLib.ActionBar;
+using LazyLib.Helpers;
+using System.Xml;
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+namespace LazyEvo.PVEBehavior.Behavior
+{
+    internal class ActionSpell : Action
+    {
+        private bool Exist;
+        private string _name;
+        private BarSpell _spell;
+        private bool chek;
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+        public override bool DoesKeyExist
+        {
+            get
+            {
+                if (!this.chek)
+                {
+                    this.chek = true;
+                    this.Exist = BarMapper.HasSpellByName(this._name);
+                }
+                return this.Exist;
+            }
+        }
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
+        public override string Name
+        {
+            get
+            {
+                return this._name;
+            }
+        }
 
+        public override bool IsReady
+        {
+            get
+            {
+                return BarMapper.IsSpellReadyByName(this._name);
+            }
+        }
+
+        public ActionSpell()
+        {
+        }
+
+        public ActionSpell(string name)
+        {
+            this._name = name;
+        }
+
+        public override void Execute(int globalcooldown)
+        {
+            if (!this.DoesKeyExist)
+                return;
+            if (!KeyHelper.HasKey(this._name))
+                this._spell = (BarSpell)null;
+            if (this._spell == null)
+            {
+                this._spell = BarMapper.GetSpellByName(this._name);
+                this._spell.SetCooldown(globalcooldown);
+                KeyHelper.AddKey(this._name, "", this._spell.Bar.ToString(), this._spell.Key.ToString());
+            }
+            this._spell.CastSpell();
+        }
+
+        public override string GetXml()
+        {
+            return "<Type>ActionSpell</Type>" + "<Name>" + this._name + "</Name>";
+        }
+
+        public override void Load(XmlNode node)
+        {
+            foreach (XmlNode xmlNode in node)
+            {
+                if (xmlNode.Name.Equals("Name"))
+                    this._name = xmlNode.InnerText;
+            }
+        }
+    }
+}
+/*
 #region
 
 using System.Xml;
@@ -101,3 +166,4 @@ namespace LazyEvo.PVEBehavior.Behavior
         }
     }
 }
+*/

@@ -45,8 +45,8 @@
             this.createProfileButton = new DevComponents.DotNetBar.ButtonItem();
             this.loadProfileButton = new DevComponents.DotNetBar.ButtonItem();
             this.saveProfileButton = new DevComponents.DotNetBar.ButtonItem();
-            this.loadProfileButton1 = new DevComponents.DotNetBar.ButtonItem();
             this.saveProfileButton1 = new DevComponents.DotNetBar.ButtonItem();
+            this.loadProfileButton1 = new DevComponents.DotNetBar.ButtonItem();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.deleteLastNormalButton = new DevComponents.DotNetBar.ButtonX();
@@ -79,6 +79,7 @@
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.galleryContainer1 = new DevComponents.DotNetBar.GalleryContainer();
+            //this.BtnOnlineProfiles = new System.Windows.Forms.Button();
             this.dockSite7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.groupPanel1.SuspendLayout();
@@ -97,7 +98,6 @@
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX1.Location = new System.Drawing.Point(0, 0);
             this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(0, 0);
             this.buttonX1.TabIndex = 0;
             // 
             // dotNetBarManager1
@@ -249,17 +249,17 @@
             this.saveProfileButton.Text = "Save Current Profile";
             this.saveProfileButton.Click += new System.EventHandler(this.SaveProfileButtonClick);
             // 
-            // loadProfileButton1
-            // 
-            this.loadProfileButton1.Name = "loadProfileButton1";
-            this.loadProfileButton1.Text = "Load Existing Profile";
-            this.loadProfileButton1.Click += new System.EventHandler(this.loadProfileButton1_Click);
-            // 
             // saveProfileButton1
             // 
             this.saveProfileButton1.Name = "saveProfileButton1";
             this.saveProfileButton1.Text = "Save Current Profile";
             this.saveProfileButton1.Click += new System.EventHandler(this.saveProfileButton1_Click);
+            // 
+            // loadProfileButton1
+            // 
+            this.loadProfileButton1.Name = "loadProfileButton1";
+            this.loadProfileButton1.Text = "Load Existing Profile";
+            this.loadProfileButton1.Click += new System.EventHandler(this.loadProfileButton1_Click);
             // 
             // dockSite3
             // 
@@ -772,6 +772,7 @@
             this.profileTypeComboBox.DisplayMember = "Text";
             this.profileTypeComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.profileTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.profileTypeComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.profileTypeComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.profileTypeComboBox.FormattingEnabled = true;
             this.profileTypeComboBox.ItemHeight = 14;
@@ -807,12 +808,23 @@
             this.galleryContainer1.Name = "galleryContainer1";
             this.galleryContainer1.PopupUsesStandardScrollbars = false;
             // 
+            // BtnOnlineProfiles
+            // 
+          //  /this.BtnOnlineProfiles.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+           // this.BtnOnlineProfiles.Location = new System.Drawing.Point(302, 0);
+          //  this.BtnOnlineProfiles.Name = "BtnOnlineProfiles";
+          //  this.BtnOnlineProfiles.Size = new System.Drawing.Size(103, 23);
+          //  this.BtnOnlineProfiles.TabIndex = 16;
+          //  this.BtnOnlineProfiles.Text = "OnlineProfiles";
+         //   this.BtnOnlineProfiles.Click += new System.EventHandler(this.BtnOnlineProfiles_Click);
+            // 
             // FlyingProfileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(233)))), ((int)(((byte)(245)))));
             this.ClientSize = new System.Drawing.Size(431, 378);
+            //this.Controls.Add(this.BtnOnlineProfiles);
             this.Controls.Add(this.groupPanel7);
             this.Controls.Add(this.groupPanel6);
             this.Controls.Add(this.groupPanel2);
@@ -896,5 +908,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX CBNaturalRun;
         private DevComponents.DotNetBar.ButtonItem loadProfileButton1;
         private DevComponents.DotNetBar.ButtonItem saveProfileButton1;
+      //  private System.Windows.Forms.Button BtnOnlineProfiles;
     }
 }

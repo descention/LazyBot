@@ -44,11 +44,13 @@
             this.PotentialAdds = new DevComponents.DotNetBar.ButtonItem();
             this.Ticker = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem5 = new DevComponents.DotNetBar.LabelItem();
+            this.ChiCondition = new DevComponents.DotNetBar.ButtonItem();
             this.HasPet = new DevComponents.DotNetBar.ButtonItem();
             this.ComboPointsCondition = new DevComponents.DotNetBar.ButtonItem();
             this.RuneCondition = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem6 = new DevComponents.DotNetBar.LabelItem();
             this.SoulShardCount = new DevComponents.DotNetBar.ButtonItem();
+            this.BurningEmbersCount = new DevComponents.DotNetBar.ButtonItem();
             this.HealthStoneCount = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem8 = new DevComponents.DotNetBar.LabelItem();
             this.MageWaterCondition = new DevComponents.DotNetBar.ButtonItem();
@@ -175,11 +177,13 @@
             this.PotentialAdds,
             this.Ticker,
             this.labelItem5,
+            this.ChiCondition,
             this.HasPet,
             this.ComboPointsCondition,
             this.RuneCondition,
             this.labelItem6,
             this.SoulShardCount,
+            this.BurningEmbersCount,
             this.HealthStoneCount,
             this.labelItem8,
             this.MageWaterCondition,
@@ -282,6 +286,10 @@
             // 
             // HasPet
             // 
+            this.ChiCondition.Name = "ChiCondition";
+            this.ChiCondition.Text = "Chi Condition";
+            this.ChiCondition.Click += new System.EventHandler(this.ChiCondition_Click);
+
             this.HasPet.Name = "HasPet";
             this.HasPet.Text = "Has Pet";
             this.HasPet.Click += new System.EventHandler(this.HasPet_Click);
@@ -316,6 +324,12 @@
             this.SoulShardCount.Name = "SoulShardCount";
             this.SoulShardCount.Text = "Soul Shard Count";
             this.SoulShardCount.Click += new System.EventHandler(this.SoulShardCount_Click);
+            // 
+            // BurningEmbersCount
+            // 
+            this.BurningEmbersCount.Name = "BurningEmbersCount";
+            this.BurningEmbersCount.Text = "Burning Embers Count";
+            this.BurningEmbersCount.Click += new System.EventHandler(this.BurningEmbersCount_Click);
             // 
             // HealthStoneCount
             // 
@@ -1329,6 +1343,7 @@
         private DevComponents.DotNetBar.StyleManager styleManager1;
         private DevComponents.DotNetBar.ButtonItem AddCHealthPower;
         private DevComponents.DotNetBar.ButtonItem BuffDetection;
+        private DevComponents.DotNetBar.ButtonItem BurningEmbersCount;
         private DevComponents.AdvTree.AdvTree AllConditions;
         private DevComponents.AdvTree.NodeConnector nodeConnector1;
         private DevComponents.DotNetBar.ElementStyle elementStyle1;
@@ -1418,6 +1433,7 @@
         private DevComponents.DotNetBar.ButtonItem Functions;
         private DevComponents.DotNetBar.LabelItem Othershj;
         private DevComponents.DotNetBar.ButtonItem Ticker;
+        private DevComponents.DotNetBar.ButtonItem ChiCondition;
         private DevComponents.DotNetBar.ButtonItem HasPet;
         private System.Windows.Forms.RadioButton RBUnchanged;
         private DevComponents.DotNetBar.ButtonItem BtnSpellDetection;

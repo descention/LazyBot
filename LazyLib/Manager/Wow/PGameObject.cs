@@ -63,7 +63,7 @@ namespace LazyLib.Wow
         /// </summary>
         public int DisplayId
         {
-            get { return GetStorageField<int>((uint) Descriptors.eGameObjectFields.GAMEOBJECT_DISPLAYID); }
+            get { return GetStorageField<int>((uint)Descriptors.CGGameObjectData.DisplayID); }
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace LazyLib.Wow
         /// </summary>
         public int Faction
         {
-            get { return GetStorageField<int>((uint) Descriptors.eGameObjectFields.GAMEOBJECT_FACTION); }
+            get { return GetStorageField<int>((uint)Descriptors.CGGameObjectData.FactionTemplate); }
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace LazyLib.Wow
             get { return Memory.Read<byte>(BaseAddress + (uint)Pointers.Globals.IsBobbing) != 0; }
         }
 
+
         public int GameObjectType
         {
             get
             {
-                int field = GetStorageField<int>((uint) Descriptors.eGameObjectFields.GAMEOBJECT_BYTES_1);
-                return ((field >> 8) & 0xFF);
+                return this.GetStorageField<int>(18U) >> 8 & (int)byte.MaxValue;
             }
         }
 
@@ -99,7 +99,7 @@ namespace LazyLib.Wow
         /// </summary>
         public new int Level
         {
-            get { return GetStorageField<int>((uint) Descriptors.eGameObjectFields.GAMEOBJECT_LEVEL); }
+            get { return GetStorageField<int>((uint)Descriptors.CGGameObjectData.Level); }
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    var packed = Memory.Read<long>(Memory.Read<uint>(Memory.Read<uint>(BaseAddress + (uint)Pointers.Globals.ArchFacing) + 0x4) + 0x20 + 0x100);
+                    var packed = Memory.Read<long>(Memory.Read<uint>(Memory.Read<uint>(BaseAddress + 0x1BC) + 0x4) + 0x108);
 
                     double x = (packed >> 42) * (1.0f / 2097152.0f);
 

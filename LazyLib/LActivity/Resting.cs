@@ -60,7 +60,7 @@ namespace LazyLib.LActivity
 
         public static void Rest()
         {
-            while (ObjectManager.MyPlayer.IsInCombat && !ObjectManager.ShouldDefend)
+            while (ObjectManager.MyPlayer.InCombat && !ObjectManager.ShouldDefend)
                 Thread.Sleep(1000);
             if (ObjectManager.ShouldDefend)
                 return;

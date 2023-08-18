@@ -46,7 +46,7 @@ namespace LazyEvo.Forms
 {
     internal partial class Main : Office2007Form
     {
-        private const string LazyVersion = "1.5.2";
+        private const string LazyVersion = "5.4.7";
         internal static CombatEngine CombatEngine;
         internal static ILazyEngine EngineHandler;
         internal static bool OneInstance;
@@ -102,10 +102,10 @@ namespace LazyEvo.Forms
 #if RELEASE
             CBDebug.Checked = LazySettings.DebugLog;
 #endif
-#if DEBUG
-            buttonX1.Visible = true;
-            buttonX2.Visible = true;
-#endif
+//#if DEBUG
+           // buttonX1.Visible = true;
+           // buttonX2.Visible = true;        I Dont Like To Look At this In debug
+//#endif
         }
 
         private void LogOut(object sender, NotifyEventNoAttach e)
@@ -534,6 +534,7 @@ namespace LazyEvo.Forms
             }
             catch (Exception ex)
             {
+                Logging.Write("Exception: " + ex);
             }
         }
 
@@ -804,7 +805,7 @@ namespace LazyEvo.Forms
 
         #region Engines
 
-        private void LoadEngines()
+      private void LoadEngines()
         {
             EngineCompiler.RecompileAll();
             SelectEngine.Items.Clear();

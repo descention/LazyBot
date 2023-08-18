@@ -98,11 +98,7 @@ namespace LazyLib.Helpers
                     for (int i = 0; i < 60; i++)
                     {
                         _listCurrentChat.Add(
-                            Memory.ReadUtf8StringRelative(Convert.ToUInt32((uint) Pointers.Chat.ChatStart +
-                                                                           (i*
-                                                                            (uint)
-                                                                            Pointers.Chat.OffsetToNextMsg)),
-                                                          512));
+                            Memory.ReadUtf8StringRelative(Convert.ToUInt32((uint)((uint)Pointers.Chat.ChatStart + (i * (uint)Pointers.Chat.OffsetToNextMsg))), 0x200));//Pointers.Chat.ChatStart + (i* (uint) Pointers.Chat.OffsetToNextMsg)),512));  Changed To (0xd4591dL + (i * 0x17c8L))), 0x200));
                     }
 
                     if (_listLastChat == null) _listLastChat = new List<string>(_listCurrentChat);

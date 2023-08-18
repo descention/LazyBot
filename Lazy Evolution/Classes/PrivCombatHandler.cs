@@ -18,6 +18,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 using System;
 using System.Linq;
 using System.Threading;
+using LazyEvo.LGrindEngine.Helpers;
 using LazyEvo.Forms;
 using LazyEvo.Public;
 using LazyLib;

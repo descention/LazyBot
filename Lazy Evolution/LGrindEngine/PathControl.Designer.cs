@@ -685,7 +685,7 @@
             this.LBTrainerCount.Size = new System.Drawing.Size(27, 23);
             this.LBTrainerCount.TabIndex = 59;
             this.LBTrainerCount.Text = "0";
-            this.LBTrainerCount.Visible = false;
+            this.LBTrainerCount.Visible = true;
             // 
             // labelX9
             // 
@@ -700,7 +700,7 @@
             this.labelX9.Size = new System.Drawing.Size(68, 23);
             this.labelX9.TabIndex = 58;
             this.labelX9.Text = "Trainer count:";
-            this.labelX9.Visible = false;
+            this.labelX9.Visible = true;
             // 
             // LBVendorCount
             // 
@@ -740,7 +740,7 @@
             this.BtnAddTrainer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.BtnAddTrainer.TabIndex = 55;
             this.BtnAddTrainer.Text = "+";
-            this.BtnAddTrainer.Visible = false;
+            this.BtnAddTrainer.Visible = true;
             this.BtnAddTrainer.Click += new System.EventHandler(this.BtnAddTrainerClick);
             // 
             // BtnAddRepair

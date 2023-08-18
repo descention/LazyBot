@@ -26,6 +26,7 @@ using System.Threading;
 using LazyLib.Helpers;
 
 #endregion
+using LazyLib.Wow;
 
 namespace LazyLib.Wow
 {
@@ -74,9 +75,9 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (!MyPlayer.IsInCombat)
+                if (!MyPlayer.InCombat)
                     return false;
-                if (HasAttackers() && (MyPlayer.IsInCombat || (MyPlayer.HasLivePet && MyPlayer.Pet.IsInCombat)) &&
+                if (HasAttackers() && (MyPlayer.InCombat || (MyPlayer.HasLivePet && MyPlayer.Pet.InCombat)) &&
                     !MyPlayer.IsDead)
                     return true;
                 return false;
@@ -558,7 +559,7 @@ namespace LazyLib.Wow
         {
             return
                 GetUnits.Where(
-                    monster => monster.Health == 1 && !monster.IsInCombat && monster.Location.DistanceToSelf < distance)
+                    monster => monster.Health == 1 && !monster.InCombat && monster.Location.DistanceToSelf < distance)
                     .ToList();
         }
 
@@ -620,9 +621,10 @@ namespace LazyLib.Wow
         /// <returns></returns>
         public static bool AttackingMeOrPet(PUnit u)
         {
-            //return TargetingMeOrPet(u) && u.IsInCombat && (u.IsAutoAttacking || u.IsCasting);
-            return TargetingMeOrPet(u) && u.IsInCombat;
+            //return TargetingMeOrPet(u) && u.InCombat && (u.IsAutoAttacking || u.IsCasting);
+            return TargetingMeOrPet(u) && u.InCombat;
         }
+
 
         /// <summary>
         ///   Gets the closest attacker other than the PUnit specified. .

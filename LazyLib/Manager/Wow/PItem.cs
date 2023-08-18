@@ -40,12 +40,12 @@ namespace LazyLib.Wow
         /// </summary>
         public int Durability
         {
-            get { return GetStorageField<int>((uint) Descriptors.eItemFields.ITEM_FIELD_DURABILITY); }
+            get { return GetStorageField<int>((uint)Descriptors.CGItemData.Durability); }
         }
 
         public ulong Info
         {
-            get { return GetStorageField<ulong>(0x4); }
+            get { return GetStorageField<ulong>(4); }
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return GetStorageField<uint>((uint) Descriptors.eObjectFields.OBJECT_FIELD_ENTRY);
+                    return GetStorageField<uint>((uint)Descriptors.CGObjectData.EntryID);
                 }
                 catch
                 {
@@ -89,10 +89,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                var toReturn = new List<uint>();
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_2_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_2_3));
-                return toReturn;
+                return new List<uint> { base.GetStorageField<uint>((uint)0x68), base.GetStorageField<uint>((uint)0x70) };
             }
         }
 
@@ -104,32 +101,10 @@ namespace LazyLib.Wow
         {
             get
             {
-                var toReturn = new List<uint>();
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_1_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_1_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_2_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_2_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_3_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_3_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_4_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_4_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_5_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_5_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_6_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_6_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_7_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_7_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_8_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_8_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_9_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_9_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_10_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_10_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_11_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_11_3));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_12_1));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.eItemFields.ITEM_FIELD_ENCHANTMENT_12_3));
-                return toReturn;
+                return new List<uint> { 
+                    base.GetStorageField<uint>((uint) 0x5c), base.GetStorageField<uint>((uint) 100), base.GetStorageField<uint>((uint) 0x68), base.GetStorageField<uint>((uint) 0x70), base.GetStorageField<uint>((uint) 0x74), base.GetStorageField<uint>((uint) 0x7c), base.GetStorageField<uint>((uint) 0x80), base.GetStorageField<uint>((uint) 0x88), base.GetStorageField<uint>((uint) 140), base.GetStorageField<uint>((uint) 0x94), base.GetStorageField<uint>((uint) 0x98), base.GetStorageField<uint>((uint) 160), base.GetStorageField<uint>((uint) 0xa4), base.GetStorageField<uint>((uint) 0xac), base.GetStorageField<uint>((uint) 0xb0), base.GetStorageField<uint>((uint) 0xb8), 
+                    base.GetStorageField<uint>((uint) 0xbc), base.GetStorageField<uint>((uint) 0xc4), base.GetStorageField<uint>((uint) 200), base.GetStorageField<uint>((uint) 0xd0), base.GetStorageField<uint>((uint) 0xd4), base.GetStorageField<uint>((uint) 220), base.GetStorageField<uint>((uint) 0xe0), base.GetStorageField<uint>((uint) 0xe8)
+                 };
             }
         }
 
@@ -139,7 +114,7 @@ namespace LazyLib.Wow
         /// <value>The contained.</value>
         public ulong Contained
         {
-            get { return GetStorageField<ulong>((uint) Descriptors.eItemFields.ITEM_FIELD_CONTAINED); }
+            get { return GetStorageField<ulong>((uint)Descriptors.CGItemData.ContainedIn); }
         }
 
         /// <summary>
@@ -147,7 +122,7 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumDurability
         {
-            get { return GetStorageField<int>((uint) Descriptors.eItemFields.ITEM_FIELD_MAXDURABILITY); }
+            get { return GetStorageField<int>((uint)Descriptors.CGItemData.MaxDurability); }
         }
 
         /// <summary>
@@ -155,7 +130,7 @@ namespace LazyLib.Wow
         /// </summary>
         public int StackCount
         {
-            get { return GetStorageField<int>((uint) Descriptors.eItemFields.ITEM_FIELD_STACK_COUNT); }
+            get { return GetStorageField<int>((uint)Descriptors.CGItemData.StackCount); }
         }
 
         /// <summary>
@@ -163,7 +138,7 @@ namespace LazyLib.Wow
         /// </summary>
         public int Charges
         {
-            get { return GetStorageField<int>((uint) Descriptors.eItemFields.ITEM_FIELD_SPELL_CHARGES); }
+            get { return GetStorageField<int>((uint)Descriptors.CGItemData.SpellCharges); }
         }
 
         /// <summary>

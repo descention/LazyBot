@@ -102,6 +102,10 @@ namespace LazyEvo.LGrindEngine
                             if (vendor.TrainClass == TrainClass.Warlock)
                                 use = true;
                             break;
+                        case Constants.UnitClass.UnitClass_Monk:
+                            if (vendor.TrainClass == TrainClass.Monk)
+                                use = true;
+                            break;
                         case Constants.UnitClass.UnitClass_Druid:
                             if (vendor.TrainClass == TrainClass.Druid)
                                 use = true;

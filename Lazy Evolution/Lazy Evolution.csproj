@@ -73,15 +73,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.Instrumentation, Version=10.1.0.1, Culture=neutral, PublicKeyToken=f90dc37c26666a67, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\DevComponents.Instrumentation.dll</HintPath>
-    </Reference>
-    <Reference Include="LazyUtil">
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\LazyUtil.dll</HintPath>
-    </Reference>
-    <Reference Include="NavMesh">
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\NavMesh.dll</HintPath>
+    <Reference Include="DevComponents.Instrumentation">
+      <HintPath>..\LazyLib\DevComponents.Instrumentation.dll</HintPath>
     </Reference>
     <Reference Include="QuickGraph, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,9 +90,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web.Services" />
@@ -110,9 +100,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZipLib">
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\ZipLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ClassCompiler.cs" />
@@ -130,46 +117,66 @@
     <Compile Include="Forms\Debug.Designer.cs">
       <DependentUpon>Debug.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Helpers\CheckUpdate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Forms\Helpers\Followers.cs" />
     <Compile Include="Forms\Helpers\Geometry.cs" />
     <Compile Include="Forms\Helpers\Shutdown.cs" />
     <Compile Include="Forms\Helpers\StopAfter.cs" />
-    <Compile Include="Forms\Wizard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Wizard.Designer.cs">
-      <DependentUpon>Wizard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HotKey.cs" />
-    <Compile Include="LFlyingEngine\FlyingProfiles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LFlyingEngine\FlyingProfiles.Designer.cs">
-      <DependentUpon>FlyingProfiles.cs</DependentUpon>
-    </Compile>
     <Compile Include="LFlyingEngine\Activity\ApproachPosFlying.cs" />
+    <Compile Include="LFlyingEngine\Activity\Gather.cs" />
     <Compile Include="LFlyingEngine\Activity\ToTown.cs" />
-    <Compile Include="LFlyingEngine\Helpers\LootedBlacklist.cs" />
-    <Compile Include="LFlyingEngine\Helpers\MarkedNode.cs" />
-    <Compile Include="LFlyingEngine\Helpers\SkillToLow.cs" />
-    <Compile Include="LFlyingEngine\Helpers\ToldAboutNode.cs" />
-    <Compile Include="LFlyingEngine\States\StateCheckBags.cs" />
-    <Compile Include="LFlyingEngine\States\StateMailbox.cs" />
-    <Compile Include="LFlyingEngine\States\StateRess.cs" />
-    <Compile Include="LFlyingEngine\States\StateResting.cs" />
-    <Compile Include="LFlyingEngine\States\StateToTown.cs" />
+    <Compile Include="LFlyingEngine\FlyingEngine.cs" />
     <Compile Include="LFlyingEngine\FlyingProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LFlyingEngine\FlyingProfileForm.Designer.cs">
       <DependentUpon>FlyingProfileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LFlyingEngine\Helpers\BadNodes.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FindNode.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FlyingBlackList.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FlyingNavigation.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FlyingNavigator.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FlyingProfile.cs" />
+    <Compile Include="LFlyingEngine\Helpers\FlyingSettings.cs" />
+    <Compile Include="LFlyingEngine\Helpers\HelperFunctions.cs" />
+    <Compile Include="LFlyingEngine\Helpers\Herb.cs" />
+    <Compile Include="LFlyingEngine\Helpers\LootedBlacklist.cs" />
+    <Compile Include="LFlyingEngine\Helpers\MarkedNode.cs" />
+    <Compile Include="LFlyingEngine\Helpers\Mine.cs" />
+    <Compile Include="LFlyingEngine\Helpers\Mount.cs" />
+    <Compile Include="LFlyingEngine\Helpers\SkillToLow.cs" />
     <Compile Include="LFlyingEngine\Helpers\Stuck.cs" />
+    <Compile Include="LFlyingEngine\Helpers\ToldAboutNode.cs" />
     <Compile Include="LFlyingEngine\Helpers\Unstuck.cs" />
+    <Compile Include="LFlyingEngine\Prio.cs" />
+    <Compile Include="LFlyingEngine\Radar\DrawNodes.cs" />
+    <Compile Include="LFlyingEngine\Radar\DrawWaypoints.cs" />
+    <Compile Include="LFlyingEngine\Radar\MouseHandler.cs" />
+    <Compile Include="LFlyingEngine\Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LFlyingEngine\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LFlyingEngine\States\StateCheckBags.cs" />
+    <Compile Include="LFlyingEngine\States\StateCombat.cs" />
+    <Compile Include="LFlyingEngine\States\StateGather.cs" />
+    <Compile Include="LFlyingEngine\States\StateMailbox.cs" />
+    <Compile Include="LFlyingEngine\States\StateMount.cs" />
+    <Compile Include="LFlyingEngine\States\StateMoving.cs" />
+    <Compile Include="LFlyingEngine\States\StateRess.cs" />
+    <Compile Include="LFlyingEngine\States\StateResting.cs" />
+    <Compile Include="LFlyingEngine\States\StateToTown.cs" />
     <Compile Include="LFlyingEngine\States\StateVendor.cs" />
+    <Compile Include="LGrindEngine\Activity\LootAndSkin.cs" />
+    <Compile Include="LGrindEngine\Activity\Resurrect.cs" />
     <Compile Include="LGrindEngine\Activity\ToTown.cs" />
     <Compile Include="LGrindEngine\Activity\Train.cs" />
     <Compile Include="LGrindEngine\DirectedLazyEdge.cs" />
+    <Compile Include="LGrindEngine\GrindingEngine.cs" />
     <Compile Include="LGrindEngine\Helpers\Converter.cs" />
     <Compile Include="LGrindEngine\Helpers\ConverterForm.cs">
       <SubType>Form</SubType>
@@ -178,9 +185,16 @@
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LGrindEngine\Helpers\GrindingBlackList.cs" />
+    <Compile Include="LGrindEngine\Helpers\GrindingNavigation.cs" />
+    <Compile Include="LGrindEngine\Helpers\GrindingNavigator.cs" />
+    <Compile Include="LGrindEngine\Helpers\GrindingProfile.cs" />
+    <Compile Include="LGrindEngine\Helpers\GrindingSettings.cs" />
     <Compile Include="LGrindEngine\Helpers\GrindingShouldTrain.cs" />
+    <Compile Include="LGrindEngine\Helpers\GrindingWaypointType.cs" />
     <Compile Include="LGrindEngine\Helpers\Mount.cs" />
     <Compile Include="LGrindEngine\Helpers\PullController.cs" />
+    <Compile Include="LGrindEngine\Helpers\Stuck.cs" />
+    <Compile Include="LGrindEngine\Helpers\Unstuck.cs" />
     <Compile Include="LGrindEngine\NpcClasses\NPC.cs" />
     <Compile Include="LGrindEngine\NpcClasses\Train.cs" />
     <Compile Include="LGrindEngine\NpcClasses\Trainer.cs" />
@@ -201,44 +215,8 @@
     </Compile>
     <Compile Include="LGrindEngine\PathProfile.cs" />
     <Compile Include="LGrindEngine\PlayerData.cs" />
-    <Compile Include="LGrindEngine\QuickGraph.cs" />
-    <Compile Include="LGrindEngine\States\StateTrainer.cs" />
-    <Compile Include="LGrindEngine\States\StateVendor.cs" />
-    <Compile Include="LGrindEngine\SubProfile.cs" />
-    <Compile Include="LFlyingEngine\Helpers\BadNodes.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FlyingBlackList.cs" />
-    <Compile Include="LFlyingEngine\FlyingEngine.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FlyingSettings.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FindNode.cs" />
-    <Compile Include="LFlyingEngine\Helpers\Herb.cs" />
-    <Compile Include="LFlyingEngine\Helpers\Mine.cs" />
-    <Compile Include="LFlyingEngine\Helpers\HelperFunctions.cs" />
-    <Compile Include="LFlyingEngine\Helpers\Mount.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FlyingProfile.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FlyingNavigation.cs" />
-    <Compile Include="LFlyingEngine\Helpers\FlyingNavigator.cs" />
-    <Compile Include="LFlyingEngine\Prio.cs" />
-    <Compile Include="LFlyingEngine\Radar\DrawNodes.cs" />
-    <Compile Include="LFlyingEngine\Radar\DrawWaypoints.cs" />
-    <Compile Include="LFlyingEngine\Radar\MouseHandler.cs" />
-    <Compile Include="LFlyingEngine\Settings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LFlyingEngine\Settings.Designer.cs">
-      <DependentUpon>Settings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LFlyingEngine\States\StateCombat.cs" />
-    <Compile Include="LFlyingEngine\States\StateGather.cs" />
-    <Compile Include="LFlyingEngine\States\StateMount.cs" />
-    <Compile Include="LFlyingEngine\States\StateMoving.cs" />
-    <Compile Include="LFlyingEngine\Activity\Gather.cs" />
-    <Compile Include="LGrindEngine\GrindingEngine.cs" />
-    <Compile Include="LGrindEngine\Helpers\GrindingProfile.cs" />
-    <Compile Include="LGrindEngine\Helpers\GrindingSettings.cs" />
-    <Compile Include="LGrindEngine\Helpers\GrindingNavigation.cs" />
-    <Compile Include="LGrindEngine\Helpers\GrindingNavigator.cs" />
-    <Compile Include="LGrindEngine\Helpers\GrindingWaypointType.cs" />
     <Compile Include="LGrindEngine\Prio.cs" />
+    <Compile Include="LGrindEngine\QuickGraph.cs" />
     <Compile Include="LGrindEngine\Radar\DrawWaypoints.cs" />
     <Compile Include="LGrindEngine\Settings.cs">
       <SubType>Form</SubType>
@@ -246,20 +224,27 @@
     <Compile Include="LGrindEngine\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="LGrindEngine\States\StateCombat.cs" />
     <Compile Include="LGrindEngine\States\StateLoot.cs" />
     <Compile Include="LGrindEngine\States\StateMoving.cs" />
+    <Compile Include="LGrindEngine\States\StatePull.cs" />
     <Compile Include="LGrindEngine\States\StateResting.cs" />
     <Compile Include="LGrindEngine\States\StateResurrect.cs" />
-    <Compile Include="LGrindEngine\States\StatePull.cs" />
     <Compile Include="LGrindEngine\States\StateToTown.cs" />
-    <Compile Include="LGrindEngine\Helpers\Stuck.cs" />
-    <Compile Include="LGrindEngine\States\StateCombat.cs" />
-    <Compile Include="LGrindEngine\Activity\LootAndSkin.cs" />
-    <Compile Include="LGrindEngine\Activity\Resurrect.cs" />
-    <Compile Include="LGrindEngine\Helpers\Unstuck.cs" />
+    <Compile Include="LGrindEngine\States\StateTrainer.cs" />
+    <Compile Include="LGrindEngine\States\StateVendor.cs" />
+    <Compile Include="LGrindEngine\SubProfile.cs" />
+    <Compile Include="Forms\Wizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Wizard.Designer.cs">
+      <DependentUpon>Wizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HotKey.cs" />
     <Compile Include="Other\ScriptRunner.cs" />
     <Compile Include="Other\Hook.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
+    <Compile Include="Plugins\Encrypt.cs" />
     <Compile Include="Plugins\ExtraLazy\Forms\Frame Dumper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,8 +252,8 @@
       <DependentUpon>Frame Dumper.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\ExtraLazy\FrameViewer.cs" />
-    <Compile Include="Plugins\PeriodicRelogger.cs" />
     <Compile Include="Plugins\ExtraLazy\Professions.cs" />
+    <Compile Include="Plugins\PeriodicRelogger.cs" />
     <Compile Include="Plugins\Professions\Loader.cs" />
     <Compile Include="Plugins\Professions\Forms\Settings.cs">
       <SubType>Form</SubType>
@@ -278,7 +263,6 @@
     </Compile>
     <Compile Include="Plugins\Relogger.cs" />
     <Compile Include="Plugins\ReloggerSettings.cs" />
-    <Compile Include="Plugins\Encrypt.cs" />
     <Compile Include="Plugins\RotationPlugin\KeysData.cs" />
     <Compile Include="Plugins\RotationPlugin\RotatorForm.cs">
       <SubType>Form</SubType>
@@ -307,60 +291,13 @@
     <Compile Include="Plugins\RotationPlugin\RotatorStatus.Designer.cs">
       <DependentUpon>RotatorStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="Public\Latency.cs" />
-    <Compile Include="Public\LazyForm.cs" />
-    <Compile Include="PVEBehavior\BehaviorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PVEBehavior\BehaviorForm.Designer.cs">
-      <DependentUpon>BehaviorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PVEBehavior\Behavior\Action.cs" />
-    <Compile Include="PVEBehavior\Behavior\ActionKey.cs" />
-    <Compile Include="PVEBehavior\Behavior\ActionSpell.cs" />
-    <Compile Include="PVEBehavior\Behavior\BehaviorController.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\AbstractCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\BuffCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\CombatCountCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\ComboPointsCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\SpellCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\DistanceToTargetCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\FunctionsCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\HealthPowerCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\HealthStoneCountCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\MageFoodCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\MageWaterCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\PetCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\PotentialAddsCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\RuneCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\SoulShardCountCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\TempEnchantCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\TickerCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Rule.cs" />
-    <Compile Include="PVEBehavior\Behavior\RuleController.cs" />
-    <Compile Include="Public\CombatHandler.cs" />
-    <Compile Include="PVEBehavior\Behavior\AddToBehavior.cs" />
-    <Compile Include="PVEBehavior\Builders\Deathknight\Deathknight.cs" />
-    <Compile Include="PVEBehavior\Builders\Deathknight\DeathknightBuilder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Deathknight\DeathknightBuilder.Designer.cs">
-      <DependentUpon>DeathknightBuilder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Paladin\PaladinBuilder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Paladin\PaladinBuilder.Designer.cs">
-      <DependentUpon>PaladinBuilder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Paladin\Paladin.cs" />
-    <Compile Include="PVEBehavior\PVEBehaviorCombat.cs" />
-    <Compile Include="Public\LazyHelpers.cs" />
-    <Compile Include="PVEBehavior\PVEBehaviorSettings.cs" />
-    <Compile Include="Public\PBlacklist.cs" />
-    <Compile Include="Public\PPullBlacklist.cs" />
+    <Compile Include="PluginSystem\Public\Latency.cs" />
+    <Compile Include="PluginSystem\Public\LazyForm.cs" />
+    <Compile Include="PluginSystem\Public\CombatHandler.cs" />
+    <Compile Include="PluginSystem\Public\LazyHelpers.cs" />
+    <Compile Include="PluginSystem\Public\PBlacklist.cs" />
+    <Compile Include="PluginSystem\Public\PPullBlacklist.cs" />
     <Compile Include="Forms\Helpers\LazyForms.cs" />
-    <Compile Include="Forms\Helpers\CheckUpdate.cs" />
     <Compile Include="Forms\Helpers\DoLoad.cs" />
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
@@ -383,13 +320,68 @@
     <Compile Include="Forms\Selector.Designer.cs">
       <DependentUpon>Selector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Helpers\ThreadManager.cs" />
+    <Compile Include="PVEBehavior\BehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PVEBehavior\BehaviorForm.Designer.cs">
+      <DependentUpon>BehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PVEBehavior\Behavior\Action.cs" />
+    <Compile Include="PVEBehavior\Behavior\ActionKey.cs" />
+    <Compile Include="PVEBehavior\Behavior\ActionSpell.cs" />
+    <Compile Include="PVEBehavior\Behavior\AddToBehavior.cs" />
+    <Compile Include="PVEBehavior\Behavior\BehaviorController.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\AbstractCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\BuffCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\BurningEmbersCountCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\ChiCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\CombatCountCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\ComboPointsCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\DistanceToTargetCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\FunctionsCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\HealthPowerCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\HealthStoneCountCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\MageFoodCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\MageWaterCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\PetCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\PotentialAddsCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\RuneCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\SoulShardCountCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\SpellCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\TempEnchantCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\TickerCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Rule.cs" />
+    <Compile Include="PVEBehavior\Behavior\RuleController.cs" />
+    <Compile Include="PVEBehavior\Builders\Deathknight\Deathknight.cs" />
+    <Compile Include="PVEBehavior\Builders\Deathknight\DeathknightBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Deathknight\DeathknightBuilder.Designer.cs">
+      <DependentUpon>DeathknightBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Paladin\Paladin.cs" />
+    <Compile Include="PVEBehavior\Builders\Paladin\PaladinBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Paladin\PaladinBuilder.Designer.cs">
+      <DependentUpon>PaladinBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Warrior\WarriorBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Warrior\WarriorBuilder.Designer.cs">
+      <DependentUpon>WarriorBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PVEBehavior\Builders\Warrior\Warrior.cs" />
+    <Compile Include="PVEBehavior\PVEBehaviorCombat.cs" />
+    <Compile Include="PVEBehavior\PVEBehaviorSettings.cs" />
     <Compile Include="PVEBehavior\RuleEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PVEBehavior\RuleEditor.Designer.cs">
       <DependentUpon>RuleEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Helpers\ThreadManager.cs" />
     <Compile Include="PVEBehavior\ScriptEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -399,15 +391,11 @@
     <EmbeddedResource Include="Forms\Debug.resx">
       <DependentUpon>Debug.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Wizard.resx">
-      <DependentUpon>Wizard.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LFlyingEngine\FlyingProfiles.resx">
-      <DependentUpon>FlyingProfiles.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LFlyingEngine\FlyingProfileForm.resx">
       <DependentUpon>FlyingProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LFlyingEngine\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LGrindEngine\Helpers\ConverterForm.resx">
       <DependentUpon>ConverterForm.cs</DependentUpon>
@@ -417,19 +405,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LGrindEngine\PathControl.resx">
       <DependentUpon>PathControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="LFlyingEngine\Settings.resx">
+    <EmbeddedResource Include="LGrindEngine\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Wizard.resx">
+      <DependentUpon>Wizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Setup.resx">
       <DependentUpon>Setup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LGrindEngine\Settings.resx">
-      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Plugins\ExtraLazy\Forms\Frame Dumper.resx">
       <DependentUpon>Frame Dumper.cs</DependentUpon>
@@ -471,6 +459,9 @@
     <EmbeddedResource Include="PVEBehavior\Builders\Paladin\PaladinBuilder.resx">
       <DependentUpon>PaladinBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PVEBehavior\Builders\Warrior\WarriorBuilder.resx">
+      <DependentUpon>WarriorBuilder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PVEBehavior\RuleEditor.resx">
       <DependentUpon>RuleEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -479,7 +470,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -506,6 +496,7 @@
     </Content>
     <Content Include="Collect\Mine_es.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Collect\Mine_fr.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -570,7 +561,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Folder Include="PVEBehavior\Builders\Hunter\" />
+    <Folder Include="PVEBehavior\Builders\Mage\" />
+    <Folder Include="PVEBehavior\Builders\Monk\" />
+    <Folder Include="PVEBehavior\Builders\Priest\" />
+    <Folder Include="PVEBehavior\Builders\Rogue\" />
+    <Folder Include="PVEBehavior\Builders\Shaman\" />
+    <Folder Include="PVEBehavior\Builders\Warlock\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

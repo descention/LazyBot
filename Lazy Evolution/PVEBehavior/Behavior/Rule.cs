@@ -1,20 +1,244 @@
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
+﻿using LazyEvo.Other;
+using LazyEvo.PVEBehavior;
+using LazyEvo.PVEBehavior.Behavior.Conditions;
+using LazyLib;
+using LazyLib.Helpers;
+using LazyLib.Wow;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+namespace LazyEvo.PVEBehavior.Behavior
+{
+    public enum Target
+    {
+        None = 0,
+        Self = 1,
+        Pet = 2,
+        Enemy = 3,
+        Unchanged = 4,
+    }
+    internal class Rule : IComparable<Rule>, IComparer<Rule>
+    {
+        private readonly List<AbstractCondition> _conditions = new List<AbstractCondition>();
+        public int GlobalCooldown;
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+        public bool IsScript
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.Script);
+            }
+        }
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
+        public string Name { get; set; }
 
+        public string Script { get; set; }
+
+        public bool MatchAll { get; set; }
+
+        public Action Action { get; set; }
+
+        public Target ShouldTarget { get; set; }
+
+        public int Priority { get; set; }
+
+        public List<AbstractCondition> GetConditions
+        {
+            get
+            {
+                lock (this._conditions)
+                    return this._conditions;
+            }
+        }
+
+        public bool IsOk
+        {
+            get
+            {
+                if (this.IsScript)
+                {
+                    if (PveBehaviorSettings.AllowScripts)
+                        return ScriptRunner.ShouldRun(this.Name, this.Script);
+                    else
+                        return false;
+                }
+                else
+                {
+                    if (this.Action == null || !this.Action.IsReady)
+                        return false;
+                    if (this.GetConditions.Count == 0)
+                        return true;
+                    if (!this.MatchAll)
+                        return Enumerable.Any<AbstractCondition>((IEnumerable<AbstractCondition>)this.GetConditions, (Func<AbstractCondition, bool>)(condition => condition.IsOk));
+                    else
+                        return Enumerable.All<AbstractCondition>((IEnumerable<AbstractCondition>)this.GetConditions, (Func<AbstractCondition, bool>)(condition => condition.IsOk));
+                }
+            }
+        }
+
+        public Rule()
+        {
+            this.MatchAll = true;
+            this.ShouldTarget = Target.Unchanged;
+        }
+
+        public Rule(string name, Action action, int priority)
+        {
+            this.Name = name;
+            this.Action = action;
+            this.Priority = priority;
+            this.MatchAll = true;
+            this.ShouldTarget = Target.Unchanged;
+        }
+
+        public Rule(string name, Action action, int priority, List<AbstractCondition> conditions)
+        {
+            this.Name = name;
+            this.Action = action;
+            this._conditions = conditions;
+            this.Priority = priority;
+            this.MatchAll = true;
+            this.ShouldTarget = Target.Enemy;
+        }
+
+        public Rule(string name, Action action, int priority, List<AbstractCondition> conditions, Target target)
+        {
+            this.Name = name;
+            this.Action = action;
+            this._conditions = conditions;
+            this.Priority = priority;
+            this.MatchAll = true;
+            this.ShouldTarget = target;
+        }
+
+        public Rule(string name, string script)
+        {
+            this.Name = name;
+            this.Script = script;
+        }
+
+        public int CompareTo(Rule other)
+        {
+            if (other != null)
+                return this.Priority.CompareTo(other.Priority);
+            Logging.Write("Tried to compare null Rule to another - check class code!", new object[0]);
+            return 0;
+        }
+
+        public int Compare(Rule x, Rule y)
+        {
+            return x.Priority.CompareTo(y.Priority);
+        }
+
+        public void BotStarting()
+        {
+            foreach (TickerCondition tickerCondition in Enumerable.OfType<TickerCondition>((IEnumerable)this._conditions))
+                tickerCondition.ForceReady();
+        }
+
+        public void AddCondition(AbstractCondition condition)
+        {
+            lock (this._conditions)
+                this._conditions.Add(condition);
+        }
+
+        public void ClearConditions()
+        {
+            lock (this._conditions)
+                this._conditions.Clear();
+        }
+
+        public string SaveAction()
+        {
+            if (this.Action != null)
+                return "<Action>" + this.Action.GetXml() + "</Action>";
+            else
+                return "";
+        }
+
+        public void LoadAction(XmlNode node)
+        {
+            foreach (XmlNode xmlNode in node.ChildNodes)
+            {
+                switch (xmlNode.Name)
+                {
+                    case "Type":
+                        if (xmlNode.InnerText.Equals("ActionSpell"))
+                        {
+                            this.Action = (Action)new ActionSpell();
+                            this.Action.Load(node);
+                        }
+                        if (xmlNode.InnerText.Equals("ActionKey"))
+                        {
+                            this.Action = (Action)new ActionKey();
+                            this.Action.Load(node);
+                            continue;
+                        }
+                        else
+                            continue;
+                    default:
+                        continue;
+                }
+            }
+        }
+
+        public void ExecuteAction(int globalCooldown)
+        {
+            try
+            {
+                if (this.IsScript)
+                    this.RunScriptAction();
+                if (this.Action == null)
+                    return;
+                switch (this.ShouldTarget)
+                {
+                    case Target.None:
+                        if (ObjectManager.MyPlayer.HasTarget)
+                        {
+                            KeyHelper.SendKey("ESC");
+                            break;
+                        }
+                        else
+                            break;
+                    case Target.Self:
+                        ObjectManager.MyPlayer.TargetSelf();
+                        break;
+                    case Target.Pet:
+                        if (ObjectManager.MyPlayer.HasLivePet)
+                        {
+                            ObjectManager.MyPlayer.Pet.TargetFriend();
+                            break;
+                        }
+                        else
+                            break;
+                    case Target.Enemy:
+                        if (!ObjectManager.MyPlayer.Target.IsValid)
+                        {
+                            ObjectManager.GetClosestAttacker.TargetHostile();
+                            break;
+                        }
+                        else
+                            break;
+                }
+                this.Action.Execute(globalCooldown);
+                foreach (TickerCondition tickerCondition in Enumerable.OfType<TickerCondition>((IEnumerable)this._conditions))
+                    tickerCondition.Reset();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void RunScriptAction()
+        {
+            ScriptRunner.RunCode(this.Name, this.Script);
+        }
+    }
+}
+/*
 #region
 
 using System;
@@ -258,7 +482,7 @@ namespace LazyEvo.PVEBehavior.Behavior
             }
             catch (Exception e)
             {
-                // Logging.Write("Error executing action: " + e);
+                Logging.Write("Exception: " + e);
             }
         }
 
@@ -268,3 +492,4 @@ namespace LazyEvo.PVEBehavior.Behavior
         }
     }
 }
+*/

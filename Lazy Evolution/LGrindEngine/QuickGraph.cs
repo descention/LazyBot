@@ -137,9 +137,10 @@ namespace LazyEvo.LGrindEngine
 
         public void LoadGraph(string file)
         {
-            FileStream stream = File.Open(file, FileMode.Open, FileAccess.Read);
-            var formatter = new BinaryFormatter();
-            _graph = (AdjacencyGraph<Location, DirectedLazyEdge>) formatter.Deserialize(stream);
+            FileStream serializationStream = File.Open(file, FileMode.Open, FileAccess.Read);
+            BinaryFormatter formatter = new BinaryFormatter();
+            this._graph = (AdjacencyGraph<Location, DirectedLazyEdge>)formatter.Deserialize(serializationStream);
+            serializationStream.Close();
         }
 
         public static double GetDistance(DirectedLazyEdge edge)

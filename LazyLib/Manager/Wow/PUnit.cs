@@ -72,39 +72,52 @@ namespace LazyLib.Wow
             {
                 float wowFacing =
                     MoveHelper.NegativeAngle(
-                        (float) Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X)));
+                        (float)Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X)));
                 return wowFacing;
             }
         }
 
-        /*
-        /// <summary>
-        ///   Gets a value indicating whether this unit is not dying.
-        /// </summary>
-        /// <remarks>
-        ///   If the mob does not use health for 9 seconds this returns true
-        /// </remarks>
-        /// <value>
-        ///   <c>true</c> if this instance is not dying; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsNotDying
+
+        public Constants.SkinnableType GetSkinnableType()
         {
-            get
+            if (this.IsSkinnable)
             {
-                if (_isNotDuying == null)
+                if (this.IsHerb)
                 {
-                    _isNotDuying = new Ticker(10000*12);
+                    if (LazySettings.DebugMode)
+                    {
+                        Logging.Write("GetSkinnableType = IsHerb", new object[0]);
+                    }
+                    return Constants.SkinnableType.Herb;
                 }
-                if (_oldHealth != Health)
+                if (this.IsMining)
                 {
-                    _oldHealth = Health;
-                    _isNotDuying.Reset();
+                    if (LazySettings.DebugMode)
+                    {
+                        Logging.Write("GetSkinnableType = IsMining", new object[0]);
+                    }
+                    return Constants.SkinnableType.Mining;
                 }
-                if (_isNotDuying.IsReady)
-                    return true;
-                return false;
+                if (this.IsIngener)
+                {
+                    if (LazySettings.DebugMode)
+                    {
+                        Logging.Write("GetSkinnableType = IsIngener", new object[0]);
+                    }
+                    return Constants.SkinnableType.Engineer;
+                }
+                if (LazySettings.DebugMode)
+                {
+                    Logging.Write("GetSkinnableType = Skining", new object[0]);
+                }
+                return Constants.SkinnableType.Skining;
             }
-        } */
+            if (LazySettings.DebugMode)
+            {
+                Logging.Write("GetSkinnableType = None", new object[0]);
+            }
+            return Constants.SkinnableType.None;
+        }
 
         /// <summary>
         ///   Gets the type of the power.
@@ -114,21 +127,61 @@ namespace LazyLib.Wow
         {
             get
             {
-                switch (PowerTypeId)
+                //Logging.Debug("Power: " + PowerTypeId);
+                switch (this.PowerTypeId)
                 {
-                    case (uint) Constants.UnitPower.UnitPower_Energy:
-                        return "Energy";
-                    case (uint) Constants.UnitPower.UnitPower_Focus:
-                        return "Focus";
-                    case (uint) Constants.UnitPower.UnitPower_Mana:
+                    case 0:
                         return "Mana";
-                    case (uint) Constants.UnitPower.UnitPower_Rage:
+
+                    case 1:
                         return "Rage";
-                    case (uint) Constants.UnitPower.UnitPower_RunicPower:
+
+                    case 2:
+                        return "Focus";
+
+                    case 3:
+                        return "Energy";
+
+                    case 4:
+                        return "Hapiness";
+
+                    case 5:
+                        return "Runes";
+
+                    case 6:
                         return "Runic Power";
-                    default:
-                        return "";
+
+                    case 7:
+                        return "SoulShards";
+
+                    case 8:
+                        return "Eclipse";
+
+                    case 9:
+                        return "HolyPower";
+
+                    case 10:
+                        return "Alternate";
+
+                    case 11:
+                        return "DarkForce";
+
+                    case 12:
+                        return "LightForce";
+
+                    case 13:
+                        return "ShadowOrbs";
+
+                    case 14:
+                        return "BurningEmbers";
+
+                    case 15:
+                        return "DemonicFury";
+
+                    case 16:
+                        return "ArcaneCharges";
                 }
+                return "";
             }
         }
 
@@ -140,59 +193,61 @@ namespace LazyLib.Wow
         {
             get
             {
-                string race;
-                switch (RaceId)
+                //Logging.Debug("Race:" + RaceId);
+                switch (this.RaceId)
                 {
-                    case (uint) Constants.UnitRace.UnitRace_Human:
-                        race = @"Human";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Orc:
-                        race = @"Orc";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Dwarf:
-                        race = @"Dwarf";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_NightElf:
-                        race = @"Night Elf";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Undead:
-                        race = @"Undead";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Tauren:
-                        race = @"Tauren";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Gnome:
-                        race = @"Gnome";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Troll:
-                        race = @"Troll";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Goblin:
-                        race = @"Goblin";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_BloodElf:
-                        race = @"Blood Elf";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Draenei:
-                        race = @"Draenei";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_FelOrc:
-                        race = @"Fel Orc";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Naga:
-                        race = @"Naga";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Broken:
-                        race = @"Broken";
-                        break;
-                    case (uint) Constants.UnitRace.UnitRace_Skeleton:
-                        race = @"Skeleton";
-                        break;
-                    default:
-                        race = @"Unknown";
-                        break;
+                    case 1:
+                        return "Human";
+
+                    case 2:
+                        return "Orc";
+
+                    case 3:
+                        return "Dwarf";
+
+                    case 4:
+                        return "Night Elf";
+
+                    case 5:
+                        return "Undead";
+
+                    case 6:
+                        return "Tauren";
+
+                    case 7:
+                        return "Gnome";
+
+                    case 8:
+                        return "Troll";
+
+                    case 9:
+                        return "Goblin";
+
+                    case 10:
+                        return "Blood Elf";
+
+                    case 11:
+                        return "Draenei";
+
+                    case 12:
+                        return "Fel Orc";
+
+                    case 13:
+                        return "Naga";
+
+                    case 14:
+                        return "Broken";
+
+                    case 15:
+                        return "Skeleton";
+
+                    case 0x16:
+                        return "Worgen";
+
+                    case 0x18:
+                        return "Pandaren";
                 }
-                return race;
+                return "Unknown";
             }
         }
 
@@ -203,8 +258,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                var pointer = Memory.Read<uint>(BaseAddress + (uint) Pointers.UnitSpeed.Pointer1);
-                var speed = Memory.Read<float>(pointer + (uint) Pointers.UnitSpeed.Pointer2);
+                var pointer = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitSpeed.Pointer1);
+                var speed = Memory.Read<float>(pointer + (uint)Pointers.UnitSpeed.Pointer2);
                 return speed;
             }
         }
@@ -228,10 +283,10 @@ namespace LazyLib.Wow
                 string gender;
                 switch (GenderId)
                 {
-                    case (uint) Constants.UnitGender.UnitGender_Male:
+                    case (uint)Constants.UnitGender.UnitGender_Male:
                         gender = @"Male";
                         break;
-                    case (uint) Constants.UnitGender.UnitGender_Female:
+                    case (uint)Constants.UnitGender.UnitGender_Female:
                         gender = @"Female";
                         break;
                     default:
@@ -248,7 +303,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return GetStorageField<UInt32>((uint) Descriptors.eUnitFields.UNIT_FIELD_BYTES_0);
+                    return GetStorageField<UInt32>((uint)Descriptors.CGUnitData.Sex);
                 }
                 catch
                 {
@@ -274,8 +329,19 @@ namespace LazyLib.Wow
 
         public uint PowerTypeId
         {
-            get { return ((InfoFlags >> 24) & 0xFF); }
+            get
+            {
+                try
+                {
+                    return ((GetStorageField<UInt32>((uint)Descriptors.CGUnitData.DisplayPower) >> 0) & 0xFF);
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
         }
+
 
         /// <summary>
         ///   Gets the class.
@@ -285,78 +351,91 @@ namespace LazyLib.Wow
         {
             get
             {
-                string stringClass;
-                switch (UnitClassId)
+                switch (this.UnitClassId)
                 {
-                    case (uint) Constants.UnitClass.UnitClass_Warrior:
-                        stringClass = @"Warrior";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Paladin:
-                        stringClass = @"Paladin";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Hunter:
-                        stringClass = @"Hunter";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Rogue:
-                        stringClass = @"Rogue";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Priest:
-                        stringClass = @"Priest";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Shaman:
-                        stringClass = @"Shaman";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Mage:
-                        stringClass = @"Mage";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Warlock:
-                        stringClass = @"Warlock";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_Druid:
-                        stringClass = @"Druid";
-                        break;
-                    case (uint) Constants.UnitClass.UnitClass_DeathKnight:
-                        stringClass = @"Death Knight";
-                        break;
-                    default:
-                        stringClass = @"Unknown";
-                        break;
+                    case 1:
+                        return "Warrior";
+
+                    case 2:
+                        return "Paladin";
+
+                    case 3:
+                        return "Hunter";
+
+                    case 4:
+                        return "Rogue";
+
+                    case 5:
+                        return "Priest";
+
+                    case 6:
+                        return "Death Knight";
+
+                    case 7:
+                        return "Shaman";
+
+                    case 8:
+                        return "Mage";
+
+                    case 9:
+                        return "Warlock";
+
+                    case 10:
+                        return "Monk";
+
+                    case 11:
+                        return "Druid";
                 }
-                return stringClass;
+                return "Unknown";
             }
         }
 
-        public Constants.UnitClass UnitClass
+        public LazyLib.Wow.Constants.UnitClass UnitClass
         {
             get
             {
-                switch (UnitClassId)
+                switch (this.UnitClassId)
                 {
-                    case (uint)Constants.UnitClass.UnitClass_Warrior:
-                        return Constants.UnitClass.UnitClass_Warrior;
-                    case (uint)Constants.UnitClass.UnitClass_Paladin:
-                        return Constants.UnitClass.UnitClass_Paladin;
-                    case (uint)Constants.UnitClass.UnitClass_Hunter:
-                        return Constants.UnitClass.UnitClass_Hunter;
-                    case (uint)Constants.UnitClass.UnitClass_Rogue:
-                        return Constants.UnitClass.UnitClass_Rogue;
-                    case (uint)Constants.UnitClass.UnitClass_Priest:
-                        return Constants.UnitClass.UnitClass_Priest;
-                    case (uint)Constants.UnitClass.UnitClass_Shaman:
-                        return Constants.UnitClass.UnitClass_Shaman;
-                    case (uint)Constants.UnitClass.UnitClass_Mage:
-                        return Constants.UnitClass.UnitClass_Mage;
-                    case (uint)Constants.UnitClass.UnitClass_Warlock:
-                        return Constants.UnitClass.UnitClass_Warlock;
-                    case (uint)Constants.UnitClass.UnitClass_Druid:
-                        return Constants.UnitClass.UnitClass_Druid;
-                    case (uint)Constants.UnitClass.UnitClass_DeathKnight:
-                        return Constants.UnitClass.UnitClass_DeathKnight;
-                    default:
-                        throw new Exception("Unknown class");
+                    case 0:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Unknown;
+
+                    case 1:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Warrior;
+
+                    case 2:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Paladin;
+
+                    case 3:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Hunter;
+
+                    case 4:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue;
+
+                    case 5:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Priest;
+
+                    case 6:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_DeathKnight;
+
+                    case 7:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Shaman;
+
+                    case 8:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Mage;
+
+                    case 9:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Warlock;
+
+                    case 10:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Monk;
+
+                    case 11:
+                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Druid;
                 }
+                throw new Exception("Unknown class");
             }
         }
+
 
         /// <summary>
         /// Return the unit classification
@@ -366,9 +445,9 @@ namespace LazyLib.Wow
         {
             get
             {
-                var v1 = Memory.Read<uint>(BaseAddress + (uint) Pointers.CgUnitCGetCreatureRank.Offset1);
+                var v1 = Memory.Read<uint>(base.BaseAddress + (uint)Pointers.CgUnitCGetCreatureRank.Offset1);
                 return
-                    (Constants.Classification) Memory.Read<uint>(v1 + (uint) Pointers.CgUnitCGetCreatureRank.Offset2);
+                    (Constants.Classification)Memory.Read<uint>(v1 + (uint)Pointers.CgUnitCGetCreatureRank.Offset2);
             }
         }
 
@@ -378,30 +457,45 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if this instance is elite; otherwise, <c>false</c>.</value>
         public bool IsElite
         {
-            get { return Classification.Equals(Constants.Classification.Elite); }
+            get
+            {
+                return this.Classification.Equals(LazyLib.Wow.Constants.Classification.Elite);
+            }
+        }
+
+        public bool IsBoss
+        {
+            get
+            {
+                return this.Classification.Equals(LazyLib.Wow.Constants.Classification.WorldBoss);
+            }
         }
 
         /// <summary>
         /// Return the unit type
         /// </summary>
-        /// <value>The type of the creature.</value>
+        /// <value>The type of the creature.</value>     
         public Constants.CreatureType CreatureType
         {
             get
             {
-                var v4 = Memory.Read<uint>(BaseAddress + (uint) Pointers.CgUnitCGetCreatureType.Offset1);
+                var v4 = Memory.Read<uint>(base.BaseAddress + (uint)Pointers.CgUnitCGetCreatureType.Offset1);
                 return
-                    (Constants.CreatureType) Memory.Read<uint>(v4 + (uint) Pointers.CgUnitCGetCreatureType.Offset2);
+                    (Constants.CreatureType)Memory.Read<uint>(v4 + (uint)Pointers.CgUnitCGetCreatureType.Offset2);
             }
         }
+
 
         /// <summary>
         ///   Gets the reaction.
         /// </summary>
         /// <value>The reaction.</value>
-        public Reaction Reaction
+        public LazyLib.Wow.Reaction Reaction
         {
-            get { return Wow.Faction.GetReaction(ObjectManager.MyPlayer, this); }
+            get
+            {
+                return LazyLib.Wow.Faction.GetReaction(LazyLib.Wow.ObjectManager.MyPlayer, this);
+            }
         }
 
         /// <summary>
@@ -422,9 +516,7 @@ namespace LazyLib.Wow
             {
                 return
                     (Constants.ShapeshiftForm)
-                    Memory.Read<byte>(
-                        Memory.Read<uint>(BaseAddress + (uint) Pointers.ShapeshiftForm.BaseAddressOffset1) +
-                        (uint) Pointers.ShapeshiftForm.BaseAddressOffset2);
+                    Memory.Read<byte>(Memory.Read<uint>(BaseAddress + (uint)Pointers.ShapeshiftForm.BaseAddressOffset1) + (uint)Pointers.ShapeshiftForm.BaseAddressOffset2);
             }
         }
 
@@ -442,7 +534,8 @@ namespace LazyLib.Wow
                 try
                 {
                     return ObjectManager.GetPlayers.Where(cur => cur.HasLivePet).Any(cur => cur.PetGUID == GUID);
-                } catch
+                }
+                catch
                 {
                     return false;
                 }
@@ -451,8 +544,12 @@ namespace LazyLib.Wow
 
         public bool IsTotem
         {
-             get { return CreatureType == Constants.CreatureType.Totem; }
+            get
+            {
+                return (this.CreatureType == LazyLib.Wow.Constants.CreatureType.Totem);
+            }
         }
+
 
         /// <summary>
         ///   Retuns the current Target of the unit
@@ -487,22 +584,22 @@ namespace LazyLib.Wow
 
         public bool HasTarget
         {
-             get
-             {
-                 try
-                 {
-                     if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
-                         return true;
-                     if (ObjectManager.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
-                     {
-                         return true;
-                     }
-                 }
-                 catch (Exception)
-                 {
-                 }
-                 return false;
-             }
+            get
+            {
+                try
+                {
+                    if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
+                        return true;
+                    if (ObjectManager.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                return false;
+            }
         }
 
         /// <summary>
@@ -518,12 +615,26 @@ namespace LazyLib.Wow
 
         public bool TravelForm
         {
-            get { return HasBuff(783) || HasBuff(2645); }
+            get
+            {
+                if (!this.HasBuff(0x30f))
+                {
+                    return this.HasBuff(0xa55);
+                }
+                return true;
+            }
         }
 
         public bool AquaticForm
         {
-            get { return HasBuff(1066) || ShapeshiftForm.Equals(Constants.ShapeshiftForm.Aqua); }
+            get
+            {
+                if (!this.HasBuff(0x42a))
+                {
+                    return this.ShapeshiftForm.Equals(LazyLib.Wow.Constants.ShapeshiftForm.Aqua);
+                }
+                return true;
+            }
         }
 
         /// <summary>
@@ -538,14 +649,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (IsInFlightForm)
-                        return true;
-                    if (TravelForm)
-                        return true;
-                    if (AquaticForm)
-                        return true;
-                    var mountid = GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MOUNTDISPLAYID);
-                    return (mountid != 0);
+                    return (this.IsInFlightForm || (this.TravelForm || (this.AquaticForm || (base.GetStorageField<int>((uint)0x47) != 0))));
                 }
                 catch (Exception)
                 {
@@ -564,20 +668,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                try
-                {
-                    switch (GetDynFlags)
-                    {
-                        case 1:
-                        case 13:
-                            return true;
-                    }
-                    return false;
-                }
-                catch
-                {
-                    return false;
-                }
+                return Convert.ToBoolean((int)(this.GetDynFlags & 2));
             }
         }
 
@@ -589,12 +680,11 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (GetDynFlags == 4)
+                if (GetDynFlags == 8)
                     return true;
                 return false;
             }
         }
-
         /// <summary>
         ///   True if this monster has been tagged by you
         /// </summary>
@@ -605,8 +695,14 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (GetDynFlags == 8 || GetDynFlags == 13 || GetDynFlags == 1 || GetDynFlags == 12)
+                if (Convert.ToBoolean((long)this.GetDynFlags & (long)16))
+                {
                     return true;
+                }
+                if (Convert.ToBoolean((long)this.GetDynFlags & (long)2))
+                {
+                    return true;
+                }
                 return false;
             }
         }
@@ -632,7 +728,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_DYNAMIC_FLAGS);
+                    return base.GetStorageField<int>((uint)Descriptors.CGObjectData.DynamicFlags);
                 }
                 catch
                 {
@@ -641,15 +737,54 @@ namespace LazyLib.Wow
             }
         }
 
+        public bool IsNotSelectable
+        {
+            get
+            {
+                return Convert.ToBoolean(this.Flags & (long)0x2000000);
+            }
+        }
+
+
         /// <summary>
         ///   Returns true if the unit is in combat
         /// </summary>
         /// <value><c>true</c> if [in combat]; otherwise, <c>false</c>.</value>
         public bool IsInCombat
         {
-            get { return Convert.ToBoolean(Flags & (uint) Constants.UnitFlags.Combat); }
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_IN_COMBAT));
+            }
         }
 
+
+        public bool InCombat
+        {
+            get
+            {
+                uint num = Memory.Read<uint>(new uint[] { base.BaseAddress + (uint)Pointers.InCombat.Pointer });
+                return (((Memory.Read<uint>(new uint[] { num + (uint)Pointers.InCombat.Offset }) >> 0x13) & 1) == 1);
+            }
+        }
+
+        /// <summary>
+        ///   Returns true if the unit is influenced
+        /// </summary>
+        /// <value><c>true</c> if [in combat]; otherwise, <c>false</c>.</value>
+        public bool IsInfluenced
+        {
+            get { return Convert.ToBoolean(Flags & (uint)Constants.UnitFlags.Preparation); }
+        }
+
+        /// <summary>
+        ///   Returns true if the unit is plusmob
+        /// </summary>
+        /// <value><c>true</c> if [in combat]; otherwise, <c>false</c>.</value>
+        public bool IsPlusMob
+        {
+            get { return Convert.ToBoolean(Flags & (uint)Constants.UnitFlags.PlusMob); }
+        }
 
         /// <summary>
         ///   Gets a value indicating whether this unit is fleeing.
@@ -659,8 +794,12 @@ namespace LazyLib.Wow
         /// </value>
         public bool IsFleeing
         {
-            get { return Convert.ToBoolean(Flags & (uint)Constants.UnitFlags.Fleeing); }
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_FLEEING));
+            }
         }
+
 
         /// <summary>
         ///   Gets a value indicating whether this unit is stunned.
@@ -670,9 +809,67 @@ namespace LazyLib.Wow
         /// </value>
         public bool IsStunned
         {
-            get { return Convert.ToBoolean(Flags & (uint)Constants.UnitFlags.Stunned); }
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_STUNNED));
+            }
         }
 
+        /// <summary>  New Thanks Charles
+        ///   Gets a value indicating whether this unit is SILENCED.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is SILENCED; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsSilenced
+        {
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_SILENCED));
+            }
+        }
+
+        /// <summary>  New Thanks Charles
+        ///   Gets a value indicating whether this unit is Disarmed
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance Is Disarmed; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDisarmed
+        {
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_DISARMED));
+            }
+        }
+
+        /// <summary>  New Thanks Charles
+        ///   Gets a value indicating whether this unit is Confused
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance Is Confused; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsConfused
+        {
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_CONFUSED));
+            }
+        }
+
+        /// <summary>  New Thanks Charles
+        ///   Gets a value indicating whether this unit is PACIFIED
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance Is PACIFIED; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPacified
+        {
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_PACIFIED));
+            }
+        }
         /// <summary>
         ///   Returns true if auto attack in enabled
         /// </summary>
@@ -681,8 +878,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                return ((Memory.Read<int>(BaseAddress + (uint) Pointers.AutoAttack.AutoAttackFlag)) |
-                        Memory.Read<int>(BaseAddress + (uint) Pointers.AutoAttack.AutoAttackMask)) != 0;
+                return ((Memory.Read<int>(BaseAddress + (uint)Pointers.AutoAttack.AutoAttackFlag)) |
+                        Memory.Read<int>(BaseAddress + (uint)Pointers.AutoAttack.AutoAttackMask)) != 0;
             }
         }
 
@@ -707,9 +904,9 @@ namespace LazyLib.Wow
         {
             get
             {
-                var p1 = Memory.Read<uint>(BaseAddress + (uint) Pointers.IsFlying.Pointer);
-                var p2 = Memory.Read<uint>(p1 + (uint) Pointers.IsFlying.Offset);
-                return (p2 & (uint) Pointers.IsFlying.Mask) != 0;
+                var p1 = Memory.Read<uint>(BaseAddress + (uint)Pointers.IsFlying.Pointer);
+                var p2 = Memory.Read<uint>(p1 + (uint)Pointers.IsFlying.Offset);
+                return (p2 & (uint)Pointers.IsFlying.Mask) != 0;
             }
         }
 
@@ -719,7 +916,10 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if skinnable; otherwise, <c>false</c>.</value>
         public bool IsSkinnable
         {
-            get { return Convert.ToBoolean(Flags & 0x4000000); }
+            get
+            {
+                return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_SKINNABLE));
+            }
         }
 
         ///<summary>
@@ -737,17 +937,17 @@ namespace LazyLib.Wow
         ///  4000000: Skinnable
         ///  20000000: dazed
         ///</value>
-        private long Flags
+        public long Flags
         {
             get
             {
                 try
                 {
-                    return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_FLAGS);
+                    return (long)base.GetStorageField<int>((uint)Descriptors.CGUnitData.Flags);
                 }
                 catch
                 {
-                    return 0;
+                    return 0L;
                 }
             }
         }
@@ -762,7 +962,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return GetStorageField<UInt32>((uint) Descriptors.eUnitFields.UNIT_FIELD_FACTIONTEMPLATE);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGUnitData.FactionTemplate);
                 }
                 catch
                 {
@@ -798,8 +998,8 @@ namespace LazyLib.Wow
                     return
                         Memory.ReadUtf8(
                             Memory.Read<uint>(
-                                Memory.Read<uint>(BaseAddress + (uint) Pointers.UnitName.UnitName1) +
-                                (uint) Pointers.UnitName.UnitName2), 256);
+                                Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitName.UnitName1) +
+                                (uint)Pointers.UnitName.UnitName2), 256);
                 }
                 catch (Exception)
                 {
@@ -817,9 +1017,8 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    uint pointer = BaseAddress + (uint) Pointers.CastingInfo.IsCasting;
-                    //Log.log(pointer.ToString());
-                    return Memory.Read<int>(pointer);
+                    uint num = base.BaseAddress + (uint)Pointers.CastingInfo.IsCasting;
+                    return Memory.Read<int>(new uint[] { num });
                 }
                 catch (Exception)
                 {
@@ -838,8 +1037,10 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (CastingId == 0 && ChanneledCastingId == 0)
+                if ((this.CastingId == 0) && (this.ChanneledCastingId == 0))
+                {
                     return false;
+                }
                 return true;
             }
         }
@@ -852,18 +1053,25 @@ namespace LazyLib.Wow
         {
             get
             {
-                uint pointer = BaseAddress + (uint) Pointers.CastingInfo.ChanneledCasting;
-                //Log.log(pointer.ToString());
-                return Memory.Read<int>(pointer);
+                uint num = base.BaseAddress + (uint)Pointers.CastingInfo.ChanneledCasting;
+                return Memory.Read<int>(new uint[] { num });
             }
         }
+
 
         /// <summary>
         ///   Is this unit a critter?
         /// </summary>
         public bool Critter
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_CRITTER) == 1 ? true : false; }
+            get
+            {
+                if (base.GetStorageField<int>((uint)12) != 1)
+                {
+                    return false;
+                }
+                return true;
+            }
         }
 
         /// <summary>
@@ -871,7 +1079,10 @@ namespace LazyLib.Wow
         /// </summary>
         public ulong CharmedBy
         {
-            get { return GetStorageField<ulong>((uint) Descriptors.eUnitFields.UNIT_FIELD_CHARMEDBY); }
+            get
+            {
+                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.CharmedBy);
+            }
         }
 
         /// <summary>
@@ -879,7 +1090,10 @@ namespace LazyLib.Wow
         /// </summary>
         public ulong SummonedBy
         {
-            get { return GetStorageField<ulong>((uint) Descriptors.eUnitFields.UNIT_FIELD_SUMMONEDBY); }
+            get
+            {
+                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.SummonedBy);
+            }
         }
 
         /// <summary>
@@ -887,7 +1101,26 @@ namespace LazyLib.Wow
         /// </summary>
         public ulong CreatedBy
         {
-            get { return GetStorageField<ulong>((uint) Descriptors.eUnitFields.UNIT_FIELD_CREATEDBY); }
+            get
+            {
+                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.CreatedBy);
+            }
+        }
+
+
+        private int SkinnableFlags
+        {
+            get
+            {
+                try
+                {
+                    return Memory.Read<int>(new uint[] { Memory.Read<uint>(new uint[] { base.BaseAddress + (uint)Pointers.Skinning.SkinnableFlags1 }) + (uint)Pointers.Skinning.SkinnableFlags2 });
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
         }
 
         /// <summary>
@@ -895,7 +1128,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int HealthPoints
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_HEALTH); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.Health);
+            }
         }
 
         /// <summary>
@@ -903,7 +1139,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumHealthPoints
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MAXHEALTH); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.MaxHealth);
+            }
         }
 
         /// <summary>
@@ -937,7 +1176,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return (100*HealthPoints)/MaximumHealthPoints;
+                    return (100 * HealthPoints) / MaximumHealthPoints;
                 }
                 catch
                 {
@@ -955,7 +1194,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return (100*ManaPoints)/MaximumManaPoints;
+                    return (100 * ManaPoints) / MaximumManaPoints;
                 }
                 catch
                 {
@@ -969,7 +1208,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int BaseHealth
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_BASE_HEALTH); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseHealth);
+            }
         }
 
         /// <summary>
@@ -977,7 +1219,48 @@ namespace LazyLib.Wow
         /// </summary>
         public int BaseMana
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_BASE_MANA); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseMana);
+            }
+        }
+
+        public int BurningEmbers
+        {
+            get
+            {
+                int num = base.GetStorageField<int>((uint)0x25) / 10;
+                if (LazySettings.DebugMode)
+                {
+                    //Logging.Write("BurningEmbers = " + num.ToString(), new object[0]);
+                }
+                return num;
+            }
+        }
+
+        public int MaximumBurningEmbers
+        {
+            get
+            {
+                return (base.GetStorageField<int>((uint)0x2b) / 10);
+            }
+        }
+
+
+        private int MonkEnergy
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)0x23);
+            }
+        }
+
+        private int MonkEnergyMax
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)0x29);
+            }
         }
 
         /// <summary>
@@ -985,7 +1268,48 @@ namespace LazyLib.Wow
         /// </summary>
         public int ManaPoints
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_POWER1); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x22);
+            }
+        }
+
+        /// <summary>
+        ///   The unit's maximum mana.
+        /// </summary>
+        public int MaximumManaPoints
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)40);
+            }
+        }
+
+        /// <summary>
+        ///   The unit's Chi.
+        /// </summary>
+        public int Chi
+        {
+            get
+            {
+                int storageField = base.GetStorageField<int>((uint)0x26);
+                if (LazySettings.DebugMode)
+                {
+                    // Logging.Write("chi = " + storageField.ToString(), new object[0]);
+                }
+                return storageField;
+            }
+        }
+
+        /// <summary>
+        ///   The unit's maxx Chi.
+        /// </summary>
+        public int MaximumChi
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)0x2c);
+            }
         }
 
         /// <summary>
@@ -997,16 +1321,15 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (UnitClass == Constants.UnitClass.UnitClass_Druid)
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
                     {
-                        return DruidRage;
+                        return this.DruidRage;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    
                 }
-                return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_POWER1)/10;
+                return (base.GetStorageField<int>((uint)0x22) / 10);
             }
         }
 
@@ -1015,7 +1338,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int Focus
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER1); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x22);
+            }
         }
 
         /// <summary>
@@ -1023,7 +1349,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int Eclipse
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER4); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x25);
+            }
         }
 
         /// <summary>
@@ -1031,7 +1360,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumEclipse
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER4); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x2b);
+            }
         }
 
         /// <summary>
@@ -1039,7 +1371,15 @@ namespace LazyLib.Wow
         /// </summary>
         public int SoulShard
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER2); }
+            get
+            {
+                int num = base.GetStorageField<int>((uint)0x23) / 100;
+                if (LazySettings.DebugMode)
+                {
+                    //Logging.Write("SoulShard = " + num.ToString(), new object[0]);
+                }
+                return num;
+            }
         }
 
         /// <summary>
@@ -1047,7 +1387,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumSoulShard
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER2); }
+            get
+            {
+                return (base.GetStorageField<int>((uint)0x29) / 100);
+            }
         }
 
         /// <summary>
@@ -1055,7 +1398,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int HolyPower
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER2); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x23);
+            }
         }
 
         /// <summary>
@@ -1063,7 +1409,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumHolyPower
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER2); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x29);
+            }
         }
 
         /// <summary>
@@ -1075,16 +1424,23 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if(UnitClass == Constants.UnitClass.UnitClass_Druid)
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
                     {
-                        return DruidEnergy;
+                        return this.DruidEnergy;
+                    }
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue)
+                    {
+                        return this.RogueEnergy;
+                    }
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Monk)
+                    {
+                        return this.MonkEnergy;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    
                 }
-                return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_POWER1);
+                return base.GetStorageField<int>((uint)0x22);
             }
         }
 
@@ -1092,7 +1448,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER3);
+                return base.GetStorageField<int>((uint)0x24);
             }
         }
 
@@ -1100,7 +1456,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER3);
+                return base.GetStorageField<int>((uint)0x2a);
             }
         }
 
@@ -1108,7 +1464,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER2) / 10;
+                return (base.GetStorageField<int>((uint)0x23) / 10);
             }
         }
 
@@ -1116,7 +1472,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER5);
+                return base.GetStorageField<int>((uint)0x2c);
             }
         }
 
@@ -1125,7 +1481,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int Happinnes
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_POWER4); }
+            get
+            {
+                return base.GetStorageField<int>((uint)0x25);
+            }
         }
 
         /// <summary>
@@ -1133,15 +1492,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int RunicPower
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_POWER1) / 10; }
-        }
-
-        /// <summary>
-        ///   The unit's maximum mana.
-        /// </summary>
-        public int MaximumManaPoints
-        {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER1); }
+            get
+            {
+                return (base.GetStorageField<int>((uint)0x22) / 10);
+            }
         }
 
         /// <summary>
@@ -1153,16 +1507,32 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (UnitClass == Constants.UnitClass.UnitClass_Druid)
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
                     {
-                        return DruidRageMax;
+                        return this.DruidRageMax;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    
                 }
-                return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER1);
+                return base.GetStorageField<int>((uint)40);
+            }
+        }
+
+
+        private int RogueEnergy
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)0x23);
+            }
+        }
+
+        private int RogueEnergyMax
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)0x29);
             }
         }
 
@@ -1171,7 +1541,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MaximumFocus
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER1); }
+            get
+            {
+                return base.GetStorageField<int>((uint)40);
+            }
         }
 
         /// <summary>
@@ -1183,25 +1556,36 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (UnitClass == Constants.UnitClass.UnitClass_Druid)
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
                     {
-                        return DruidEnergyMax;
+                        return this.DruidEnergyMax;
+                    }
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue)
+                    {
+                        return this.RogueEnergyMax;
+                    }
+                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Monk)
+                    {
+                        return this.MonkEnergyMax;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    
                 }
-                return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER1);
+                return base.GetStorageField<int>((uint)40);
             }
         }
 
         /// <summary>
         ///   The unit's maximum runic power.
         /// </summary>
+
         public int MaximumRunicPower
         {
-            get { return GetStorageField<int>((uint)Descriptors.eUnitFields.UNIT_FIELD_MAXPOWER1); }
+            get
+            {
+                return base.GetStorageField<int>((uint)40);
+            }
         }
 
         /// <summary>
@@ -1209,7 +1593,10 @@ namespace LazyLib.Wow
         /// </summary>
         public new int Level
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_LEVEL); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.Level);
+            }
         }
 
         /// <summary>
@@ -1217,7 +1604,35 @@ namespace LazyLib.Wow
         /// </summary>
         public int DisplayId
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_DISPLAYID); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.DisplayID);
+            }
+        }
+
+
+        public bool IsMining
+        {
+            get
+            {
+                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x200));
+            }
+        }
+
+        public bool IsHerb
+        {
+            get
+            {
+                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x100));
+            }
+        }
+
+        public bool IsIngener
+        {
+            get
+            {
+                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x8000));
+            }
         }
 
         /// <summary>
@@ -1225,7 +1640,10 @@ namespace LazyLib.Wow
         /// </summary>
         public int MountDisplayId
         {
-            get { return GetStorageField<int>((uint) Descriptors.eUnitFields.UNIT_FIELD_MOUNTDISPLAYID); }
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.MountDisplayID);
+            }
         }
 
         /// <summary>
@@ -1233,7 +1651,10 @@ namespace LazyLib.Wow
         /// </summary>
         public ulong TargetGUID
         {
-            get { return GetStorageField<ulong>((uint) Descriptors.eUnitFields.UNIT_FIELD_TARGET); }
+            get
+            {
+                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.Target);
+            }
         }
 
         /// <summary>
@@ -1246,9 +1667,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
-                    return true;
-                return false;
+                return ((this.Target != null) && this.Target.TargetGUID.Equals(LazyLib.Wow.ObjectManager.MyPlayer.GUID));
             }
         }
 
@@ -1285,7 +1704,8 @@ namespace LazyLib.Wow
                     {
                         return Pet.GUID;
                     }
-                } catch { }
+                }
+                catch { }
                 return 0;
             }
         }
@@ -1305,7 +1725,8 @@ namespace LazyLib.Wow
                     if (Pet != null)
                         return true;
                     return false;
-                } catch
+                }
+                catch
                 {
                     return false;
                 }
@@ -1346,7 +1767,7 @@ namespace LazyLib.Wow
         public double DistanceToSelf
         {
             get { return Location.DistanceToSelf; }
-        } 
+        }
         /// <summary>
         /// Determines whether [has well known buff] [the specified buff name].
         /// </summary>
@@ -1387,6 +1808,7 @@ namespace LazyLib.Wow
             return false;
         }
 
+
         /// <summary>
         ///   Check to see if this unit currently has the specified buff
         /// </summary>
@@ -1411,7 +1833,8 @@ namespace LazyLib.Wow
             {
                 var auras = GetAuras;
                 return auras.Any(woWAura => buff == woWAura.SpellId && (woWAura.OwnerGUID == ObjectManager.MyPlayer.GUID) || (woWAura.OwnerGUID == ObjectManager.MyPlayer.PetGUID));
-            } catch
+            }
+            catch
             {
                 return false;
             }
@@ -1421,14 +1844,14 @@ namespace LazyLib.Wow
         {
             List<int> auras = GetBuffs();
             List<int> buf = BarMapper.GetIdsFromName(buff);
-            if (auras.Any(buf.Contains)) 
+            if (auras.Any(buf.Contains))
                 return true;
             return false;
         }
 
         public bool HasBuff(string buff, bool playerShouldBeOwner)
         {
-            if(!playerShouldBeOwner)
+            if (!playerShouldBeOwner)
             {
                 return HasBuff(buff);
             }
@@ -1471,58 +1894,59 @@ namespace LazyLib.Wow
             {
                 return (from woWAura in GetAuras where woWAura.SpellId == spellId select woWAura.SecondsLeft).FirstOrDefault();
             }
-            catch 
+            catch
             {
                 return 0;
             }
         }
 
-        public IEnumerable<WoWAura> GetAuras
-        {
-            get
-            {
-                var auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1);
-                if (auraCount == -1)
-                {
-                    auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount2);
-                }
-                var result = new List<WoWAura>();
-                long frequency;
-                long perfCount;
-                QueryPerformanceFrequency(out frequency);
-                QueryPerformanceCounter(out perfCount);
-                long currentTime = (perfCount * 1000) / frequency;
-                //Current time in ms
-                for (uint i = 0; i < auraCount; i++)
-                {
-                    int localSpellId;
-                    byte stackCount;
-                    uint timeLeft;
-                    ulong ownerGuid;
-                    if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
-                    {
-                        var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
-                        localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
-                        stackCount = Memory.Read<byte>((auraTable + ((uint) Pointers.UnitAuras.AuraSize*i)) + (uint) Pointers.UnitAuras.AuraStack);
-                        timeLeft = Memory.Read<uint>((auraTable + ((uint) Pointers.UnitAuras.AuraSize*i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                        ownerGuid = Memory.Read<ulong>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
-                    } else
-                    {
-                        localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
-                        stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
-                        timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                        ownerGuid = Memory.Read<ulong>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
-                    }
-                    if (localSpellId != 0)
-                    {
-                        timeLeft = (uint)(timeLeft - currentTime) / 1000;
-                        var aura = new WoWAura {SpellId = localSpellId, Stack = stackCount, SecondsLeft = timeLeft, OwnerGUID = ownerGuid};
-                        result.Add(aura);
-                    }
-                }
-                return result;
-            }
-        }
+          public IEnumerable<WoWAura> GetAuras
+          {
+              get
+              {
+                  var auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1);
+                  if (auraCount == -1)
+                  {
+                      auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount2);
+                  }
+                  var result = new List<WoWAura>();
+                  long frequency;
+                  long perfCount;
+                  QueryPerformanceFrequency(out frequency);
+                  QueryPerformanceCounter(out perfCount);
+                  long currentTime = (perfCount * 1000) / frequency;
+                  //Current time in ms
+                  for (uint i = 0; i < auraCount; i++)
+                  {
+                      int localSpellId;
+                      byte stackCount;
+                      uint timeLeft;
+                      ulong ownerGuid;
+                      if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
+                      {
+                          var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
+                          localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
+                          stackCount = Memory.Read<byte>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
+                          timeLeft = Memory.Read<uint>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
+                          ownerGuid = Memory.Read<ulong>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i );
+                      }
+                      else
+                      {
+                          localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
+                          stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
+                          timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
+                          ownerGuid = Memory.Read<ulong>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i )));
+                      }
+                      if (localSpellId != 0)
+                      {
+                          timeLeft = (uint)(timeLeft - currentTime) / 1000;
+                          var aura = new WoWAura { SpellId = localSpellId, Stack = stackCount, SecondsLeft = timeLeft, OwnerGUID = ownerGuid };
+                          result.Add(aura);
+                      }
+                  }
+                  return result;
+              }
+          }
 
         /// <summary>
         ///   Returns ArrayList with SpellID's of Auras on the unit
@@ -1557,7 +1981,7 @@ namespace LazyLib.Wow
         {
             if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
-            Logging.Write("[Unit]TargetingF: " + Name);
+            // Logging.Write("[Unit]TargetingF: " + Name);
             if (IsDead)
                 return TargetDead();
             Face();
@@ -1573,7 +1997,7 @@ namespace LazyLib.Wow
                 Face();
                 return true;
             }
-            Logging.Write("[Unit]Could not targetF: " + Name);
+            // Logging.Write("[Unit]Could not targetF: " + Name);
             return false;
         }
 
@@ -1606,23 +2030,6 @@ namespace LazyLib.Wow
                 return HostileBackgroundTargetting();
             }
             return HostileTabTargetting();
-            /*
-
-            var timer = new Ticker(2600);
-            Face();
-            while (!ObjectManager.MyPlayer.TargetGUID.Equals(GUID) && !timer.IsReady)
-            {
-                KeyHelper.SendKey("TargetEnemy");
-                Thread.Sleep(1200);
-            }
-            Thread.Sleep(100);
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
-            {
-                Face();
-                return true;
-            }
-            Logging.Write("[Unit]Could not targetH: " + Name);
-            return false; */
         }
 
         private bool HostileBackgroundTargetting()
@@ -1689,9 +2096,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_SPIRITHEALER) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_SPIRITHEALER) != 0);
             }
         }
 
@@ -1699,9 +2104,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_INNKEEPER) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_INNKEEPER) != 0);
             }
         }
 
@@ -1709,9 +2112,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_FLIGHTMASTER) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_FLIGHTMASTER) != 0);
             }
         }
 
@@ -1719,9 +2120,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_TRAINER_CLASS) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_TRAINER_CLASS) != 0);
             }
         }
 
@@ -1729,9 +2128,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_REPAIR) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_REPAIR) != 0);
             }
         }
 
@@ -1739,9 +2136,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR_REAGENT) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR_REAGENT) != 0);
             }
         }
 
@@ -1749,9 +2144,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR_FOOD) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR_FOOD) != 0);
             }
         }
 
@@ -1759,9 +2152,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_VENDOR) != 0);
             }
         }
 
@@ -1769,9 +2160,7 @@ namespace LazyLib.Wow
         {
             get
             {
-
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_BANKER) != 0;
-
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_BANKER) != 0);
             }
         }
 
@@ -1779,9 +2168,19 @@ namespace LazyLib.Wow
         {
             get
             {
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_AUCTIONEER) != 0);
+            }
+        }
 
-                return (GetStorageField<uint>((uint)Descriptors.eUnitFields.UNIT_NPC_FLAGS) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_AUCTIONEER) != 0;
-
+        /// <summary> 
+        ///   Gets a value indicating whether The unit is IsTrainerMyProfession
+        /// </summary>
+        /// 
+        public bool IsTrainerMyProfession
+        {
+            get
+            {
+                return ((base.GetStorageField<uint>((uint)Descriptors.CGUnitData.NpcFlags) & (uint)UnitNPCFlags.UNIT_NPC_FLAG_TRAINER_PROFESSION) != 0);
             }
         }
 
@@ -1791,6 +2190,42 @@ namespace LazyLib.Wow
             public short Stack;
             public uint SecondsLeft;
             public ulong OwnerGUID;
+        }
+
+        internal enum UnitNPCFlags2 : uint
+        {
+            UNIT_FLAG_CONFUSED = 0x400000,
+            UNIT_FLAG_DISABLE_MOVE = 4,
+            UNIT_FLAG_DISARMED = 0x200000,
+            UNIT_FLAG_FLEEING = 0x800000,
+            UNIT_FLAG_IMMUNE_TO_NPC = 0x200,
+            UNIT_FLAG_IMMUNE_TO_PC = 0x100,
+            UNIT_FLAG_IN_COMBAT = 0x80000,
+            UNIT_FLAG_LOOTING = 0x400,
+            UNIT_FLAG_MOUNT = 0x8000000,
+            UNIT_FLAG_NON_ATTACKABLE = 2,
+            UNIT_FLAG_NOT_ATTACKABLE_1 = 0x80,
+            UNIT_FLAG_NOT_SELECTABLE = 0x2000000,
+            UNIT_FLAG_PACIFIED = 0x20000,
+            UNIT_FLAG_PET_IN_COMBAT = 0x800,
+            UNIT_FLAG_PLAYER_CONTROLLED = 0x1000000,
+            UNIT_FLAG_PREPARATION = 0x20,
+            UNIT_FLAG_PVP = 0x1000,
+            UNIT_FLAG_PVP_ATTACKABLE = 8,
+            UNIT_FLAG_RENAME = 0x10,
+            UNIT_FLAG_SERVER_CONTROLLED = 1,
+            UNIT_FLAG_SHEATHE = 0x40000000,
+            UNIT_FLAG_SILENCED = 0x2000,
+            UNIT_FLAG_SKINNABLE = 0x4000000,
+            UNIT_FLAG_STUNNED = 0x40000,
+            UNIT_FLAG_TAXI_FLIGHT = 0x100000,
+            UNIT_FLAG_UNK_14 = 0x4000,
+            UNIT_FLAG_UNK_15 = 0x8000,
+            UNIT_FLAG_UNK_16 = 0x10000,
+            UNIT_FLAG_UNK_28 = 0x10000000,
+            UNIT_FLAG_UNK_29 = 0x20000000,
+            UNIT_FLAG_UNK_31 = 0x80000000,
+            UNIT_FLAG_UNK_6 = 0x40
         }
 
         internal enum UnitNPCFlags

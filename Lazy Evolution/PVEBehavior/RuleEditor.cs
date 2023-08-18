@@ -308,6 +308,11 @@ namespace LazyEvo.PVEBehavior
             AddCondition(CombatCount.Text, new CombatCountCondition());
         }
 
+        private void ChiCondition_Click(object sender, EventArgs e)
+        {
+            AddCondition(ChiCondition.Text, new ChiCondition());
+        }
+
         private void DistanceToTarget_Click(object sender, EventArgs e)
         {
             AddCondition(DistanceToTarget.Text, new DistanceToTarget());
@@ -316,6 +321,11 @@ namespace LazyEvo.PVEBehavior
         private void SoulShardCount_Click(object sender, EventArgs e)
         {
             AddCondition(SoulShardCount.Text, new SoulShardCountCondition());
+        }
+
+        private void BurningEmbersCount_Click(object sender, EventArgs e)
+        {
+            AddCondition(BurningEmbersCount.Text, new BurningEmbersCountCondition());
         }
 
         private void ComboPointsCondition_Click(object sender, EventArgs e)

@@ -1,56 +1,66 @@
-﻿
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
-
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
-using LazyLib.Helpers.Mail;
-using LazyLib.Wow;
-
-namespace LazyLib.Helpers.Vendor
+﻿namespace LazyLib.Helpers.Vendor
 {
-    [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
+    using LazyLib;
+    using LazyLib.Helpers;
+    using LazyLib.Helpers.Mail;
+    using LazyLib.Wow;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.Threading;
+
+    [Obfuscation(Feature="renaming", ApplyToMembers=true)]
     public class VendorManager
     {
         private static readonly List<string> Sold = new List<string>();
-        public static event EventHandler SellFinished;
-        public static void DoSell(String unit_name)
-        {
 
+        public static  event EventHandler SellFinished;
+
+        public static void DoSell(PUnit vendor)
+        {
             try
             {
                 ProtectedList.Load();
                 MailList.Load();
-                //Target vendor TODO: Looking for a better solution
-                LazyLib.Helpers.KeyHelper.ChatboxSendText("/target " + unit_name);
-                Thread.Sleep(3000);
-                if (LazyLib.Wow.ObjectManager.MyPlayer.Target.Name != unit_name)
+                MoveHelper.MoveToUnit(vendor, 3.0);
+                vendor.Location.Face();
+                int num = 1;
+            Label_0027:
+                vendor.Interact(false);
+                Thread.Sleep(0x3e8);
+                if (InterfaceHelper.GetFrameByName("GossipFrameCloseButton").IsVisible)
                 {
-                    Logging.Write("Could not target vendor: "+ unit_name);
-                    return;
+                    if (InterfaceHelper.GetFrameByName("GossipTitleButton" + num).IsVisible)
+                    {
+                        Thread.Sleep(0x5dc);
+                        InterfaceHelper.GetFrameByName("GossipTitleButton" + num).LeftClick();
+                        Thread.Sleep(0x5dc);
+                        if (InterfaceHelper.GetFrameByName("MerchantFrame").IsVisible || (num >= 6))
+                        {
+                            goto Label_00D2;
+                        }
+                        KeyHelper.SendKey("ESC");
+                        num++;
+                    }
+                    else
+                    {
+                        KeyHelper.SendKey("ESC");
+                        num++;
+                    }
+                    goto Label_0027;
                 }
-                //Interact vendor
-                LazyLib.Helpers.KeyHelper.SendKey("InteractTarget");
+            Label_00D2:
+                if (LazyLib.Wow.ObjectManager.MyPlayer.Target != vendor)
+                {
+                    vendor.Location.Face();
+                    vendor.Interact(false);
+                    Thread.Sleep(0x3e8);
+                }
                 MouseHelper.Hook();
                 MailManager.OpenAllBags();
                 if (LazySettings.ShouldVendor)
                 {
-                    Logging.Write("[Vendor]Going to sell items");
+                    Logging.Write("[Vendor]Going to sell items", new object[0]);
                     Sell();
                 }
                 if (LazySettings.ShouldRepair)
@@ -68,34 +78,36 @@ namespace LazyLib.Helpers.Vendor
                 }
             }
         }
-        public static void DoSell(PUnit vendor)
+
+        public static void DoSell(string unit_name)
         {
             try
             {
                 ProtectedList.Load();
                 MailList.Load();
-                MoveHelper.MoveToUnit(vendor, 3);
-                vendor.Location.Face();
-                vendor.Interact(false);
-                Thread.Sleep(1000);
-                if(ObjectManager.MyPlayer.Target != vendor)
+                KeyHelper.ChatboxSendText("/target " + unit_name);
+                Thread.Sleep(0xbb8);
+                if (LazyLib.Wow.ObjectManager.MyPlayer.Target.Name != unit_name)
                 {
-                    vendor.Location.Face();
-                    vendor.Interact(false);
-                    Thread.Sleep(1000);
+                    Logging.Write("Could not target vendor: " + unit_name, new object[0]);
                 }
-                MouseHelper.Hook();
-                MailManager.OpenAllBags();
-                if (LazySettings.ShouldVendor)
+                else
                 {
-                    Logging.Write("[Vendor]Going to sell items");
-                    Sell();
+                    KeyHelper.SendKey("InteractTarget");
+                    MouseHelper.Hook();
+                    MailManager.OpenAllBags();
+                    if (LazySettings.ShouldVendor)
+                    {
+                        Logging.Write("[Vendor]Going to sell items", new object[0]);
+                        Sell();
+                    }
+                    if (LazySettings.ShouldRepair)
+                    {
+                        Repair();
+                    }
                 }
-                if (LazySettings.ShouldRepair)
-                {
-                    Repair();
-                }
-            } finally
+            }
+            finally
             {
                 MailManager.CloseAllBags();
                 MouseHelper.ReleaseMouse();
@@ -106,49 +118,35 @@ namespace LazyLib.Helpers.Vendor
             }
         }
 
-        private static void Sell()
+        private static int GetSlotCount(int item)
         {
-            Sold.Clear();
-            LoadWowHead();
-            SellLoop();
-            /*
-            foreach (PItem item in Inventory.GetItemsInBags)
+            try
             {
-                if (ItemDatabase.GetItem(item.EntryId.ToString()) != null)
+                if (item == 1)
                 {
-                    string name = ItemDatabase.GetItem(item.EntryId.ToString())["item_name"].ToString();
-                    string quality = ItemDatabase.GetItem(item.EntryId.ToString())["item_quality"].ToString();
-                    if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(quality))
-                    {
-                        if(MailList.ShouldMail(name))
-                        {
-                            continue;
-                        }
-                        if (ProtectedList.ShouldVendor(name))
-                        {
-                            switch (quality)
-                            {
-                                case "Poor":
-                                    if (LazySettings.SellPoor)
-                                        SellItem(name);
-                                    break;
-                                case "Common":
-                                    if (LazySettings.SellCommon)
-                                        SellItem(name);
-                                    break;
-                                case "UnCommon":
-                                    if (LazySettings.SellUncommon)
-                                        SellItem(name);
-                                    break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Logging.Write(string.Format("[Vendor]Could not detect the name of: {0} is wowhead down?", item.EntryId));
-                    }
+                    return 0x10;
                 }
-            } */
+                if (item == 2)
+                {
+                    return Inventory.Bag1.Slots;
+                }
+                if (item == 3)
+                {
+                    return Inventory.Bag2.Slots;
+                }
+                if (item == 4)
+                {
+                    return Inventory.Bag3.Slots;
+                }
+                if (item == 5)
+                {
+                    return Inventory.Bag4.Slots;
+                }
+            }
+            catch
+            {
+            }
+            return 0;
         }
 
         private static void LoadWowHead()
@@ -157,86 +155,84 @@ namespace LazyLib.Helpers.Vendor
             {
                 if (ItemDatabase.GetItem(item.EntryId.ToString()) == null)
                 {
-                    Dictionary<string, string> dictionary = WowHeadData.GetWowHeadItem(item.EntryId);
-                    if (dictionary != null)
+                    Dictionary<string, string> wowHeadItem = WowHeadData.GetWowHeadItem((double) item.EntryId);
+                    if (wowHeadItem != null)
                     {
-                        string name = dictionary["name"];
-                        string quality = dictionary["quality"];
-                        if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(quality))
+                        string str = wowHeadItem["name"];
+                        string str2 = wowHeadItem["quality"];
+                        if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(str2))
                         {
-                            ItemDatabase.PutItem(item.EntryId.ToString(), name, quality);
+                            ItemDatabase.PutItem(item.EntryId.ToString(), str, str2);
                         }
                     }
                 }
             }
         }
 
-        /*
-        private static void SellItem(string name)
+        private static void Repair()
         {
-            if (!Sold.Contains(name))
+            Frame frameByName = InterfaceHelper.GetFrameByName("MerchantRepairAllButton");
+            if (frameByName != null)
             {
-                Logging.Write("[Vendor]Selling: " + name);
-                KeyHelper.ChatboxSendText("/run for b=0,4 do for s=1,GetContainerNumSlots(b)do local n=GetContainerItemLink(b,s)if n and strfind(n,\"" +
-                    name + "\")then UseContainerItem(b,s)end end end ");
-                Thread.Sleep(700);
-                Sold.Add(name);
+                frameByName.LeftClick();
             }
-        } */
+        }
+
+        private static void Sell()
+        {
+            Sold.Clear();
+            LoadWowHead();
+            SellLoop();
+        }
 
         private static void SellLoop()
         {
-            int containerIndex = 1;
-            int positionInBag = 1;
-            while (containerIndex != 6)
+            int item = 1;
+            int num2 = 1;
+            while (item != 6)
             {
-                Frame containerFrame = InterfaceHelper.GetFrameByName("ContainerFrame" + containerIndex);
-                if (containerFrame != null)
+                if (InterfaceHelper.GetFrameByName("ContainerFrame" + item) != null)
                 {
-                    int slots = GetSlotCount(containerIndex);
-                    Logging.Write("Found ContainerFrame with Slot count: " + slots);
-                    while (positionInBag != slots + 1)
+                    int slotCount = GetSlotCount(item);
+                    Logging.Write("Found ContainerFrame with Slot count: " + slotCount, new object[0]);
+                    while (num2 != (slotCount + 1))
                     {
-                        string itemStr = "ContainerFrame" + containerIndex + "Item" + positionInBag;
-                        Frame itemOb = InterfaceHelper.GetFrameByName(itemStr);
-                        if (itemOb != null)
+                        Frame frameByName = InterfaceHelper.GetFrameByName(string.Concat(new object[] { "ContainerFrame", item, "Item", num2 }));
+                        if (frameByName != null)
                         {
-                            itemOb.HoverHooked();
+                            frameByName.HoverHooked();
                             Thread.Sleep(170);
                             try
                             {
-                                Frame toolTip = InterfaceHelper.GetFrameByName("GameTooltip");
-                                if (toolTip != null)
+                                Frame frame3 = InterfaceHelper.GetFrameByName("GameTooltip");
+                                if (frame3 != null)
                                 {
-                                    Frame childObject = toolTip.GetChildObject("GameTooltipTextLeft1");
-                                    if (childObject != null)
+                                    Frame childObject = frame3.GetChildObject("GameTooltipTextLeft1");
+                                    if ((childObject != null) && ShouldSell(childObject.GetText))
                                     {
-                                        if (ShouldSell(childObject.GetText))
-                                        {
-                                            Logging.Write("Selling: " + childObject.GetText);
-                                            Thread.Sleep(150);
-                                            itemOb.RightClickHooked();
-                                            Thread.Sleep(150);
-                                        }
+                                        Logging.Write("Selling: " + childObject.GetText, new object[0]);
+                                        Thread.Sleep(150);
+                                        frameByName.RightClickHooked();
+                                        Thread.Sleep(150);
                                     }
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception exception)
                             {
-                                Logging.Write("Exception when pasing gametooltip: " + e);
+                                Logging.Write("Exception when pasing gametooltip: " + exception, new object[0]);
                             }
                         }
-                        positionInBag++;
+                        num2++;
                     }
-                    if (positionInBag == slots + 1)
+                    if (num2 == (slotCount + 1))
                     {
-                        positionInBag = 1;
-                        containerIndex++;
+                        num2 = 1;
+                        item++;
                     }
                 }
                 else
                 {
-                    containerIndex++;
+                    item++;
                 }
             }
         }
@@ -249,91 +245,95 @@ namespace LazyLib.Helpers.Vendor
                 {
                     try
                     {
-                        if (ItemDatabase.GetItem(item.EntryId.ToString()) != null)
+                        string str3;
+                        if (ItemDatabase.GetItem(item.EntryId.ToString()) == null)
                         {
-                            string name = ItemDatabase.GetItem(item.EntryId.ToString())["item_name"].ToString();
-                            string quality = ItemDatabase.GetItem(item.EntryId.ToString())["item_quality"].ToString();
-                            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(quality))
-                            {
-                                if(name != sellName)
-                                {
-                                    continue; 
-                                }
-                                if (MailList.ShouldMail(name))
-                                {
-                                    continue;
-                                }
-                                if (ProtectedList.ShouldVendor(name))
-                                {
-                                    switch (quality)
-                                    {
-                                        case "Poor":
-                                            if (LazySettings.SellPoor)
-                                                return true;
-                                            break;
-                                        case "Common":
-                                            if (LazySettings.SellCommon)
-                                                return true;
-                                            break;
-                                        case "UnCommon":
-                                            if (LazySettings.SellUncommon)
-                                                return true;
-                                            break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Logging.Write(string.Format("[Vendor]Could not detect the name of: {0} is wowhead down?", item.EntryId));
-                            }
+                            continue;
                         }
+                        string str = ItemDatabase.GetItem(item.EntryId.ToString())["item_name"].ToString();
+                        string str2 = ItemDatabase.GetItem(item.EntryId.ToString())["item_quality"].ToString();
+                        if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(str2))
+                        {
+                            goto Label_0185;
+                        }
+                        if ((((str != sellName) && (sellName.Replace(str, "").Length == sellName.Length)) || MailList.ShouldMail(str)) || (!ProtectedList.ShouldVendor(str) || ((str3 = str2) == null)))
+                        {
+                            continue;
+                        }
+                        if (!(str3 == "Poor"))
+                        {
+                            if (str3 == "Common")
+                            {
+                                goto Label_013D;
+                            }
+                            if (str3 == "UnCommon")
+                            {
+                                goto Label_014C;
+                            }
+                            if (str3 == "Низкий")
+                            {
+                                goto Label_015B;
+                            }
+                            if (str3 == "Обычный")
+                            {
+                                goto Label_016A;
+                            }
+                            if (str3 == "Необычный")
+                            {
+                                goto Label_0179;
+                            }
+                            continue;
+                        }
+                        if (!LazySettings.SellPoor)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_013D:
+                        if (!LazySettings.SellCommon)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_014C:
+                        if (!LazySettings.SellUncommon)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_015B:
+                        if (!LazySettings.SellPoor)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_016A:
+                        if (!LazySettings.SellCommon)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_0179:
+                        if (!LazySettings.SellUncommon)
+                        {
+                            continue;
+                        }
+                        return true;
+                    Label_0185:
+                        Logging.Write(string.Format("[Vendor]Could not detect the name of: {0} is wowhead down?", item.EntryId), new object[0]);
                     }
-                    catch (Exception e)
+                    catch (Exception exception)
                     {
-                        Logging.Debug("Exception in ShouldSell (Loop): {0}", e);
+                        Logging.Debug("Exception in ShouldSell (Loop): {0}", new object[] { exception });
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception exception2)
             {
-                Logging.Debug("Exception in ShouldSell: {0}", e);
+                Logging.Debug("Exception in ShouldSell: {0}", new object[] { exception2 });
             }
             return false;
         }
-
-        /// <summary>
-        /// Gets the slot count.
-        /// </summary>
-        /// <returns></returns>
-        private static int GetSlotCount(int item)
-        {
-            try
-            {
-                if (item == 1)
-                    return 16;
-                if (item == 2)
-                    return Inventory.Bag1.Slots;
-                if (item == 3)
-                    return Inventory.Bag2.Slots;
-                if (item == 4)
-                    return Inventory.Bag3.Slots;
-                if (item == 5)
-                    return Inventory.Bag4.Slots;
-            }
-            catch
-            {
-            }
-            return 0;
-        }
-
-
-        private static void Repair()
-        {
-           Frame frameByName = InterfaceHelper.GetFrameByName("MerchantRepairAllButton");
-           if(frameByName != null)
-           {
-               frameByName.LeftClick();
-           }
-        }
     }
 }
+

@@ -39,6 +39,7 @@
             this.comboItem11 = new DevComponents.Editors.ComboItem();
             this.comboItem7 = new DevComponents.Editors.ComboItem();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem9 = new DevComponents.Editors.ComboItem();
             this.comboItem10 = new DevComponents.Editors.ComboItem();
             this.comboItem6 = new DevComponents.Editors.ComboItem();
@@ -97,6 +98,7 @@
             this.comboItem11,
             this.comboItem7,
             this.comboItem1,
+            this.comboItem4,
             this.comboItem9,
             this.comboItem10,
             this.comboItem6});
@@ -133,6 +135,10 @@
             // comboItem1
             // 
             this.comboItem1.Text = "Mage";
+            // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "Monk";
             // 
             // comboItem9
             // 
@@ -179,6 +185,7 @@
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
         private DevComponents.Editors.ComboItem comboItem3;
+        private DevComponents.Editors.ComboItem comboItem4;
         private DevComponents.Editors.ComboItem comboItem5;
         private DevComponents.Editors.ComboItem comboItem6;
         private DevComponents.Editors.ComboItem comboItem7;

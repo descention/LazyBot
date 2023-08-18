@@ -1,5 +1,4 @@
-﻿<?xml version="1.0"?>
-
+<?xml version="1.0"?>
 <HerbList>
   <Herb>Кровопийка</Herb>
   <Herb>Ледяной зев</Herb>
@@ -27,9 +26,7 @@
   <Herb>Магороза</Herb>
   <Herb>Удавник</Herb>
   <Herb>Синячник</Herb>
-  <Herb>
-    Горный серебряный шалфей
-  </Herb>
+  <Herb>Горный серебряный шалфей</Herb>
   <Herb>Синячник</Herb>
   <Herb>Сквернопля</Herb>
   <Herb>Мерзлая трава</Herb>
@@ -60,4 +57,13 @@
   <Herb>Цветущее сердце</Herb>
   <Herb>Хлыстохвост</Herb>
   <Herb>Сумеречный жасмин</Herb>
+  <Herb>Печаль-трава</Herb>
+  <Herb>Листья зеленого чая</Herb>
+  <Herb>Дождевой мак</Herb>
+  <Herb>Ваточник</Herb>
+  <Herb>Золотой лотос</Herb>
+  <Herb>Пораженная ша трава</Herb>
+  <Herb>Снежная лилия</Herb>
+  <Herb>Дурногриб</Herb>
+  <Herb>Лист зеленого чая</Herb>
 </HerbList>

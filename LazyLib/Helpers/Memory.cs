@@ -27,10 +27,15 @@ using System.Security.Principal;
 using System.Text;
 
 #endregion
+using LazyLib;
+using LazyLib.Helpers;
+using LazyLib.Wow;
 
 namespace LazyLib.Helpers
 {
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
+
+    
     public static class Memory
     {
 // ReSharper disable InconsistentNaming
@@ -274,6 +279,8 @@ namespace LazyLib.Helpers
                 return default(T);
             }
         }
+        
+
 
         public static T Read<T>(params uint[] addresses)
         {
@@ -289,6 +296,7 @@ namespace LazyLib.Helpers
             uint last = 0;
             for (int i = 0; i < addresses.Length; i++)
             {
+                Logging.Write("addresses[i] " + addresses[i].ToString());
                 if (i == addresses.Length - 1)
                 {
                     return ReadInternal<T>(addresses[i] + last);

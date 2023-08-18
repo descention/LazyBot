@@ -70,7 +70,7 @@ namespace LazyLib.Helpers
 
         public static bool CheckBind(string command, string key)
         {
-            //Logging.Debug("Checking key: " + key);
+            // Logging.Debug("Checking key: " + key);
             List<string> keysForCommand = GetKeysForCommand(command);
             if (!keysForCommand.Contains(key))
             {

@@ -49,6 +49,7 @@
             this.GrinderCBSkipPullOnAdds = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.CBTrain = new DevComponents.DotNetBar.Controls.CheckBoxX();
+        //    this.GrinderCBOnLongBattle = new System.Windows.Forms.CheckBox();
             this.groupPanel10.SuspendLayout();
             this.groupPanel9.SuspendLayout();
             this.groupPanel8.SuspendLayout();
@@ -460,12 +461,23 @@
             this.CBTrain.TabIndex = 47;
             this.CBTrain.Text = "Train";
             // 
+            // GrinderCBOnLongBattle
+            // 
+           // this.GrinderCBOnLongBattle.AutoSize = true;
+           // this.GrinderCBOnLongBattle.Location = new System.Drawing.Point(223, 140);
+           // this.GrinderCBOnLongBattle.Name = "GrinderCBOnLongBattle";
+           // this.GrinderCBOnLongBattle.Size = new System.Drawing.Size(91, 17);
+           // this.GrinderCBOnLongBattle.TabIndex = 143;
+          //  this.GrinderCBOnLongBattle.Text = "OnLongBattle";
+           // this.GrinderCBOnLongBattle.UseVisualStyleBackColor = true;
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(234)))), ((int)(((byte)(246)))));
             this.ClientSize = new System.Drawing.Size(434, 274);
+            //this.Controls.Add(this.GrinderCBOnLongBattle);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.groupPanel10);
             this.Controls.Add(this.groupPanel9);
@@ -483,6 +495,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GrinderIntSkipAddMaxCount)).EndInit();
             this.groupPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -495,7 +508,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBWaitForLoot;
         private DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBJumpRandomly;
         private DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBSkin;
-        protected internal DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBStopLootOnFull;
         private DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBLoot;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel8;
         private DevComponents.DotNetBar.LabelX labelX44;
@@ -508,5 +520,7 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX UseMount;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
         private DevComponents.DotNetBar.Controls.CheckBoxX CBTrain;
+      //  private System.Windows.Forms.CheckBox GrinderCBOnLongBattle;
+        private DevComponents.DotNetBar.Controls.CheckBoxX GrinderCBStopLootOnFull;
     }
 }

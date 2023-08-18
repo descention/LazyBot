@@ -1,5 +1,4 @@
-﻿
-﻿/*
+﻿﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
     LazyBot is free software: you can redistribute it and/or modify
@@ -16,7 +15,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
     along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
- using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -72,8 +71,8 @@ namespace LazyLib.Helpers
             {
                 return
                     new Frame(
-                        Memory.Read<uint>(Memory.ReadRelative<uint>((uint) Pointers.UiFrame.CurrentFramePtr) +
-                                          (uint) Pointers.UiFrame.CurrentFrameOffset));
+                        Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.UiFrame.CurrentFramePtr) +
+                                          (uint)Pointers.UiFrame.CurrentFrameOffset));
             }
         }
 
@@ -93,7 +92,7 @@ namespace LazyLib.Helpers
             catch (ThreadAbortException)
             {
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //Logging.Write("Exception when updating interface: " + e);
             }
@@ -101,12 +100,12 @@ namespace LazyLib.Helpers
 
         internal static void StartUpdate()
         {
-            if(_updateThread != null)
+            if (_updateThread != null)
             {
                 _updateThread.Abort();
                 _updateThread = null;
             }
-            _updateThread = new Thread(UpdateThread) {IsBackground = true, Name = "InterfaceUpdater"};
+            _updateThread = new Thread(UpdateThread) { IsBackground = true, Name = "InterfaceUpdater" };
             _updateThread.Start();
         }
 
@@ -124,14 +123,14 @@ namespace LazyLib.Helpers
         public static void ReloadFrames()
         {
             var allFrames = new Dictionary<String, Frame>();
-            var @base = Memory.ReadRelative<uint>((uint) Pointers.UiFrame.FrameBase);
-            var currentFrame = Memory.Read<uint>(@base + (uint) Pointers.UiFrame.FirstFrame);
+            var @base = Memory.ReadRelative<uint>((uint)Pointers.UiFrame.FrameBase);
+            var currentFrame = Memory.Read<uint>(@base + (uint)Pointers.UiFrame.FirstFrame);
             while (currentFrame != 0)
             {
                 var f = new Frame(currentFrame);
                 if (!allFrames.ContainsKey(f.GetName))
                     allFrames.Add(f.GetName, f);
-                currentFrame = Memory.Read<uint>(currentFrame + Memory.Read<uint>(@base + (uint) Pointers.UiFrame.NextFrame) + 4);
+                currentFrame = Memory.Read<uint>(currentFrame + Memory.Read<uint>(@base + (uint)Pointers.UiFrame.NextFrame) + 4);
                 Thread.Sleep(1);
             }
             _allFrames = allFrames;

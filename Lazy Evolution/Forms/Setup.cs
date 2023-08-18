@@ -156,6 +156,9 @@ namespace LazyEvo.Forms
             SetupIIRelogLogInAfter.Value = ReloggerSettings.PeriodicLogIn;
             SetupIIRelogLogAccount.Value = ReloggerSettings.AccountAccount;
 
+            //UseItem
+            //CBUSEItem.Checked = LazySettings.UseItems;
+
             //Language
             if (LazySettings.Language != LazySettings.LazyLanguage.Unknown)
             {
@@ -165,6 +168,7 @@ namespace LazyEvo.Forms
             {
                 ClientLanguage.SelectedIndex = 0;
             }
+            //LoadUseList();
             LoadMailList();
             LoadProtectedList();
         }
@@ -229,6 +233,9 @@ namespace LazyEvo.Forms
             ReloggerSettings.AccountAccount = SetupIIRelogLogAccount.Value;
             ReloggerSettings.SaveSettings();
 
+            //UseList
+            //LazySettings.UseItems = this.CBUSEItem.Checked;
+
             //Language
             string clientLanguage = ClientLanguage.SelectedItem.ToString();
             var lazyLanguage =
@@ -243,6 +250,7 @@ namespace LazyEvo.Forms
             }
             LazySettings.Language = lazyLanguage;
             LazySettings.SaveSettings();
+            //SaveUseList();
             SaveMailList();
             SaveProtectedList();
         }
@@ -635,5 +643,61 @@ namespace LazyEvo.Forms
         {
             return FileName + "(" + Name + ")";
         }
+/*
+        private void AddUSE(string name)
+        {
+            Node node = new Node(name)
+            {
+                Tag = name
+            };
+            this.ListitemsUSE.BeginUpdate();
+            this.ListitemsUSE.Nodes.Add(node);
+            this.ListitemsUSE.EndUpdate();
+        }
+
+        private void BBtnAddUSEItemClick(object sender, EventArgs e)
+        {
+            if (this.TBUSEName.Text != "")
+            {
+                this.AddUSE(this.TBUSEName.Text);
+                this.TBUSEName.Text = "";
+            }
+        }
+
+        private void BtnRemoveUSEItemClick(object sender, EventArgs e)
+        {
+            if (this.ListitemsUSE.SelectedNode != null)
+            {
+                this.ListitemsUSE.Nodes.Remove(this.ListitemsUSE.SelectedNode);
+            }
+        }
+
+        private void CBUSEItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.CBUSEItem.Checked && !LazySettings.UseItems)
+            {
+               // MessageBox.Show(Language.GetText(0x15e));
+            }
+        }
+
+        private void LoadUseList()
+        {
+            UseList.Load();
+            foreach (string getList in UseList.get_GetList())
+            {
+                this.AddUSE(getList);
+            }
+        }
+
+        private void SaveUseList()
+        {
+            UseList.Clear();
+            foreach (Node node in this.ListitemsUSE.Nodes)
+            {
+                UseList.AddUSE(node.Tag.ToString());
+            }
+            UseList.Save();
+        }
+ */
     }
 }

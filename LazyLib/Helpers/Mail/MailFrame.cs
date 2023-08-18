@@ -1,40 +1,19 @@
-﻿
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
-
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
- using System;
-using System.Threading;
-
-namespace LazyLib.Helpers.Mail
+﻿namespace LazyLib.Helpers.Mail
 {
+    using LazyLib.Helpers;
+    using System;
+    using System.Threading;
+
     internal class MailFrame
     {
-        public static Boolean Open
+        public static void ClickInboxTab()
         {
-            get
+            try
             {
-                try
-                {
-                    return InterfaceHelper.GetFrameByName("MailFrame").IsVisible;
-                }
-                catch
-                {
-                    return false;
-                }
+                InterfaceHelper.GetFrameByName("MailFrameTab1").LeftClick();
+            }
+            catch
+            {
             }
         }
 
@@ -43,147 +22,30 @@ namespace LazyLib.Helpers.Mail
             try
             {
                 InterfaceHelper.GetFrameByName("MailFrame").LeftClick();
-            } catch {}
-        }
-
-        public static String GetReciver
-        {
-            get
-            {
-                try
-                {
-                    return InterfaceHelper.GetFrameByName("SendMailNameEditBox").GetEditBoxText;
-                }
-                catch
-                {
-                    return String.Empty;
-                }
-            }
-        }
-
-        public static String GetMailSubject
-        {
-            get
-            {
-                try
-                {
-                    return InterfaceHelper.GetFrameByName("SendMailSubjectEditBox").GetEditBoxText;
-                }
-                catch
-                {
-                    return String.Empty;
-                }
-            }
-        }
-
-        public static Boolean CurrentTabIsSendMail
-        {
-            get
-            {
-                try
-                {
-                    return InterfaceHelper.GetFrameByName("SendMailAttachment1").IsVisible;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        public static Boolean CurrentTabIsInbox
-        {
-            get
-            {
-                try
-                {
-                    return InterfaceHelper.GetFrameByName("InboxPrevPageButton").IsVisible;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        public static void Close()
-        {
-            try
-            {
-                while (Open)
-                {
-                    InterfaceHelper.GetFrameByName("InboxCloseButton").LeftClick();
-                    Thread.Sleep(250);
-                }
             }
             catch
             {
             }
         }
 
-        public static void SetMailModeSendMoney()
+        public static void ClickSend()
         {
             try
             {
-                InterfaceHelper.GetFrameByName("SendMailSendMoneyButton").LeftClick();
+                ClickMailFrame();
+                Thread.Sleep(0x4b0);
+                InterfaceHelper.GetFrameByName("SendMailMailButton").LeftClick();
             }
             catch
             {
             }
         }
 
-        public static void SetMailModeCod()
+        public static void ClickSendHooked()
         {
             try
             {
-                InterfaceHelper.GetFrameByName("SendMailCODButton").LeftClick();
-            }
-            catch
-            {
-            }
-        }
-
-        public static void SetReceiver(String receiver)
-        {
-            Frame f = InterfaceHelper.GetFrameByName("SendMailNameEditBox");
-            if (f != null)
-            {
-                f.SetEditBoxText(receiver);
-            }
-        }
-
-        public static void SetReceiverHooked(String receiver)
-        {
-            Frame f = InterfaceHelper.GetFrameByName("SendMailNameEditBox");
-            if (f != null)
-            {
-                f.SetEditBoxTextHooked(receiver);
-            }
-        }
-
-        public static void SetMailSubject(String subject)
-        {
-            Frame f = InterfaceHelper.GetFrameByName("SendMailSubjectEditBox");
-            if (f != null)
-            {
-                f.SetEditBoxText(subject);
-            }
-        }
-
-        public static void SetMailBody(String body)
-        {
-            Frame f = InterfaceHelper.GetFrameByName("SendMailBodyEditBox");
-            if (f != null)
-            {
-                f.SetEditBoxText(body);
-            }
-        }
-
-        public static void ClickInboxTab()
-        {
-            try
-            {
-                InterfaceHelper.GetFrameByName("MailFrameTab1").LeftClick();
+                InterfaceHelper.GetFrameByName("SendMailMailButton").LeftClickHooked();
             }
             catch
             {
@@ -212,28 +74,153 @@ namespace LazyLib.Helpers.Mail
             }
         }
 
-        public static void ClickSend()
+        public static void Close()
         {
             try
             {
-                ClickMailFrame();
-                Thread.Sleep(1200);
-                InterfaceHelper.GetFrameByName("SendMailMailButton").LeftClick();
+                while (Open)
+                {
+                    InterfaceHelper.GetFrameByName("InboxCloseButton").LeftClick();
+                    Thread.Sleep(250);
+                }
             }
             catch
             {
             }
         }
 
-        public static void ClickSendHooked()
+        public static void SetMailBody(string body)
+        {
+            Frame frameByName = InterfaceHelper.GetFrameByName("SendMailBodyEditBox");
+            if (frameByName != null)
+            {
+                frameByName.SetEditBoxText(body);
+            }
+        }
+
+        public static void SetMailModeCod()
         {
             try
             {
-                InterfaceHelper.GetFrameByName("SendMailMailButton").LeftClickHooked();
+                InterfaceHelper.GetFrameByName("SendMailCODButton").LeftClick();
             }
             catch
             {
             }
         }
+
+        public static void SetMailModeSendMoney()
+        {
+            try
+            {
+                InterfaceHelper.GetFrameByName("SendMailSendMoneyButton").LeftClick();
+            }
+            catch
+            {
+            }
+        }
+
+        public static void SetMailSubject(string subject)
+        {
+            Frame frameByName = InterfaceHelper.GetFrameByName("SendMailSubjectEditBox");
+            if (frameByName != null)
+            {
+                frameByName.SetEditBoxText(subject);
+            }
+        }
+
+        public static void SetReceiver(string receiver)
+        {
+            Frame frameByName = InterfaceHelper.GetFrameByName("SendMailNameEditBox");
+            if (frameByName != null)
+            {
+                frameByName.SetEditBoxText(receiver);
+            }
+        }
+
+        public static void SetReceiverHooked(string receiver)
+        {
+            Frame frameByName = InterfaceHelper.GetFrameByName("SendMailNameEditBox");
+            if (frameByName != null)
+            {
+                frameByName.SetEditBoxTextHooked(receiver);
+            }
+        }
+
+        public static bool CurrentTabIsInbox
+        {
+            get
+            {
+                try
+                {
+                    return InterfaceHelper.GetFrameByName("InboxPrevPageButton").IsVisible;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool CurrentTabIsSendMail
+        {
+            get
+            {
+                try
+                {
+                    return InterfaceHelper.GetFrameByName("SendMailAttachment1").IsVisible;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static string GetMailSubject
+        {
+            get
+            {
+                try
+                {
+                    return InterfaceHelper.GetFrameByName("SendMailSubjectEditBox").GetEditBoxText;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public static string GetReciver
+        {
+            get
+            {
+                try
+                {
+                    return InterfaceHelper.GetFrameByName("SendMailNameEditBox").GetEditBoxText;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public static bool Open
+        {
+            get
+            {
+                try
+                {
+                    return InterfaceHelper.GetFrameByName("MailFrame").IsVisible;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
+

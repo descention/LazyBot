@@ -48,9 +48,11 @@ namespace LazyLib.Helpers
         {
             lock (_lock)
             {
-                if (!Directory.Exists(LazySettings.OurDirectory + "\\Settings"))
-                    Directory.CreateDirectory(LazySettings.OurDirectory + "\\Settings");
-                if (!File.Exists(LazySettings.OurDirectory + KeyFile)) //Lets create default keys if none exist
+                if (!Directory.Exists(LazySettings.OurDirectory + @"\Settings"))
+                {
+                    Directory.CreateDirectory(LazySettings.OurDirectory + @"\Settings");
+                }
+                if (!File.Exists(LazySettings.OurDirectory + @"\Settings\Keys.xml"))
                 {
                     SaveKeys();
                 }
@@ -61,88 +63,108 @@ namespace LazyLib.Helpers
                 AddKey("E", "None", "Indifferent", LazySettings.KeysStafeRightKeyText);
                 AddKey("Attack1", "None", LazySettings.KeysAttack1Bar, LazySettings.KeysAttack1Key);
                 AddKey("MacroForMail", "None", LazySettings.KeysMailMacroBar, LazySettings.KeysMailMacroKey);
-                AddKey(InteractWithMouseover, "None", "Indifferent", LazySettings.KeysInteractKeyText);
-                AddKey(InteractTarget, "None", "Indifferent", LazySettings.KeysInteractTargetText);
-                AddKey(TargetLastTarget, "None", "Indifferent", LazySettings.KeysTargetLastTargetText);              
-                XmlDocument doc = new XmlDocument();
+                AddKey("InteractWithMouseOver", "None", "Indifferent", LazySettings.KeysInteractKeyText);
+                AddKey("InteractTarget", "None", "Indifferent", LazySettings.KeysInteractTargetText);
+                AddKey("TargetLastTarget", "None", "Indifferent", LazySettings.KeysTargetLastTargetText);
+                AddKey("LFR", "None", "Indifferent", "I");
+                XmlDocument document = new XmlDocument();
                 try
                 {
-                    doc.Load(LazySettings.OurDirectory + KeyFile);
-                } catch (Exception e)
-                {
-                    Logging.Write(LogType.Error, "Could not load keys: " + e);
-                    return;
+                    document.Load(LazySettings.OurDirectory + @"\Settings\Keys.xml");
                 }
-                XmlNodeList keys = doc.GetElementsByTagName("KeyWrapper");
-                foreach (XmlNode key in keys)
+                catch (Exception exception)
                 {
-                    string name = string.Empty;
+                    Logging.Write(LogType.Error, "Could not load keys: " + exception, new object[0]);
+                    goto Label_02D5;
+                }
+                foreach (XmlNode node in document.GetElementsByTagName("KeyWrapper"))
+                {
+                    string innerText = string.Empty;
                     string shiftState = string.Empty;
                     string barState = string.Empty;
                     string character = string.Empty;
-                    foreach (XmlNode childNode in key.ChildNodes)
+                    foreach (XmlNode node2 in node.ChildNodes)
                     {
-                        switch (childNode.Name)
+                        string name = node2.Name;
+                        if (name != null)
                         {
-                            case "name":
-                                name = childNode.InnerText;
-                                break;
-                            case "shiftstate":
-                                shiftState = childNode.InnerText;
-                                break;
-                            case "bar":
-                                barState = childNode.InnerText;
-                                break;
-                            case "key":
-                                character = childNode.InnerText;
-                                break;
+                            if (!(name == "name"))
+                            {
+                                if (name == "shiftstate")
+                                {
+                                    goto Label_0250;
+                                }
+                                if (name == "bar")
+                                {
+                                    goto Label_025B;
+                                }
+                                if (name == "key")
+                                {
+                                    goto Label_0266;
+                                }
+                            }
+                            else
+                            {
+                                innerText = node2.InnerText;
+                            }
                         }
+                        continue;
+                    Label_0250:
+                        shiftState = node2.InnerText;
+                        continue;
+                    Label_025B:
+                        barState = node2.InnerText;
+                        continue;
+                    Label_0266:
+                        character = node2.InnerText;
                     }
-                    if (!string.IsNullOrEmpty(name))
+                    if (!string.IsNullOrEmpty(innerText))
                     {
-                        AddKey(name, shiftState, barState, character);
+                        AddKey(innerText, shiftState, barState, character);
                     }
                 }
+            Label_02D5:;
             }
         }
 
         private static void SaveKeys()
         {
-            var list = new Dictionary<string, KeyWrapper>();
-            list.Add("Up", new KeyWrapper("Up", "None", "Indifferent", "Up"));
-            list.Add("Down", new KeyWrapper("Down", "None", "Indifferent", "Down"));
-            list.Add("Right", new KeyWrapper("Down", "None", "Indifferent", "Right"));
-            list.Add("Left", new KeyWrapper("Down", "None", "Indifferent", "Left"));
-            list.Add("Space", new KeyWrapper("Space", "None", "Indifferent", "Space"));
-            list.Add("X", new KeyWrapper("X", "None", "Indifferent", "X"));
-            list.Add("PetAttack", new KeyWrapper("PetAttack", "Ctrl", "Indifferent", "1"));
-            list.Add("PetFollow", new KeyWrapper("PetFollow", "Ctrl", "Indifferent", "2"));
-            list.Add("F1", new KeyWrapper("F1", "None", "Indifferent", "F1"));
-            list.Add("TargetEnemy", new KeyWrapper("Tab", "None", "Indifferent", "Tab"));
-            list.Add("TargetFriend", new KeyWrapper("TargetFriend", "Ctrl", "Indifferent", "Tab"));
-            list.Add("ESC", new KeyWrapper("ESC", "None", "Indifferent", "Escape"));
-            list.Add("InventoryOpenAll", new KeyWrapper("InventoryOpenAll", "None", "Indifferent", "B"));
-            StringBuilder xml = new StringBuilder();
-            xml.AppendFormat(@"<?xml version=""1.0""?>");
-            xml.AppendFormat("<KeyList>");
-            foreach (var keyWrapper in list)
+            Dictionary<string, KeyWrapper> dictionary = new Dictionary<string, KeyWrapper>();
+            dictionary.Add("Up", new KeyWrapper("Up", "None", "Indifferent", "Up"));
+            dictionary.Add("Down", new KeyWrapper("Down", "None", "Indifferent", "Down"));
+            dictionary.Add("Right", new KeyWrapper("Down", "None", "Indifferent", "Right"));
+            dictionary.Add("Left", new KeyWrapper("Down", "None", "Indifferent", "Left"));
+            dictionary.Add("Space", new KeyWrapper("Space", "None", "Indifferent", "Space"));
+            dictionary.Add("X", new KeyWrapper("X", "None", "Indifferent", "X"));
+            dictionary.Add("PetAttack", new KeyWrapper("PetAttack", "Ctrl", "Indifferent", "1"));
+            dictionary.Add("PetFollow", new KeyWrapper("PetFollow", "Ctrl", "Indifferent", "2"));
+            dictionary.Add("F1", new KeyWrapper("F1", "None", "Indifferent", "F1"));
+            dictionary.Add("TargetEnemy", new KeyWrapper("Tab", "None", "Indifferent", "Tab"));
+            dictionary.Add("TargetFriend", new KeyWrapper("TargetFriend", "Ctrl", "Indifferent", "Tab"));
+            dictionary.Add("ESC", new KeyWrapper("ESC", "None", "Indifferent", "Escape"));
+            dictionary.Add("InventoryOpenAll", new KeyWrapper("InventoryOpenAll", "None", "Indifferent", "B"));
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("<?xml version=\"1.0\"?>", new object[0]);
+            builder.AppendFormat("<KeyList>", new object[0]);
+            foreach (KeyValuePair<string, KeyWrapper> pair in dictionary)
             {
-                xml.AppendFormat("<KeyWrapper>");
-                xml.AppendFormat("<name>{0}</name>", keyWrapper.Key);
-                xml.AppendFormat("<shiftstate>{0}</shiftstate>", keyWrapper.Value.Special);
-                xml.AppendFormat("<bar>{0}</bar>", keyWrapper.Value.Bar);
-                xml.AppendFormat("<key>{0}</key>", keyWrapper.Value.Key);
-                xml.AppendFormat("</KeyWrapper>");
+                builder.AppendFormat("<KeyWrapper>", new object[0]);
+                builder.AppendFormat("<name>{0}</name>", pair.Key);
+                builder.AppendFormat("<shiftstate>{0}</shiftstate>", pair.Value.Special);
+                builder.AppendFormat("<bar>{0}</bar>", pair.Value.Bar);
+                builder.AppendFormat("<key>{0}</key>", pair.Value.Key);
+                builder.AppendFormat("</KeyWrapper>", new object[0]);
             }
-            xml.AppendFormat("</KeyList>");
+            builder.AppendFormat("</KeyList>", new object[0]);
             try
             {
-                var doc = new XmlDocument();
-                doc.LoadXml(xml.ToString());
-                doc.Save(LazySettings.OurDirectory + KeyFile);
-            } catch (Exception e)
+                XmlDocument document = new XmlDocument();
+                document.LoadXml(builder.ToString());
+                document.Save(LazySettings.OurDirectory + @"\Settings\Keys.xml");
+            }
+            catch (Exception exception)
             {
-                Logging.Write("Could not save the keys: " + e);
+                Logging.Write("Could not save the keys: " + exception, new object[0]);
             }
         }
 
@@ -231,7 +253,7 @@ namespace LazyLib.Helpers
             }
         }
 
-        public static void ChatboxSendText(String text)
+        public static void ChatboxSendText(string text)
         {
             if (IsChatboxOpened)
             {
@@ -253,7 +275,7 @@ namespace LazyLib.Helpers
                 }
             }
             SendTextNow(text);
-            Thread.Sleep(1000);
+            Thread.Sleep(0x3e8);
             KeyLowHelper.SendEnter();
         }
 
@@ -262,17 +284,20 @@ namespace LazyLib.Helpers
             KeyLowHelper.SendEnter();
         }
 
-        public static void SendTextNow(String text)
+        public static void SendTextNow(string text)
         {
-            foreach (char c in text)
+            foreach (char ch in text)
             {
-                KeyLowHelper.SendMessage(Memory.WindowHandle, KeyLowHelper.WmChar, (IntPtr)c, (IntPtr)0);
+                KeyLowHelper.SendMessage(Memory.WindowHandle, 0x102, (IntPtr)ch, IntPtr.Zero);
             }
         }
 
         public static bool IsChatboxOpened
         {
-            get { return Memory.ReadRelative<uint>((uint)Pointers.Globals.ChatboxIsOpen) == 1; }
+            get
+            {
+                return (Memory.ReadRelative<uint>(new uint[] { 0xba033c }) == 1);
+            }
         }
     }
 }

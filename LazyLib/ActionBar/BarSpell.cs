@@ -1,95 +1,68 @@
-﻿
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
+﻿// Type: LazyLib.ActionBar.BarSpell
+// Assembly: LazyLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: A92FE1A9-C28E-4E6F-9BAC-5C48387A25CC
+// Assembly location: E:\VeryOldLazyBots\Lazy Evolution\LazyLib.dll
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
-#region
-
-using System.Reflection;
-using System.Threading;
 using LazyLib.Helpers;
 using LazyLib.Wow;
-
-#endregion
+using System.Reflection;
+using System.Threading;
 
 namespace LazyLib.ActionBar
 {
-    /// <summary>
-    ///   Represents a spell ingame
-    /// </summary>
-    [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
+    [Obfuscation(ApplyToMembers = true, Feature = "renaming")]
     public class BarSpell
     {
         private Ticker _globalCooldown;
 
-        public BarSpell(int id, int bar, int key, string name)
-        {
-            SpellId = id;
-            Bar = bar;
-            _globalCooldown = new Ticker(1600);
-            Key = key;
-            Name = name;
-            KeyHelper.AddKey(name, "", Bar.ToString(), Key.ToString());
-        }
-
         public int SpellId { get; private set; }
+
         public int Bar { get; set; }
+
         public int Key { get; set; }
+
         public string Name { get; private set; }
+
         public int Cooldown { get; private set; }
 
-        /// <summary>
-        /// Gets a value indicating whether [does key exist].
-        /// </summary>
-        /// <value><c>true</c> if [does key exist]; otherwise, <c>false</c>.</value>
         public bool DoesKeyExist
         {
-            get { return BarMapper.HasSpellByName(Name); }
+            get
+            {
+                return BarMapper.HasSpellByName(this.Name);
+            }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is ready.
-        /// </summary>
-        /// <value><c>true</c> if this instance is ready; otherwise, <c>false</c>.</value>
         public bool IsReady
         {
-            get { return BarMapper.IsSpellReadyById(SpellId); }
+            get
+            {
+                return BarMapper.IsSpellReadyById(this.SpellId);
+            }
         }
 
-        /// <summary>
-        /// Sets the cooldown.
-        /// </summary>
-        /// <param name="cooldown">The cooldown.</param>
+        public BarSpell(int id, int bar, int key, string name)
+        {
+            this.SpellId = id;
+            this.Bar = bar;
+            this._globalCooldown = new Ticker(1600.0);
+            this.Key = key;
+            this.Name = name;
+            KeyHelper.AddKey(name, "", this.Bar.ToString(), this.Key.ToString());
+        }
+
         public void SetCooldown(int cooldown)
         {
-            _globalCooldown = new Ticker(cooldown);
-            Cooldown = cooldown;
+            this._globalCooldown = new Ticker((double)cooldown);
+            this.Cooldown = cooldown;
         }
 
-        /// <summary>
-        ///   Casts the spell.
-        /// </summary>
         public void CastSpell()
         {
-            KeyHelper.SendKey(Name);
-            _globalCooldown.Reset();
-
-            while (ObjectManager.MyPlayer.IsCasting || !_globalCooldown.IsReady)
-            {
+            KeyHelper.SendKey(this.Name);
+            this._globalCooldown.Reset();
+            while (ObjectManager.MyPlayer.IsCasting || !this._globalCooldown.IsReady)
                 Thread.Sleep(10);
-            }
         }
     }
 }

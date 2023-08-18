@@ -1,5 +1,4 @@
-﻿<?xml version="1.0"?>
-
+<?xml version="1.0"?>
 <HerbList>
   <Herb>Cardo de sangre</Herb>
   <Herb>Setelo</Herb>
@@ -27,9 +26,7 @@
   <Herb>Marregal</Herb>
   <Herb>Alga estranguladora</Herb>
   <Herb>Hierba cardenal</Herb>
-  <Herb>
-    Salviargenta de montaña
-  </Herb>
+  <Herb>Salviargenta de montaña</Herb>
   <Herb>Hierba cardenal</Herb>
   <Herb>Hierba vil</Herb>
   <Herb>Hierba congelada</Herb>
@@ -41,9 +38,7 @@
   <Herb>Liquen antiguo</Herb>
   <Herb>Trébol de oro</Herb>
   <Herb>Flor abisal</Herb>
-  <Herb>
-    Arbusto de polvo abisal
-  </Herb>
+  <Herb>Arbusto de polvo abisal</Herb>
   <Herb>Espino de fuego</Herb>
   <Herb>Vid pesadilla</Herb>
   <Herb>Cardo de maná</Herb>
@@ -62,4 +57,11 @@
   <Herb>Flor de corazón</Herb>
   <Herb>Colátigo</Herb>
   <Herb>Jazmín Crepuscular</Herb>
+  <Herb>Hoja de té verde</Herb>
+  <Herb>Amapola de lluvia</Herb>
+  <Herb>Hierba sedosa</Herb>
+  <Herb>Loto dorado</Herb>
+  <Herb>Hierba influenciada por el sha</Herb>
+  <Herb>Lirio de las nieves</Herb>
+  <Herb>Flor del inocente</Herb>
 </HerbList>

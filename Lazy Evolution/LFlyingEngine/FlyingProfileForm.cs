@@ -434,30 +434,6 @@ namespace LazyEvo.LFlyingEngine
             Logging.Write(LogType.Warning, "Set Flying mode to TestTown, start the bot to test");
         }
 
-        private void BtnOnlineProfiles_Click(object sender, EventArgs e)
-        {
-            var flyingProfiles = new FlyingProfiles();
-            flyingProfiles.Show();
-            flyingProfiles.ProfileDownload += ProfileChanged;
-        }
-
-        private void ProfileChanged(object sender, EProfileDownloaded e)
-        {
-            string profileToLoad = e.Path;
-            if (profileToLoad.Contains(".xml"))
-            {
-                FlyingEngine.CurrentProfile = new FlyingProfile();
-                FlyingEngine.CurrentProfile.LoadFile(profileToLoad);
-                FlyingSettings.Profile = profileToLoad;
-                FlyingSettings.SaveSettings();
-                UpdateControls();
-            }
-            else
-            {
-                MessageBox.Show("Could not load the downloaded profile, invalid profile type");
-            }
-        }
-
         private void CBNaturalRun_CheckedChanged(object sender, EventArgs e)
         {
             if (FlyingEngine.CurrentProfile != null)

@@ -43,9 +43,9 @@ namespace LazyEvo.Forms.Helpers
             try
             {
                 var proc = new Process
-                               {
-                                   StartInfo = new ProcessStartInfo(_ourDirectory + "\\wyUpdate.exe", "-quickcheck -justcheck -noerr")
-                               };
+                {
+                    StartInfo = new ProcessStartInfo(_ourDirectory + "\\wyUpdate.exe", "-quickcheck -justcheck -noerr")
+                };
                 proc.Start();
                 proc.WaitForExit();
                 int exitCode = proc.ExitCode;

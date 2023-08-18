@@ -280,7 +280,7 @@ namespace LazyEvo.Plugins.ExtraLazy
             {
                 name = msg.Substring(msg.IndexOf("[") + 1, msg.IndexOf("]") - 1 - msg.IndexOf("["));
                 return this.removeProfession(name);
-                this.parseProfession();
+                // this.parseProfession();
             }
             else if (msg.Contains("You have g"))
             {
@@ -338,7 +338,7 @@ namespace LazyEvo.Plugins.ExtraLazy
             else if (msg.Contains("You have learned a new ability"))
             {
                 name = msg.Substring(msg.IndexOf("[") + 1, msg.IndexOf("]") - 1 - msg.IndexOf("["));
-                Profession p1 = null;
+                // Profession p1 = null;
                 foreach (Profession p in this._pProfessions)
                 {
                     if (p.Name == name)

@@ -81,6 +81,7 @@ namespace LazyLib
         public static bool SellCommon;
         public static bool SellUncommon;
         public static bool SellPoor;
+        public static bool SendToMailUnCommon;
         public static string FreeBackspace;
         public static string SelectedEngine;
         public static string SelectedCombat;
@@ -91,6 +92,7 @@ namespace LazyLib
         public static LazyLanguage Language;
         public static string TelnetPassword;
         public static int TelnetPort;
+        public static bool UseItems; 
 
         public static void LoadSettings()
         {
@@ -144,8 +146,9 @@ namespace LazyLib
             //Mail
             ShouldMail = pIniManager.GetBoolean("Mail", "ShouldMail", false);
             MailTo = pIniManager.GetString("Mail", "MailTo", string.Empty);
-            //MacroForMail = pIniManager.GetBoolean("Mail", "MacroForMail", false);
+            MacroForMail = pIniManager.GetBoolean("Mail", "MacroForMail", false);
             MacroForMail = false;
+            SendToMailUnCommon = pIniManager.GetBoolean("Mail", "SendToMailUnCommon", false);
             KeysMailMacroBar = pIniManager.GetString("Mail", "KeysMailMacroBar", "1");
             KeysMailMacroKey = pIniManager.GetString("Mail", "KeysMailMacroKey", "1");
 
@@ -156,6 +159,9 @@ namespace LazyLib
             SellUncommon = pIniManager.GetBoolean("Vendor", "SellUncommon", false);
             SellPoor = pIniManager.GetBoolean("Vendor", "SellPoor", false);
             FreeBackspace = pIniManager.GetString("Vendor", "FreeBackspace", "2"); 
+
+            //UseItems
+            UseItems = pIniManager.GetBoolean("UseItem", "UseItems", false);
         }
 
         public static void SaveSettings()
@@ -210,6 +216,7 @@ namespace LazyLib
             pIniManager.IniWriteValue("Mail", "ShouldMail", ShouldMail);
             pIniManager.IniWriteValue("Mail", "MailTo", MailTo);
             pIniManager.IniWriteValue("Mail", "MacroForMail", MacroForMail);
+            pIniManager.IniWriteValue("Mail", "SendToMailUnCommon", SendToMailUnCommon);
             pIniManager.IniWriteValue("Mail", "KeysMailMacroBar", KeysMailMacroBar);
             pIniManager.IniWriteValue("Mail", "KeysMailMacroKey", KeysMailMacroKey);
 
@@ -219,7 +226,10 @@ namespace LazyLib
             pIniManager.IniWriteValue("Vendor", "SellCommon", SellCommon);
             pIniManager.IniWriteValue("Vendor", "SellUncommon", SellUncommon);
             pIniManager.IniWriteValue("Vendor", "SellPoor", SellPoor);
-            pIniManager.IniWriteValue("Vendor", "FreeBackspace", FreeBackspace); 
+            pIniManager.IniWriteValue("Vendor", "FreeBackspace", FreeBackspace);
+
+            //UseItems
+            pIniManager.IniWriteValue("UseItem", "UseItems", UseItems);
         }
     }
 }

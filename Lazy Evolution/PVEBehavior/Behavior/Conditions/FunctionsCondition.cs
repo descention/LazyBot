@@ -45,6 +45,11 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
         IsPlayer = 6,
         IsPet = 7,
         IsAutoAttacking = 8,
+        IsSilenced = 9,
+        IsDisarmed = 10,
+        IsConfused = 11,
+        IsPacified = 12,
+
     }
 
     internal class FunctionsCondition : AbstractCondition
@@ -127,7 +132,7 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                             return true;
                         return false;
                     case FunctionEnum.InCombat:
-                        if (target.IsInCombat == value)
+                        if (target.InCombat == value)
                             return true;
                         return false;
                     case FunctionEnum.IsAutoAttacking:
@@ -148,6 +153,22 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                         return false;
                     case FunctionEnum.IsStunned:
                         if (target.IsStunned == value)
+                            return true;
+                        return false;
+                    case FunctionEnum.IsSilenced:
+                        if (target.IsSilenced == value)
+                            return true;
+                        return false;
+                    case FunctionEnum.IsDisarmed:
+                        if (target.IsDisarmed == value)
+                            return true;
+                        return false;
+                    case FunctionEnum.IsConfused:
+                        if (target.IsConfused == value)
+                            return true;
+                        return false;
+                    case FunctionEnum.IsPacified:
+                        if (target.IsPacified == value)
                             return true;
                         return false;
                 }
@@ -200,6 +221,14 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                                                         Function.Equals(FunctionEnum.IsPet)));
             conditionTarget.Nodes.Add(CreateRadioButton("IsAutoAttacking", "Auto Attacking", "FunctionEnum",
                                                         Function.Equals(FunctionEnum.IsAutoAttacking)));
+            conditionTarget.Nodes.Add(CreateRadioButton("IsSilenced", "IsSilenced", "FunctionEnum",
+                                            Function.Equals(FunctionEnum.IsSilenced)));
+            conditionTarget.Nodes.Add(CreateRadioButton("IsDisarmed", "IsDisarmed", "FunctionEnum",
+                                            Function.Equals(FunctionEnum.IsDisarmed)));
+            conditionTarget.Nodes.Add(CreateRadioButton("IsConfused", "IsConfused", "FunctionEnum",
+                                            Function.Equals(FunctionEnum.IsConfused)));
+            conditionTarget.Nodes.Add(CreateRadioButton("IsPacified", "IsPacified", "FunctionEnum",
+                                            Function.Equals(FunctionEnum.IsPacified)));
             conditionTarget.Expanded = true;
             re.Add(conditionTarget);
         }

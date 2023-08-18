@@ -191,6 +191,14 @@ namespace LazyEvo.PVEBehavior.Behavior
                     condition = new SoulShardCountCondition();
                     condition.LoadData(xmlNode);
                     return condition;
+                case "BurningEmbersCount":
+                    condition = new BurningEmbersCountCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "ChiCondition":
+                    condition = new ChiCondition();   // New For Chi
+                    condition.LoadData(xmlNode);
+                    return condition;
                 case "HealthStoneCountCondition":
                     condition = new HealthStoneCount();
                     condition.LoadData(xmlNode);

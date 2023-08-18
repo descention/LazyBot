@@ -36,6 +36,7 @@
             this.SelectEngine = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.Deathknight = new DevComponents.Editors.ComboItem();
             this.Paladin = new DevComponents.Editors.ComboItem();
+            this.Warrior = new DevComponents.Editors.ComboItem();
             this.BeTBSelectBehavior = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX20 = new DevComponents.DotNetBar.LabelX();
             this.BeTBNewBehavior = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -196,7 +197,8 @@
             this.SelectEngine.ItemHeight = 14;
             this.SelectEngine.Items.AddRange(new object[] {
             this.Deathknight,
-            this.Paladin});
+            this.Paladin,
+            this.Warrior});
             this.SelectEngine.Location = new System.Drawing.Point(111, 63);
             this.SelectEngine.Name = "SelectEngine";
             this.SelectEngine.Size = new System.Drawing.Size(150, 20);
@@ -210,6 +212,10 @@
             // Paladin
             // 
             this.Paladin.Text = "Paladin";
+            // 
+            // Paladin
+            // 
+            this.Warrior.Text = "Warrior";
             // 
             // BeTBSelectBehavior
             // 
@@ -929,6 +935,7 @@
         internal DevComponents.DotNetBar.Controls.ComboBoxEx SelectEngine;
         private DevComponents.Editors.ComboItem Deathknight;
         private DevComponents.Editors.ComboItem Paladin;
+        private DevComponents.Editors.ComboItem Warrior;
         private DevComponents.DotNetBar.ButtonItem BtnAddScript;
         private DevComponents.DotNetBar.LabelItem labelItem4;
         private DevComponents.DotNetBar.Controls.CheckBoxX BtnAllowScripts;

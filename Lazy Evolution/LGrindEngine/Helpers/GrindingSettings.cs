@@ -30,6 +30,7 @@ namespace LazyEvo.LGrindEngine.Helpers
         public static bool StopLootOnFull;
         public static bool Loot;
         public static bool Mount;
+        //public static bool OnLongBattle;
         public static bool Jump;
         public static string Profile;
         public static int ApproachRange;
@@ -45,7 +46,7 @@ namespace LazyEvo.LGrindEngine.Helpers
             OurDirectory = executableDirectoryName;
             var pIniManager = new IniManager(OurDirectory + SettingsName);
             Skin = pIniManager.GetBoolean("Grinding", "Skin", false);
-            WaitForLoot = pIniManager.GetBoolean("Grinding", "WaitForLoot", false);
+            WaitForLoot = pIniManager.GetBoolean("Grinding", "WaitForLoot", true);
             StopLootOnFull = pIniManager.GetBoolean("Grinding", "StopLootOnFull", false);
             Loot = pIniManager.GetBoolean("Grinding", "Loot", true);
             Mount = pIniManager.GetBoolean("Grinding", "Mount", true);
@@ -53,7 +54,8 @@ namespace LazyEvo.LGrindEngine.Helpers
             Profile = pIniManager.GetString("Grinding", "Profile", string.Empty);
             Jump = pIniManager.GetBoolean("Grinding", "Jump", false);
             SkipMobsWithAdds = pIniManager.GetBoolean("Grinding", "SkipMobsWithAdds", false);
-            //ShouldTrain = pIniManager.GetBoolean("Grinding", "ShouldTrain", false);
+            ShouldTrain = pIniManager.GetBoolean("Grinding", "ShouldTrain", false);
+            //OnLongBattle = pIniManager.GetBoolean("Grinding", "OnLongBattle", false);
             ShouldTrain = false;
             SkipAddsDistance = pIniManager.GetInt("Grinding", "SkipAddsDistance", 20);
             SkipAddsCount = pIniManager.GetInt("Grinding", "SkipAddsCount", 2);
@@ -74,6 +76,7 @@ namespace LazyEvo.LGrindEngine.Helpers
             pIniManager.IniWriteValue("Grinding", "Jump", Jump.ToString());
             pIniManager.IniWriteValue("Grinding", "ApproachRange", ApproachRange.ToString());
             pIniManager.IniWriteValue("Grinding", "SkipMobsWithAdds", SkipMobsWithAdds.ToString());
+            //pIniManager.IniWriteValue("Grinding", "OnLongBattle", OnLongBattle.ToString());
             pIniManager.IniWriteValue("Grinding", "SkipAddsDistance", SkipAddsDistance.ToString());
             pIniManager.IniWriteValue("Grinding", "SkipAddsCount", SkipAddsCount.ToString());
             pIniManager.IniWriteValue("Grinding", "ShouldTrain", ShouldTrain.ToString());

@@ -38,6 +38,7 @@ namespace LazyEvo.LGrindEngine
             GrinderCBJumpRandomly.Checked = GrindingSettings.Jump;
             GrinderIntAppRange.Value = GrindingSettings.ApproachRange;
             GrinderCBSkipPullOnAdds.Checked = GrindingSettings.SkipMobsWithAdds;
+          //  GrinderCBOnLongBattle.Checked = GrindingSettings.OnLongBattle;
             GrinderIntSkipAddsDis.Value = GrindingSettings.SkipAddsDistance;
             GrinderIntSkipAddMaxCount.Value = GrindingSettings.SkipAddsCount;
             UseMount.Checked = GrindingSettings.Mount;
@@ -53,6 +54,7 @@ namespace LazyEvo.LGrindEngine
             GrindingSettings.Jump = GrinderCBJumpRandomly.Checked;
             GrindingSettings.ApproachRange = GrinderIntAppRange.Value;
             GrindingSettings.SkipMobsWithAdds = GrinderCBSkipPullOnAdds.Checked;
+            //GrindingSettings.OnLongBattle = GrinderCBOnLongBattle.Checked;
             GrindingSettings.SkipAddsDistance = GrinderIntSkipAddsDis.Value;
             GrindingSettings.SkipAddsCount = GrinderIntSkipAddMaxCount.Value;
             GrindingSettings.Mount = UseMount.Checked;

@@ -34,15 +34,9 @@ namespace LazyLib.Wow
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
     public class PPlayerSelf : PPlayer
     {
-        private readonly uint[] _healthStone = new uint[]
-                                                   {
-                                                       36892, 36894, 36893, 36889, 36891, 36890, 22105, 22103, 22104,
-                                                       9421,
-                                                       19013, 19012, 19011, 19010, 5510, 5509, 5511, 5512, 19005, 19004,
-                                                       19009, 19008, 19007
-                                                   };
+        private readonly uint[] _healthStone = new uint[] {  0x901c, 0x901e, 0x901d, 0x9019, 0x901b, 0x901a, 0x5659, 0x5657, 0x5658, 0x24cd, 0x4a45, 0x4a44, 0x4a43, 0x4a42, 0x1586, 0x1585, 0x1587, 0x1588, 0x4a3d, 0x4a3c, 0x4a41, 0x4a40, 0x4a3f};
 
-        private readonly uint[] _mageFood = new uint[] { 65499, 43523, 43518, 65517, 65516, 65515, 65500 };
+        private readonly uint[] _mageFood = new uint[] { 0xffdb, 0xaa03, 0xa9fe, 0xffed, 0xffec, 0xffeb, 0xffdc };
 
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PPlayerSelf" /> class.
@@ -61,30 +55,6 @@ namespace LazyLib.Wow
         {
             get
             {
-                /*
-                foreach (uint u in ObjectManager.MyPlayer.GetItemsEquippedId)
-                {
-                    bool foundit = false;
-                    foreach (PItem pItem in ObjectManager.GetItems)
-                    {
-                        if (pItem.EntryId.Equals(u))
-                        {
-                            foundit = true;
-                            double durability = pItem.GetDurabilityPercentage;
-                            if (durability < 10)
-                                return true;
-                        }
-                    }
-                    if (!foundit)
-                    {
-                        if (u != 0)
-                        {
-                            Logging.Write("Found an item with id " + u +
-                                          " that does not exist on your char. Assuming it is broken, going to repair");
-                            return true;
-                        }
-                    }
-                } */
                 if (InterfaceHelper.GetFrameByName("DurabilityFrame") == null)
                     return false;
                 return InterfaceHelper.GetFrameByName("DurabilityFrame").IsVisible;
@@ -98,7 +68,7 @@ namespace LazyLib.Wow
 
         public int CoinAge
         {
-            get { return GetStorageField<int>((uint) Descriptors.ePlayerFields.PLAYER_FIELD_COINAGE); }
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.Coinage); }
         }
 
         /// <summary>
@@ -109,29 +79,13 @@ namespace LazyLib.Wow
         {
             get
             {
-                var toReturn = new List<uint>();
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_2_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_3_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_4_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_5_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_6_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_7_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_8_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_9_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_10_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_11_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_12_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_13_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_14_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_15_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_16_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_17_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_18_ENTRYID));
-                toReturn.Add(GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_19_ENTRYID));
-                return toReturn;
+                return new List<uint> { 
+                    base.GetStorageField<uint>((uint) 0xe48), base.GetStorageField<uint>((uint) 0xe50), base.GetStorageField<uint>((uint) 0xe58), base.GetStorageField<uint>((uint) 0xe60), base.GetStorageField<uint>((uint) 0xe68), base.GetStorageField<uint>((uint) 0xe70), base.GetStorageField<uint>((uint) 0xe78), base.GetStorageField<uint>((uint) 0xe80), base.GetStorageField<uint>((uint) 0xe88), base.GetStorageField<uint>((uint) 0xe90), base.GetStorageField<uint>((uint) 0xe98), base.GetStorageField<uint>((uint) 0xea0), base.GetStorageField<uint>((uint) 0xea8), base.GetStorageField<uint>((uint) 0xeb0), base.GetStorageField<uint>((uint) 0xeb8), base.GetStorageField<uint>((uint) 0xec0), 
+                    base.GetStorageField<uint>((uint) 0xec8), base.GetStorageField<uint>((uint) 0xed0), base.GetStorageField<uint>((uint) 0xed8)
+                 };
             }
         }
+
 
         public bool LootWinOpen
         {
@@ -171,12 +125,10 @@ namespace LazyLib.Wow
             {
                 var guids = new List<ulong>();
                 const int numberOfItems = 16;
-                // this could change on a patch day, it's the number of items stored in a player's backpack
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
                 {
-                    guids.Add(GetStorageField<ulong>((uint) Descriptors.ePlayerFields.PLAYER_FIELD_PACK_SLOT_1 + 0x8*i));
-                    //Logging.Write(GetStorageField<ulong>((uint)Descriptors.ePlayerFields.PLAYER_FIELD_PACK_SLOT_1 + 0x8 * i) + "");
+                    guids.Add(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
                 }
                 return guids;
             }
@@ -191,7 +143,7 @@ namespace LazyLib.Wow
                 try
                 {
                     bag =
-                        Memory.ReadRelative<UInt64>(((uint) Pointers.Container.EquippedBagGUID));
+                        Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID));
                     guids.Add(bag);
                 }
                 catch
@@ -200,7 +152,7 @@ namespace LazyLib.Wow
                 try
                 {
                     bag =
-                        Memory.ReadRelative<UInt64>(((uint) Pointers.Container.EquippedBagGUID + 0x8*1));
+                        Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 1));  // + 8
                     guids.Add(bag);
                 }
                 catch
@@ -209,7 +161,7 @@ namespace LazyLib.Wow
                 try
                 {
                     bag =
-                        Memory.ReadRelative<UInt64>(((uint) Pointers.Container.EquippedBagGUID + 0x8*2));
+                        Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 2)); // + 16
                     guids.Add(bag);
                 }
                 catch
@@ -218,7 +170,7 @@ namespace LazyLib.Wow
                 try
                 {
                     bag =
-                        Memory.ReadRelative<UInt64>(((uint) Pointers.Container.EquippedBagGUID + 0x8*3));
+                        Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 3));  // + 24
                     guids.Add(bag);
                 }
                 catch
@@ -228,27 +180,6 @@ namespace LazyLib.Wow
             }
         }
 
-        /*
-        /// <summary>
-        ///   Gets the backspace left.
-        /// </summary>
-        /// <value>The backspace left.</value>
-        internal int FreeBagSlots
-        {
-            get
-            {
-                List<ulong> bagGuids = GUIDOfBags;
-                int items = GetItemsInBags.Count();
-                int bagSpace = 0;
-                foreach (PContainer container in ObjectManager.GetContainers)
-                {
-                    if (bagGuids.Contains(container.GUID))
-                        bagSpace += container.Slots;
-                }
-                bagSpace += 16;
-                return bagSpace - items;
-            }
-        } */
 
         /// <summary>
         ///   Returns a item pointer to the mainhand
@@ -262,7 +193,7 @@ namespace LazyLib.Wow
                 {
                     if (
                         pItem.EntryId.Equals(
-                            GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_16_ENTRYID)))
+                            GetStorageField<uint>((uint)0xec0)))
                     {
                         return pItem;
                     }
@@ -283,7 +214,7 @@ namespace LazyLib.Wow
                 {
                     if (
                         pItem.EntryId.Equals(
-                            GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_17_ENTRYID)))
+                            GetStorageField<uint>((uint)0xec8)))
                     {
                         return pItem;
                     }
@@ -328,7 +259,14 @@ namespace LazyLib.Wow
         /// </value>
         public bool WinterGraspInProgress
         {
-            get { return HasBuff(37795) || (HasBuff(33280) || HasBuff(55629)); }
+            get
+            {
+                if (!base.HasBuff(0x93a3) && !base.HasBuff(0x8200))
+                {
+                    return base.HasBuff(0xd94d);
+                }
+                return true;
+            }
         }
 
         /// <summary>
@@ -403,7 +341,14 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if [in vashir]; otherwise, <c>false</c>.</value>
         public bool InVashjir
         {
-            get { return (ZoneId == 5145 || ZoneId == 5144 || ZoneId == 5146 || ZoneId == 4815); }
+            get
+            {
+                if (((this.ZoneId != 0x1419) && (this.ZoneId != 0x1418)) && (this.ZoneId != 0x141a))
+                {
+                    return (this.ZoneId == 0x12cf);
+                }
+                return true;
+            }
         }
 
         /// <summary>
@@ -425,8 +370,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return Memory.ReadUtf8(
-                    Memory.ReadRelative<uint>((uint) Pointers.Zone.ZoneText), 40);
+                return Memory.ReadUtf8(Memory.ReadRelative<uint>((uint) Pointers.Zone.ZoneText), 40);
             }
         }
 
@@ -455,7 +399,7 @@ namespace LazyLib.Wow
         /// <value>The experience points.</value>
         public int Experience
         {
-            get { return GetStorageField<int>((uint) Descriptors.ePlayerFields.PLAYER_XP); }
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.XP); }
         }
 
         /// <summary>
@@ -464,7 +408,7 @@ namespace LazyLib.Wow
         /// <value>The experience points to next level.</value>
         public int NextLevel
         {
-            get { return GetStorageField<int>((uint) Descriptors.ePlayerFields.PLAYER_NEXT_LEVEL_XP); }
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.NextLevelXP); }
         }
 
         /// <summary>
@@ -487,43 +431,61 @@ namespace LazyLib.Wow
             switch (slot)
             {
                 case 1:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe48);
+
                 case 2:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_2_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe50);
+
                 case 3:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_3_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe58);
+
                 case 4:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_4_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe60);
+
                 case 5:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_5_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe68);
+
                 case 6:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_6_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe70);
+
                 case 7:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_7_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe78);
+
                 case 8:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_8_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe80);
+
                 case 9:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_9_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe88);
+
                 case 10:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_10_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe90);
+
                 case 11:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_11_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xe98);
+
                 case 12:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_12_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xea0);
+
                 case 13:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_13_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xea8);
+
                 case 14:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_14_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xeb0);
+
                 case 15:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_15_ENTRYID);
-                case 16:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_16_ENTRYID);
-                case 17:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_17_ENTRYID);
-                case 18:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_18_ENTRYID);
-                case 19:
-                    return GetStorageField<uint>((uint) Descriptors.ePlayerFields.PLAYER_VISIBLE_ITEM_19_ENTRYID);
+                    return base.GetStorageField<uint>((uint)0xeb8);
+
+                case 0x10:
+                    return base.GetStorageField<uint>((uint)0xec0);
+
+                case 0x11:
+                    return base.GetStorageField<uint>((uint)0xec8);
+
+                case 0x12:
+                    return base.GetStorageField<uint>((uint)0xed0);
+
+                case 0x13:
+                    return base.GetStorageField<uint>((uint)0xed8);
             }
             return 0;
         }

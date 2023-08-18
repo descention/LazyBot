@@ -63,6 +63,8 @@ namespace LazyEvo.Classes
             //added by hertzigger
             LazyEvo.Plugins.LazyData.Loader lazyData = new LazyEvo.Plugins.LazyData.Loader();
             Assemblys.Add("Lazy Data", lazyData);
+            //LazyEvo.Plugins.GoldenFleece GoldenFleece = new LazyEvo.Plugins.GoldenFleece();
+            //Assemblys.Add("GoldenFleece", GoldenFleece);
             try
             {
                 if (!Directory.Exists(LazyForms.OurDirectory + "\\Plugins"))

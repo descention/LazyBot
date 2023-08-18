@@ -1,107 +1,69 @@
-﻿
-﻿/*
-This file is part of LazyBot - Copyright (C) 2011 Arutha
-
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
-*/
-using System.Reflection;
-
-namespace LazyLib.Wow
+﻿namespace LazyLib.Wow
 {
+    using System;
+    using System.Reflection;
+
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
     public class Constants
     {
-        #region ChatType enum
-
-        /// <summary>
-        ///   The different eChat types
-        /// </summary>
         public enum ChatType : byte
         {
             Addon = 0,
-            Say = 1,
+            Afk = 0x17,
+            Battleground = 0x2c,
+            BattlegroundLeader = 0x2d,
+            BgEventAlliance = 0x24,
+            BgEventHorde = 0x25,
+            BgEventNeutral = 0x23,
+            Channel = 0x11,
+            ChannelJoin = 0x12,
+            ChannelLeave = 0x13,
+            ChannelList = 20,
+            ChannelNotice = 0x15,
+            ChannelNoticeUser = 0x16,
+            CombatFactionChange = 0x26,
+            Dnd = 0x18,
+            Emote = 10,
+            Filtered = 0x2b,
+            Guild = 4,
+            Ignored = 0x19,
+            Loot = 0x1b,
+            MonsterEmote = 0x10,
+            MonsterParty = 13,
+            MonsterSay = 12,
+            MonsterWhisper = 15,
+            MonsterYell = 14,
+            Officer = 5,
             Party = 2,
             Raid = 3,
-            Guild = 4,
-            Officer = 5,
-            Yell = 6,
-            Whisper = 7,
-            WhisperMob = 8,
-            WhisperInform = 9,
-            Emote = 10,
-            TextEmote = 11,
-            MonsterSay = 12,
-            MonsterParty = 13,
-            MonsterYell = 14,
-            MonsterWhisper = 15,
-            MonsterEmote = 16,
-            Channel = 17,
-            ChannelJoin = 18,
-            ChannelLeave = 19,
-            ChannelList = 20,
-            ChannelNotice = 21,
-            ChannelNoticeUser = 22,
-            Afk = 23,
-            Dnd = 24,
-            Ignored = 25,
-            Skill = 26,
-            Loot = 27,
-            //29
-            //30
-            //31
-            //32
-            //33
-            //34
-            //35
-            //36
-            //37
-            //38
-            BgEventNeutral = 35,
-            BgEventAlliance = 36,
-            BgEventHorde = 37,
-            CombatFactionChange = 38,
-            RaidLeader = 39,
+            RaidLeader = 0x27,
             RaidWarning = 40,
-            RaidWarningWidescreen = 41,
-            //42
-            Filtered = 43,
-            Battleground = 44,
-            BattlegroundLeader = 45,
-            Restricted = 46,
-            RealId = 53,
-        } ;
-
-        #endregion
-
-        #region Classification enum
+            RaidWarningWidescreen = 0x29,
+            RealId = 0x35,
+            Restricted = 0x2e,
+            Say = 1,
+            Skill = 0x1a,
+            TextEmote = 11,
+            Whisper = 7,
+            WhisperInform = 9,
+            WhisperMob = 8,
+            Yell = 6
+        }
 
         public enum Classification
         {
-            Normal = 0,
-            Elite = 1,
-            RareElite = 2,
-            WorldBoss = 3,
-            Rare = 4
+            Normal,
+            Elite,
+            RareElite,
+            WorldBoss,
+            Rare,
+            trivial,
+            minus
         }
-
-        #endregion
-
-        #region CreatureType enum
 
         public enum CreatureType
         {
-            Unknown = 0,
+            Unknown,
             Beast,
             Dragon,
             Demon,
@@ -117,103 +79,111 @@ namespace LazyLib.Wow
             GasCloud
         }
 
-        #endregion
-
-        #region KeyType enum
+    public enum PowerType
+    {
+        Mana,
+        Rage,
+        Focus,
+        Energy,
+        Happiness,
+        Runes,
+        RunicPower,
+        SoulShards,
+        Eclipse,
+        HolyPower,
+        Alternate,
+        DarkForce,
+        LightForce,
+        ShadowOrbs,
+        BurningEmbers,
+        DemonicFury,
+        ArcaneCharges
+    }
 
         public enum KeyType : uint
         {
+            GeneralMacro = 0x40,
+            Item = 0x80,
             Spell = 0,
-            GeneralMacro = 64,
-            ToonSpecificMacro = 65,
-            Item = 128
+            ToonSpecificMacro = 0x41
         }
-
-        #endregion
-
-        #region ObjType enum
-
-        public enum ObjType : uint
-        {
-            OT_NONE = 0,
-            OT_ITEM = 1,
-            OT_CONTAINER = 2,
-            OT_UNIT = 3,
-            OT_PLAYER = 4,
-            OT_GAMEOBJ = 5,
-            OT_DYNOBJ = 6,
-            OT_CORPSE = 7,
-            OT_FORCEDWORD = 0xFFFFFFFF
-        }
-
-        #endregion
-
-        #region ObjectType enum
 
         public enum ObjectType : uint
         {
-            Object = 0,
-            Item = 1,
-            Container = 2,
-            Unit = 3,
-            Player = 4,
-            GameObject = 5,
-            DynamicObject = 6,
-            Corpse = 7,
             AiGroup = 8,
-            AreaTrigger = 9
+            AreaTrigger = 9,
+            Container = 2,
+            Corpse = 7,
+            DynamicObject = 6,
+            GameObject = 5,
+            Item = 1,
+            Object = 0,
+            Player = 4,
+            Unit = 3
         }
 
-        #endregion
-
-        #region PlayerFactions enum
+        public enum ObjType : uint
+        {
+            OT_AREATRIGGER = 8,
+            OT_CONTAINER = 2,
+            OT_CORPSE = 7,
+            OT_DYNOBJ = 6,
+            OT_FORCEDWORD = 0xffffffff,
+            OT_GAMEOBJ = 5,
+            OT_ITEM = 1,
+            OT_NONE = 0,
+            OT_PLAYER = 4,
+            OT_SCENEOBJECT = 9,
+            OT_UNIT = 3
+        }
 
         public enum PlayerFactions : uint
         {
-            Human = 1,
-            Orc = 2,
+            BloodElf = 0x64a,
+            Draenei = 0x65d,
             Dwarf = 3,
+            Gnome = 0x73,
+            Goblin = 0x89c,
+            Human = 1,
             NightElf = 4,
-            Undead = 5,
+            Orc = 2,
             Tauren = 6,
-            Gnome = 115,
-            Troll = 116,
-            BloodElf = 1610,
-            Draenei = 1629,
-            Worgen = 2203,
-            Goblin = 2204,
+            Troll = 0x74,
+            Undead = 5,
+            Worgen = 0x89b
         }
-
-        #endregion
-
-        #region ShapeshiftForm enum
 
         public enum ShapeshiftForm
         {
-            Normal = 0,
-            Cat = 1,
-            TreeOfLife = 2,
-            Travel = 3,
-            Aqua = 4,
-            Bear = 5,
             Ambient = 6,
-            Ghoul = 7,
-            DireBear = 8,
+            Aqua = 4,
+            BattleStance = 0x11,
+            Bear = 5,
+            BerserkerStance = 0x13,
+            Cat = 1,
             CreatureBear = 14,
             CreatureCat = 15,
-            GhostWolf = 16,
-            BattleStance = 17,
-            DefensiveStance = 18,
-            BerserkerStance = 19,
-            EpicFlightForm = 27,
-            Shadow = 28,
+            DefensiveStance = 0x12,
+            DireBear = 8,
+            EpicFlightForm = 0x1b,
+            GhostWolf = 0x10,
+            Ghoul = 7,
+            Moonkin = 0x1f,
+            Normal = 0,
+            Shadow = 0x1c,
             Stealth = 30,
-            Moonkin = 31,
+            Travel = 3,
+            TreeOfLife = 2
         }
 
-        #endregion
-
-        #region UnitClass enum
+        public enum SkinnableType
+        {
+            None,
+            Skining,
+            Herb,
+            Mining,
+            Engineer
+        }
 
         public enum UnitClass
         {
@@ -227,120 +197,103 @@ namespace LazyLib.Wow
             UnitClass_Shaman = 7,
             UnitClass_Mage = 8,
             UnitClass_Warlock = 9,
+            UnitClass_Monk = 10,
             UnitClass_Druid = 11,
         }
-
-        #endregion
-
-        #region UnitDynamicFlags enum
 
         public enum UnitDynamicFlags
         {
             None = 0,
-            Lootable = 0x1,
-            TrackUnit = 0x2,
-            TaggedByOther = 0x4,
-            TaggedByMe = 0x8,
-            SpecialInfo = 0x10,
-            Dead = 0x20,
-            ReferAFriendLinked = 0x40,
-            IsTappedByAllThreatList = 0x80,
+            Invisible = 1,
+            Lootable = 2,
+            TrackUnit = 4,
+            Tapped = 8,
+            TappedByMe = 16,
+            SpecialInfo = 32,
+            Dead = 64,
+            ReferAFriendLinked = 128,
+            IsTappedByAllThreatList = 256
         }
-
-        #endregion
-
-        #region UnitFlags enum
 
         public enum UnitFlags : uint
         {
-            None = 0,
-            Sitting = 0x1,
-            //SelectableNotAttackable_1 = 0x2,
-            Influenced = 0x4, // Stops movement packets
-            PlayerControlled = 0x8, // 2.4.2
-            Totem = 0x10,
-            Preparation = 0x20, // 3.0.3
-            PlusMob = 0x40, // 3.0.2
-            //SelectableNotAttackable_2 = 0x80,
-            NotAttackable = 0x100,
-            //Flag_0x200 = 0x200,
-            Looting = 0x400,
-            PetInCombat = 0x800, // 3.0.2
-            PvPFlagged = 0x1000,
-            Silenced = 0x2000, //3.0.3
-            //Flag_14_0x4000 = 0x4000,
-            //Flag_15_0x8000 = 0x8000,
-            //SelectableNotAttackable_3 = 0x10000,
-            Pacified = 0x20000, //3.0.3
-            Stunned = 0x40000,
             CanPerformAction_Mask1 = 0x60000,
-            Combat = 0x80000, // 3.1.1
-            TaxiFlight = 0x100000, // 3.1.1
-            Disarmed = 0x200000, // 3.1.1
-            Confused = 0x400000, //  3.0.3
-            Fleeing = 0x800000,
-            Possessed = 0x1000000, // 3.1.1
-            NotSelectable = 0x2000000,
-            Skinnable = 0x4000000,
-            Mounted = 0x8000000,
-            //Flag_28_0x10000000 = 0x10000000,
+            Combat = 0x80000,
+            Confused = 0x400000,
             Dazed = 0x20000000,
+            Disarmed = 0x200000,
+            Fleeing = 0x800000,
+            Influenced = 4,
+            Looting = 0x400,
+            Mounted = 0x8000000,
+            None = 0,
+            NotAttackable = 0x100,
+            NotSelectable = 0x2000000,
+            Pacified = 0x20000,
+            PetInCombat = 0x800,
+            PlayerControlled = 8,
+            PlusMob = 0x40,
+            Possessed = 0x1000000,
+            Preparation = 0x20,
+            PvPFlagged = 0x1000,
             Sheathe = 0x40000000,
-            //Flag_31_0x80000000 = 0x80000000,
+            Silenced = 0x2000,
+            Sitting = 1,
+            Skinnable = 0x4000000,
+            Stunned = 0x40000,
+            TaxiFlight = 0x100000,
+            Totem = 0x10
         }
-
-        #endregion
-
-        #region UnitGender enum
 
         public enum UnitGender
         {
-            UnitGender_Male = 0,
-            UnitGender_Female = 1,
-            UnitGender_Unknown = 2,
+            UnitGender_Male,
+            UnitGender_Female,
+            UnitGender_Unknown
         }
-
-        #endregion
-
-        #region UnitPower enum
 
         public enum UnitPower
         {
-            UnitPower_Mana = 0,
-            UnitPower_Rage = 1,
-            UnitPower_Focus = 2,
-            UnitPower_Energy = 3,
-            UnitPower_Runes = 5,
-            UnitPower_RunicPower = 6,
-            UnitPower_SoulShard = 8,
-            UnitPower_Eclipse = 9,
-            UnitPower_HolyPower = 10,
-            UnitPower_Max = 7,
+            UnitPower_Mana,
+            UnitPower_Rage,
+            UnitPower_Focus,
+            UnitPower_Energy,
+            UnitPower_Happiness,
+            UnitPower_Runes,
+            UnitPower_RunicPower,
+            UnitPower_SoulShard,
+            UnitPower_Eclipse,
+            UnitPower_HolyPower,
+            UnitPower_Alternate,
+            UnitPower_DarkForce,
+            UnitPower_LightForce,
+            UnitPower_ShadowOrbs,
+            UnitPower_BurningEmbers,
+            UnitPower_DemonicFury,
+            UnitPower_ArcaneCharges,
+            UnitPower_Max
         }
-
-        #endregion
-
-        #region UnitRace enum
 
         public enum UnitRace
         {
+            UnitRace_BloodElf = 10,
+            UnitRace_Broken = 14,
+            UnitRace_Draenei = 11,
+            UnitRace_Dwarf = 3,
+            UnitRace_FelOrc = 12,
+            UnitRace_Gnome = 7,
+            UnitRace_Goblin = 9,
             UnitRace_Human = 1,
-            UnitRace_Orc,
-            UnitRace_Dwarf,
-            UnitRace_NightElf,
-            UnitRace_Undead,
-            UnitRace_Tauren,
-            UnitRace_Gnome,
-            UnitRace_Troll,
-            UnitRace_Goblin,
-            UnitRace_BloodElf,
-            UnitRace_Draenei,
-            UnitRace_FelOrc,
-            UnitRace_Naga,
-            UnitRace_Broken,
+            UnitRace_Naga = 13,
+            UnitRace_NightElf = 4,
+            UnitRace_Orc = 2,
+            UnitRace_Pandaren = 0x18,
             UnitRace_Skeleton = 15,
+            UnitRace_Tauren = 6,
+            UnitRace_Troll = 8,
+            UnitRace_Undead = 5,
+            UnitRace_Worgen = 0x16
         }
-
-        #endregion
     }
 }
+

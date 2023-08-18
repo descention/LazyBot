@@ -1216,7 +1216,7 @@
         private DevComponents.DotNetBar.ItemPanel ControlSettings;
         private DevComponents.DotNetBar.LabelItem labelItem1;
         private DevComponents.DotNetBar.LabelItem labelItem2;
-        private DevComponents.DotNetBar.ButtonItem OpenLazySettings;
+        // private DevComponents.DotNetBar.ButtonItem OpenLazySettings;
         private DevComponents.DotNetBar.ButtonItem CombatSettings;
         private DevComponents.DotNetBar.ButtonItem EngineSettings;
         private DevComponents.DotNetBar.LabelItem labelItem3;
@@ -1264,7 +1264,7 @@
         private DevComponents.DotNetBar.ButtonX MainBtnRefreshProcess;
         private DevComponents.DotNetBar.ButtonX MainBtnSelectProcess;
         internal DevComponents.DotNetBar.Controls.ComboBoxEx MainComProcessSelection;
-        private DevComponents.DotNetBar.ButtonItem OpenSettings;
+        // private DevComponents.DotNetBar.ButtonItem OpenSettings;
         private DevComponents.DotNetBar.ButtonItem GeneralSettings;
         private DevComponents.DotNetBar.ControlContainerItem controlContainerItem1;
         private DevComponents.DotNetBar.ControlContainerItem controlContainerItem2;

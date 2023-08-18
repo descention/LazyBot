@@ -310,7 +310,7 @@ namespace LazyEvo.PVEBehavior
             foreach (PUnit pUnit in list)
             {
                 if (pUnit.DistanceToSelf < closest && (ignore.GUID != pUnit.GUID) && !ignore.IsPet &&
-                    !(pUnit.IsInCombat || pUnit.IsTargetingMe || pUnit.IsTargetingMyPet))
+                    !(pUnit.InCombat || pUnit.IsTargetingMe || pUnit.IsTargetingMyPet))
                 {
                     closest = pUnit.DistanceToSelf;
                     toReturn = pUnit;

@@ -59,14 +59,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.Instrumentation, Version=11.2.0.1, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\DevComponents.Instrumentation.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\LB V5.4.1 charles\saddan\QuickGraph.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
@@ -83,13 +75,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionBar\KeyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GeomertrySettings.cs" />
     <Compile Include="Helpers\Camera.cs" />
     <Compile Include="Helpers\ChatQueu.cs" />
     <Compile Include="Helpers\Fishing.cs" />
     <Compile Include="Helpers\Mail\MailFrame.cs" />
-    <Compile Include="Helpers\Mail\MailManager.cs" />
     <Compile Include="Helpers\Mail\MailList.cs" />
+    <Compile Include="Helpers\Mail\MailManager.cs" />
     <Compile Include="Helpers\ValidateKeys.cs" />
     <Compile Include="Helpers\Vendor\ItemDatabase.cs" />
     <Compile Include="Helpers\Vendor\ProtectedList.cs" />
@@ -122,7 +117,6 @@
     <Compile Include="ActionBar\BarMapper.cs" />
     <Compile Include="Helpers\MouseHelper.cs" />
     <Compile Include="Helpers\MoveHelper.cs" />
-    <Compile Include="ActionBar\BarKey.cs" />
     <Compile Include="IPlugin\ILazyPlugin.cs" />
     <Compile Include="LazyRadar\Drawer\DrawEnemies.cs" />
     <Compile Include="LazyRadar\Drawer\DrawFriends.cs" />
@@ -140,7 +134,15 @@
     <Compile Include="LogType.cs" />
     <Compile Include="Manager\BlueChat.cs" />
     <Compile Include="Manager\Constants.cs" />
-    <Compile Include="Manager\Descriptors.cs" />
+    <Compile Include="Manager\Descriptors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manager\Wow\DBC!1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manager\Wow\DBCHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Manager\Wow\Location.cs" />
     <Compile Include="Helpers\Memory.cs" />
     <Compile Include="Manager\ObjectManager.cs" />
@@ -156,6 +158,10 @@
     <Compile Include="Manager\Pointers.cs" />
     <Compile Include="Helpers\IniManager.cs" />
     <Compile Include="ActionBar\BarSpell.cs" />
+    <Compile Include="Manager\Wow\Reaction.cs" />
+    <Compile Include="Manager\Wow\WoWClientDB.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Ticker.cs" />
     <Compile Include="LazySettings.cs" />
@@ -192,6 +198,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\Spells.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +208,7 @@
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

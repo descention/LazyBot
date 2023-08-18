@@ -47,31 +47,55 @@ namespace LazyLib.Wow
         {
             get
             {
-                long faction = Faction;
-                if (faction.Equals((long) Constants.PlayerFactions.Human))
+                long faction = base.Faction;
+                if (faction.Equals((long)1L))
+                {
                     return "Human";
-                if (faction.Equals((long) Constants.PlayerFactions.BloodElf))
+                }
+                if (faction.Equals((long)0x64aL))
+                {
                     return "Blood Elf";
-                if (faction.Equals((long) Constants.PlayerFactions.Dwarf))
+                }
+                if (faction.Equals((long)3L))
+                {
                     return "Dwarf";
-                if (faction.Equals((long) Constants.PlayerFactions.Gnome))
+                }
+                if (faction.Equals((long)0x73L))
+                {
                     return "Gnome";
-                if (faction.Equals((long) Constants.PlayerFactions.NightElf))
+                }
+                if (faction.Equals((long)4L))
+                {
                     return "Night Elf";
-                if (faction.Equals((long) Constants.PlayerFactions.Orc))
+                }
+                if (faction.Equals((long)2L))
+                {
                     return "Orc";
-                if (faction.Equals((long) Constants.PlayerFactions.Tauren))
+                }
+                if (faction.Equals((long)6L))
+                {
                     return "Tauren";
-                if (faction.Equals((long) Constants.PlayerFactions.Troll))
+                }
+                if (faction.Equals((long)0x74L))
+                {
                     return "Troll";
-                if (faction.Equals((long) Constants.PlayerFactions.Undead))
+                }
+                if (faction.Equals((long)5L))
+                {
                     return "Undead";
-                if (faction.Equals((long) Constants.PlayerFactions.Draenei))
+                }
+                if (faction.Equals((long)0x65dL))
+                {
                     return "Draenei";
-                if (faction.Equals((long) Constants.PlayerFactions.Worgen))
+                }
+                if (faction.Equals((long)0x89bL))
+                {
                     return "Worgen";
-                if (faction.Equals((long) Constants.PlayerFactions.Goblin))
+                }
+                if (faction.Equals((long)0x89cL))
+                {
                     return "Goblin";
+                }
                 return "Unknown";
             }
         }
@@ -83,7 +107,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                switch (PlayerRace)
+                switch (this.PlayerRace)
                 {
                     case "Human":
                     case "Dwarf":
@@ -92,6 +116,7 @@ namespace LazyLib.Wow
                     case "Draenei":
                     case "Worgen":
                         return "Alliance";
+
                     case "Orc":
                     case "Undead":
                     case "Tauren":
