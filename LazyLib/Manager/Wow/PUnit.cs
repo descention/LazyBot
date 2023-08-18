@@ -26,6 +26,7 @@ using System.Threading;
 using LazyLib.ActionBar;
 using LazyLib.Helpers;
 using LazyLib.Manager;
+//using LazyLib.Helpers.DBCReads;
 
 #endregion
 
@@ -78,47 +79,6 @@ namespace LazyLib.Wow
             }
         }
 
-
-        public Constants.SkinnableType GetSkinnableType()
-        {
-            if (this.IsSkinnable)
-            {
-                if (this.IsHerb)
-                {
-                    if (LazySettings.DebugMode)
-                    {
-                        Logging.Write("GetSkinnableType = IsHerb", new object[0]);
-                    }
-                    return Constants.SkinnableType.Herb;
-                }
-                if (this.IsMining)
-                {
-                    if (LazySettings.DebugMode)
-                    {
-                        Logging.Write("GetSkinnableType = IsMining", new object[0]);
-                    }
-                    return Constants.SkinnableType.Mining;
-                }
-                if (this.IsIngener)
-                {
-                    if (LazySettings.DebugMode)
-                    {
-                        Logging.Write("GetSkinnableType = IsIngener", new object[0]);
-                    }
-                    return Constants.SkinnableType.Engineer;
-                }
-                if (LazySettings.DebugMode)
-                {
-                    Logging.Write("GetSkinnableType = Skining", new object[0]);
-                }
-                return Constants.SkinnableType.Skining;
-            }
-            if (LazySettings.DebugMode)
-            {
-                Logging.Write("GetSkinnableType = None", new object[0]);
-            }
-            return Constants.SkinnableType.None;
-        }
         /// <summary>
         ///   Gets the type of the power.
         /// </summary>
@@ -233,6 +193,12 @@ namespace LazyLib.Wow
                     case (uint)Constants.UnitRace.UnitRace_Pandaren:
                         race = @"Pandaren";
                         break;
+                   /* case (uint)Constants.UnitRace.UnitRace_PandarenHorde:
+                        race = @"PandarenHorde";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_PandarenAlliance:
+                        race = @"PandarenAlliance";
+                        break;*/
                     default:
                         race = @"Unknown";
                         break;
@@ -472,6 +438,7 @@ namespace LazyLib.Wow
                 return Wow.Faction.GetReaction(ObjectManager.MyPlayer, this);
             }
         }
+
 
         /// <summary>
         ///   Gets a value indicating whether this unit is a player.
@@ -722,17 +689,6 @@ namespace LazyLib.Wow
                 return Convert.ToBoolean((long)(this.Flags & (uint)UnitNPCFlags2.UNIT_FLAG_IN_COMBAT));
             }
         }
-
-
-      /*  public bool InCombat
-        {
-            get
-            {
-                uint num = Memory.Read<uint>(new uint[] { base.BaseAddress + (uint)Pointers.InCombat.Pointer });
-                return (((Memory.Read<uint>(new uint[] { num + (uint)Pointers.InCombat.Offset }) >> 0x13) & 1) == 1);
-            }
-        }
-       */
 
         public bool InCombat
         {
@@ -1073,22 +1029,6 @@ namespace LazyLib.Wow
             }
         }
 
-
-        private int SkinnableFlags
-        {
-            get
-            {
-                try
-                {
-                    return Memory.Read<int>(new uint[] { Memory.Read<uint>(new uint[] { base.BaseAddress + (uint)Pointers.Skinning.SkinnableFlags1 }) + (uint)Pointers.Skinning.SkinnableFlags2 });
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-        }
-
         /// <summary>
         ///   True if this unit is dead
         /// </summary>
@@ -1228,21 +1168,40 @@ namespace LazyLib.Wow
         #endregion
 
         #region Nested type: Energy
+
         public int Energy
         {
             get
             {
-                return (int)this.GetPowerByPowerType(Constants.PowerType.Energy);
+                try
+                {
+                    return (int)this.GetPowerByPowerType(Constants.PowerType.Energy);
+                }
+                catch (Exception exception)
+                {
+                    Logging.Write("Unit > Energy: " + exception, true);
+                    return 0;
+                }
             }
         }
+
 
         public int MaximumEnergy
         {
             get
             {
-                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Energy);
+                try
+                {
+                    return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Energy);
+                }
+                catch (Exception exception)
+                {
+                    Logging.Write("WoWUnit > MaxEnergy: " + exception, true);
+                    return 0;
+                }
             }
         }
+ 
 
         public int EnergyPercentage
         {
@@ -1252,12 +1211,14 @@ namespace LazyLib.Wow
                 {
                     return (100 * Energy) / MaximumEnergy;
                 }
-                catch
+                catch (Exception exception)
                 {
+                    Logging.Write("Player > EnergyPercentage: " + exception, true);
                     return 0;
                 }
             }
         }
+
         #endregion
 
         #region Nested type: BurningEmbers
@@ -1554,22 +1515,23 @@ namespace LazyLib.Wow
         #endregion
 
         #region Nested type: HolyPower
-        public int HolyPower
+        public uint HolyPower
         {
             get
             {
-                return (int)this.GetPowerByPowerType(Constants.PowerType.HolyPower);
+                return (uint)this.GetPowerByPowerType(Constants.PowerType.HolyPower);
             }
         }
 
-        public int MaximumHolyPower
+        public uint MaximumHolyPower
         {
             get
             {
-                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.HolyPower);
+                return (uint)this.GetMaxPowerByPowerType(Constants.PowerType.HolyPower);
             }
         }
-        public int HolyPowerPercentage
+
+        public uint HolyPowerPercentage
         {
             get
             {
@@ -1583,6 +1545,7 @@ namespace LazyLib.Wow
                 }
             }
         }
+
         #endregion
 
         #region Nested type: DemonicFury
@@ -1713,39 +1676,6 @@ namespace LazyLib.Wow
         }
         #endregion
 
-        /*   #region Nested type: Happiness
-        public int Happiness
-        {
-            get
-            {
-                return (int)this.GetPowerByPowerType(Constants.PowerType.Happiness);
-            }
-        }
-
-        public int MaximumHappiness
-        {
-            get
-            {
-                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Happiness);
-            }
-        }
-        public int HappinessPercentage
-        {
-            get
-            {
-                try
-                {
-                    return (100 * Happiness) / MaximumHappiness;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-        }
-        #endregion
-      */
-
         #endregion
 
         /// <summary>
@@ -1767,31 +1697,6 @@ namespace LazyLib.Wow
             get
             {
                 return base.GetStorageField<int>((uint)Descriptors.CGUnitData.DisplayID);
-            }
-        }
-
-
-        public bool IsMining
-        {
-            get
-            {
-                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x200));
-            }
-        }
-
-        public bool IsHerb
-        {
-            get
-            {
-                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x100));
-            }
-        }
-
-        public bool IsIngener
-        {
-            get
-            {
-                return Convert.ToBoolean((int)(this.SkinnableFlags & 0x8000));
             }
         }
 
@@ -2350,20 +2255,20 @@ namespace LazyLib.Wow
         {
             uint num = this.GetPowerIndexByPowerType(PowerType);
             uint num2 = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
-            return Memory.Read<uint>(num2 + (0x10C + num * 4));
+            return Memory.Read<uint>(num2 + ((uint)0x110 + num * 4));
         }
 
         public uint GetPowerByPowerType(LazyLib.Wow.Constants.PowerType PowerType)
         {
             uint num = this.GetPowerIndexByPowerType(PowerType);
             uint num2 = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
-            return Memory.Read<uint>(num2 + (0xF0 + num * 4));
+            return Memory.Read<uint>(num2 + ((uint)0xF4 + num * 4));
         }
 
         private uint GetPowerIndexByPowerType(LazyLib.Wow.Constants.PowerType PowerType)
         {
             uint num = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
-            uint num2 = num + 0xE0;
+            uint num2 = num + 0xE4;
             uint num3 = (uint)((int)Memory.Read<Byte>(num2 + 1) + PowerType + (int)((uint)Pointers.PowerIndex.Multiplicator * Memory.Read<Byte>(num2 + 1)));
             return Memory.Read<uint>(Memory.BaseAddress + (uint)Pointers.PowerIndex.PowerIndexArrays + num3 * 4);
         }
@@ -2414,6 +2319,8 @@ namespace LazyLib.Wow
 
         internal enum UnitNPCFlags
         {
+            UNIT_NPC_FLAG_VoidStorageBanker = 0x20000000,
+            UNIT_NPC_FLAG_Transmogrifier = 0x10000000,
             UNIT_NPC_FLAG_AUCTIONEER = 0x200000,
             UNIT_NPC_FLAG_BANKER = 0x20000,
             UNIT_NPC_FLAG_BATTLEMASTER = 0x100000,

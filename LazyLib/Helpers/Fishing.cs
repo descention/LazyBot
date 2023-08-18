@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.Wow;
 using LazyLib.Manager;
+using System;
 
 namespace LazyLib.Helpers
 {

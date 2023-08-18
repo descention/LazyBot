@@ -56,15 +56,13 @@ namespace LazyEvo.Classes
                 lazyPlugin.Value.PluginUnload();
             }
             Assemblys.Clear();
+            /// First Plugin
             var converter = new Converter();
             Assemblys.Add("Converter", converter);
-
             //Loads lazy data demo
             //added by hertzigger
             LazyEvo.Plugins.LazyData.Loader lazyData = new LazyEvo.Plugins.LazyData.Loader();
             Assemblys.Add("Lazy Data", lazyData);
-            //LazyEvo.Plugins.GoldenFleece GoldenFleece = new LazyEvo.Plugins.GoldenFleece();
-            //Assemblys.Add("GoldenFleece", GoldenFleece);
             try
             {
                 if (!Directory.Exists(LazyForms.OurDirectory + "\\Plugins"))

@@ -92,7 +92,6 @@ namespace LazyLib
         public static LazyLanguage Language;
         public static string TelnetPassword;
         public static int TelnetPort;
-        public static bool UseItems; 
 
         public static void LoadSettings()
         {
@@ -159,9 +158,6 @@ namespace LazyLib
             SellUncommon = pIniManager.GetBoolean("Vendor", "SellUncommon", false);
             SellPoor = pIniManager.GetBoolean("Vendor", "SellPoor", false);
             FreeBackspace = pIniManager.GetString("Vendor", "FreeBackspace", "2"); 
-
-            //UseItems
-            UseItems = pIniManager.GetBoolean("UseItem", "UseItems", false);
         }
 
         public static void SaveSettings()
@@ -227,9 +223,6 @@ namespace LazyLib
             pIniManager.IniWriteValue("Vendor", "SellUncommon", SellUncommon);
             pIniManager.IniWriteValue("Vendor", "SellPoor", SellPoor);
             pIniManager.IniWriteValue("Vendor", "FreeBackspace", FreeBackspace);
-
-            //UseItems
-            pIniManager.IniWriteValue("UseItem", "UseItems", UseItems);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace LazyEvo.LGrindEngine
 {
     internal class Prio
     {
+        internal static int Tracker = 1002;
         internal static int Resurrect = 1001;
         internal static int Combat = 1000;
         internal static int Resting = 999;

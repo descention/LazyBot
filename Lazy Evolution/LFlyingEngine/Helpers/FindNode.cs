@@ -50,7 +50,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
         {
             switch (node.Type)
             {
-                case (int) Constants.ObjectType.GameObject:
+                case Constants.ObjectType.GameObject:
                     if (_herbs.Contains(((PGameObject) node).Name))
                     {
                         return true;
@@ -64,7 +64,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
         {
             switch (node.Type)
             {
-                case (int) Constants.ObjectType.GameObject:
+                case  Constants.ObjectType.GameObject:
                     if (_mines.Contains(((PGameObject) node).Name))
                     {
                         return true;
@@ -78,8 +78,8 @@ namespace LazyEvo.LFlyingEngine.Helpers
         {
             switch (node.Type)
             {
-                case (int) Constants.ObjectType.GameObject:
-                    if (((PGameObject) node).GameObjectType == 25)
+                case  Constants.ObjectType.GameObject:
+                    if (((PGameObject)node).GameObjectType == Constants.GameObjectTypes.FishingHole)//25
                     {
                         return true;
                     }
@@ -92,9 +92,9 @@ namespace LazyEvo.LFlyingEngine.Helpers
         {
             switch (node.Type)
             {
-                case (int) Constants.ObjectType.Unit:
+                case  Constants.ObjectType.Unit:
                     return ((PUnit) node).Name;
-                case (int) Constants.ObjectType.GameObject:
+                case  Constants.ObjectType.GameObject:
                     return ((PGameObject) node).Name;
             }
             return "";
@@ -104,9 +104,9 @@ namespace LazyEvo.LFlyingEngine.Helpers
         {
             switch (node.Type)
             {
-                case (int) Constants.ObjectType.GameObject:
+                case  Constants.ObjectType.GameObject:
                     return (node).Location;
-                case (int) Constants.ObjectType.Unit:
+                case  Constants.ObjectType.Unit:
                     return (node).Location;
             }
             return new Location(0, 0, 0);
@@ -122,7 +122,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
                               where
                                   (((_herbs.Contains(u.Name) && FlyingSettings.Herb) ||
                                     (_mines.Contains(u.Name) && FlyingSettings.Mine) ||
-                                    (FlyingSettings.Fish && u.GameObjectType == 25 &&
+                                    (FlyingSettings.Fish && u.GameObjectType == Constants.GameObjectTypes.FishingHole &&
                                      u.Location.DistanceToSelf2D < FlyingSettings.FishApproach)) &&
                                    !FlyingBlackList.IsBlacklisted(u) && !SkillToLow.IsBlacklisted(u.Name) &&
                                    !LootedBlacklist.IsLooted(u))
@@ -131,7 +131,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
                 }
                 if (FlyingSettings.Fish)
                 {
-                    PGameObject school = (from h in _cached where h.GameObjectType == 25 select h).FirstOrDefault();
+                    PGameObject school = (from h in _cached where h.GameObjectType == Constants.GameObjectTypes.FishingHole select h).FirstOrDefault();
                     if (school != null)
                     {
                         return school;

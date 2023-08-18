@@ -58,7 +58,7 @@ namespace LazyEvo.LGrindEngine.Helpers
                         if (IsValidTarget(pUnit) &&
                             !PPullBlackList.IsBlacklisted(pUnit) &&
                             !PBlackList.IsBlacklisted(pUnit)
-                            && pUnit.Target.Type != 4)
+                            && pUnit.Target.Type != Constants.ObjectType.Player)
                         {
                             if (GrindingSettings.SkipMobsWithAdds)
                             {

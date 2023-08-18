@@ -1,49 +1,50 @@
-﻿namespace LazyLib.Wow
-{
-    using LazyLib.Helpers;
-    using System;
-    using LazyLib;
+﻿using LazyLib.Helpers;
+using System;
+using LazyLib;
 
+
+namespace LazyLib.Wow
+{
     internal class Faction
     {
-        private static LazyLib.Wow.Reaction CompareFactionHash(uint localBitHash, uint mobBitHash)
+        private static Reaction CompareFactionHash(uint localBitHash, uint mobBitHash)
         {
             int mobHashCheck = Memory.Read<int>(new uint[] { mobBitHash + 4 });
             if (TestBits(localBitHash + (uint)Pointers.Reaction.FriendlyOffset1, mobBitHash + (uint)Pointers.Reaction.FriendlyOffset2))
             {
-                return LazyLib.Wow.Reaction.Friendly;
+                return Reaction.Friendly;
             }
             if (HashCompare(40, localBitHash, mobHashCheck))
             {
-                return LazyLib.Wow.Reaction.Friendly;
+                return Reaction.Friendly;
             }
             if (TestBits(localBitHash + (uint)Pointers.Reaction.HostileOffset1, mobBitHash + (uint)Pointers.Reaction.HostileOffset2))
             {
-                return LazyLib.Wow.Reaction.Hostile;
+                return Reaction.Hostile;
             }
             if (HashCompare(0x18, localBitHash, mobHashCheck))
             {
-                return LazyLib.Wow.Reaction.Hostile;
+                return Reaction.Hostile;
             }
-            return LazyLib.Wow.Reaction.Neutral;
+            return Reaction.Neutral;
         }
 
-        public static LazyLib.Wow.Reaction GetReaction(PUnit localObj, PUnit mobObj)
+        public static Reaction GetReaction(PUnit localObj, PUnit mobObj)
         {
             DBC<IntPtr> dbc = new DBC<IntPtr>((IntPtr)(uint)Pointers.Reaction.DBCPtrFactionTemplate);
             try
             {
                 if ((localObj.Faction < 1) || (mobObj.Faction < 1))
                 {
-                    return LazyLib.Wow.Reaction.Missing;
+                    return Reaction.Missing;
                 }
-                IntPtr rowPtr = dbc.GetRowPtr((int) localObj.Faction);
-                IntPtr ptr2 = dbc.GetRowPtr((int) mobObj.Faction);
-                return CompareFactionHash((uint) ((int) rowPtr), (uint) ((int) ptr2));
+                IntPtr rowPtr = dbc.GetRowPtr((int)localObj.Faction);
+                IntPtr ptr2 = dbc.GetRowPtr((int)mobObj.Faction);
+                return CompareFactionHash((uint)((int)rowPtr), (uint)((int)ptr2));
             }
             catch (Exception)
             {
-                return LazyLib.Wow.Reaction.Missing;
+                return Reaction.Missing;
             }
         }
 

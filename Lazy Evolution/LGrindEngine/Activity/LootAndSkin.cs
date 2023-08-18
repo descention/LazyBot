@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
     LazyBot is free software: you can redistribute it and/or modify
@@ -14,95 +14,70 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
     You should have received a copy of the GNU General Public License
     along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+using System.Threading;
+using LazyEvo.LGrindEngine.Helpers;
+using LazyEvo.Public;
+using LazyLib;
+using LazyLib.Helpers;
+using LazyLib.Wow;
+
 namespace LazyEvo.LGrindEngine.Activity
 {
-    using LazyEvo.LGrindEngine;
-    using LazyEvo.LGrindEngine.Helpers;
-    using LazyEvo.Public;
-    using LazyLib;
-    using LazyLib.Helpers;
-    using LazyLib.Wow;
-    using System;
-    using System.Threading;
-
     internal class LootAndSkin
     {
-        private static readonly Ticker TimeOut = new Ticker(3000.0);
-
-        public static void DoLootAfterCombat(PUnit unit)
-        {
-            if (GrindingSettings.Loot && !LazyLib.Wow.ObjectManager.ShouldDefend)
-            {
-                Thread.Sleep(500);
-                if (!LazyLib.Wow.ObjectManager.MyPlayer.Target.IsValid && unit.IsLootable)
-                {
-                    KeyHelper.SendKey("TargetLastTarget");
-                }
-                Thread.Sleep(500);
-                if (LazyLib.Wow.ObjectManager.MyPlayer.Target.IsValid)
-                {
-                    DoWork(LazyLib.Wow.ObjectManager.MyPlayer.Target);
-                }
-            }
-        }
+        private static readonly Ticker TimeOut = new Ticker(2000);
 
         public static void DoWork(PUnit unit)
         {
             MoveHelper.ReleaseKeys();
-            if (unit.IsLootable)
+            if (!unit.IsLootable)
+                return;
+            Logging.Write("Looting: " + unit.Name);
+            if (unit.DistanceToSelf > 5)
             {
-                Logging.Write("Looting: " + unit.Name, new object[0]);
-                if (unit.DistanceToSelf > 5.0)
-                {
-                    MoveHelper.MoveToLoc(unit.Location, 4.0, false, true);
-                }
-                if (LazyLib.Wow.ObjectManager.ShouldDefend)
-                {
-                    Logging.Write("Skipping loot, we got into combat", new object[0]);
-                    return;
-                }
-                Thread.Sleep(200);
-                if (LazyLib.Wow.ObjectManager.MyPlayer.HasLivePet)
-                {
-                    Thread.Sleep(700);
-                }
-                if (LazyLib.Wow.ObjectManager.MyPlayer.Target != unit)
-                {
-                    unit.Interact(false);
-                }
-                else
-                {
-                    KeyHelper.SendKey("InteractTarget");
-                }
-                if (LazyLib.Wow.ObjectManager.ShouldDefend)
-                {
-                    return;
-                }
-                TimeOut.Reset();
-                while (!LazyLib.Wow.ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
-                {
-                    Thread.Sleep(100);
-                }
-                if (GrindingSettings.WaitForLoot)
-                {
-                    Latency.Sleep(500);
-                }
-                GrindingEngine.UpdateStats(1, 0, 0);
-                if (!GrindingSettings.Skin)
-                {
-                    PBlackList.Blacklist(unit, 300, false);
-                }
+                MoveHelper.MoveToLoc(unit.Location, 4, false, true);
             }
-            if ((unit.IsSkinnable && GrindingSettings.Skin) && (unit.GetSkinnableType() == Constants.SkinnableType.Skining))
+            if (ObjectManager.ShouldDefend)
             {
-                Logging.Write("Skinning: " + unit.Name, new object[0]);
-                if (unit.DistanceToSelf > 5.0)
-                {
-                    MoveHelper.MoveToLoc(unit.Location, 4.0, false, true);
-                }
+                Logging.Write("Skipping loot, we got into combat");
+                return;
+            }
+            Thread.Sleep(200);
+            if (ObjectManager.MyPlayer.HasLivePet)
+                Thread.Sleep(700);
+            if (ObjectManager.MyPlayer.Target != unit)
+            {
+                unit.Interact(false);
+            }
+            else
+            {
+                KeyHelper.SendKey("InteractTarget");
+            }
+            if (ObjectManager.ShouldDefend)
+                return;
+            TimeOut.Reset();
+            while (!ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                Thread.Sleep(100);
+            TimeOut.Reset();
+            if (GrindingSettings.Skin || GrindingSettings.WaitForLoot)
+            {
+                while (ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                    Thread.Sleep(100);
+                Thread.Sleep(1300);
+            }
+            else
+            {
+                Thread.Sleep(200);
+            }
+            GrindingEngine.UpdateStats(1, 0, 0);
+            PBlackList.Blacklist(unit, 300, false);
+            if (unit.IsSkinnable && GrindingSettings.Skin)
+            {
+                Logging.Write("Skinning");
                 KeyHelper.SendKey("TargetLastTarget");
-                Thread.Sleep(0x3e8);
-                if (!LazyLib.Wow.ObjectManager.MyPlayer.Target.IsValid)
+                Thread.Sleep(1000);
+                if (!ObjectManager.MyPlayer.Target.IsValid)
                 {
                     unit.Interact(false);
                 }
@@ -111,16 +86,33 @@ namespace LazyEvo.LGrindEngine.Activity
                     KeyHelper.SendKey("InteractTarget");
                 }
                 TimeOut.Reset();
-                while (!LazyLib.Wow.ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                while (!ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
                 {
                     Thread.Sleep(100);
                 }
                 if (GrindingSettings.WaitForLoot)
                 {
-                    Latency.Sleep(500);
+                    Thread.Sleep(500);
                 }
                 GrindingEngine.UpdateStats(1, 0, 0);
-                PBlackList.Blacklist(unit, 300, false);
+            }
+        }
+
+        public static void DoLootAfterCombat(PUnit unit)
+        {
+            if (!GrindingSettings.Loot)
+                return;
+            if (ObjectManager.ShouldDefend)
+                return;
+            Thread.Sleep(500);
+            if (!ObjectManager.MyPlayer.Target.IsValid && unit.IsLootable)
+            {
+                KeyHelper.SendKey("TargetLastTarget");
+            }
+            Thread.Sleep(500);
+            if (ObjectManager.MyPlayer.Target.IsValid)
+            {
+                DoWork(ObjectManager.MyPlayer.Target);
             }
         }
     }

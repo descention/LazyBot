@@ -19,6 +19,7 @@ using System;
 using System.Reflection;
 using LazyEvo.Classes;
 using LazyLib.Wow;
+using LazyEvo.Forms;
 
 namespace LazyEvo.Public
 {
@@ -61,27 +62,52 @@ namespace LazyEvo.Public
 
         public static void Stop()
         {
+            //  if (Main.CombatEngine.Name != "PvP Behavior Engine")
+            // {
             PrivCombatHandler.Stop();
+            // return;
+            //  }
+            // PvpCombatHandler.Stop();
         }
 
         public static void StartCombat(PUnit u)
         {
+            //  if (Main.CombatEngine.Name != "PvP Behavior Engine")
+            // {
             PrivCombatHandler.StartCombat(u);
+            // return;
+            // }
+            //  PvpCombatHandler.StartCombat(u, m);
         }
 
         public static void OnRess()
         {
+            //  if (Main.CombatEngine.Name != "PvP Behavior Engine")
+            // {
             PrivCombatHandler.OnRess();
+            // return;
+            //  }
+            // PvpCombatHandler.OnRess();
         }
 
         public static void RunningAction()
         {
+            //  if (Main.CombatEngine.Name != "PvP Behavior Engine")
+            // {
             PrivCombatHandler.RunningAction();
+            // return;
+            //  }
+            // PvpCombatHandler.RunningAction();
         }
 
         public static void Rest()
         {
+            //  if (Main.CombatEngine.Name != "PvP Behavior Engine")
+            // {
             PrivCombatHandler.Rest();
+            // return;
+            //  }
+            // PvpCombatHandler.Rest();
         }
     }
 }

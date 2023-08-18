@@ -270,7 +270,7 @@ namespace LazyLib.Helpers.Mail
         {
             foreach (PGameObject node in ObjectManager.GetGameObject)
             {
-                if (node.GameObjectType == 19 && node.Location.DistanceToSelf < 6)
+                if (node.GameObjectType == Constants.GameObjectTypes.Mailbox && node.Location.DistanceToSelf < 6) //19
                 {
                     node.Location.Face();
                     Thread.Sleep(100);

@@ -78,11 +78,11 @@ namespace LazyEvo.Forms
             var pairs = new NameValuePair[] {};
             if (wu != null && wu.BaseAddress != 0)
             {
-                if (wu.Type == 3)
+                if (wu.Type == Constants.ObjectType.Unit)
                 {
                     pairs = GetTargetNameValuePairs(wu);
                 }
-                else if (wu.Type == 4)
+                else if (wu.Type == Constants.ObjectType.Player)
                 {
                     var wpm = (PPlayer) wu;
                     pairs = GetPlayerNameValuePairs(wpm);
@@ -123,11 +123,11 @@ namespace LazyEvo.Forms
                     var targetPairs = new NameValuePair[] {};
                     if (wu.BaseAddress != 0)
                     {
-                        if (wu.Type == 3)
+                        if (wu.Type == Constants.ObjectType.Unit)
                         {
                             targetPairs = GetTargetNameValuePairs(wu);
                         }
-                        else if (wu.Type == 4)
+                        else if (wu.Type == Constants.ObjectType.Player)
                         {
                             var wpm = (PPlayer) wu;
                             targetPairs = GetPlayerNameValuePairs(wpm);

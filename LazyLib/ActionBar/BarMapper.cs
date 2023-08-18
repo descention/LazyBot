@@ -81,10 +81,10 @@ namespace LazyLib.ActionBar
                     string[] spellsSplit = Resource.Spells.Split('\n');
                     foreach (string s in spellsSplit)
                     {
-                        if (s.Contains("="))
+                        if (s.Contains(";"))
                         {
-                            int id = Convert.ToInt32(s.Split('=')[0]);
-                            string name = s.Split('=')[1].Replace("\n", "").Replace("\r", "");
+                            int id = Convert.ToInt32(s.Split(';')[0]);//spells.txt fix here
+                            string name = s.Split(';')[1].Replace("\n", "").Replace("\r", "");
                             if (!_spellDatabase.ContainsKey(id))
                                 _spellDatabase.Add(id, name);
                         }

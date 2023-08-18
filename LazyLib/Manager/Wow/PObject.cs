@@ -30,11 +30,11 @@
             GamePosition.Findpos(Memory.WindowHandle);
             int xOffset = -40;
             int yOffset = -40;
-            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
             {
                 MoveMouse(GamePosition.GetCenterX + xOffset, GamePosition.GetCenterY + yOffset);
                 Thread.Sleep(10);
-                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
                     break;
                 xOffset = xOffset + 10;
                 if (xOffset > 50)
@@ -47,7 +47,7 @@
                     }
                 }
             }
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
                 return true;
             return false;
         }
@@ -57,36 +57,36 @@
             Point worldToScreen = Camera.World2Screen.WorldToScreen(Location, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y - 15);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 15);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             Thread.Sleep(50);
             MoveMouse(MouseHelper.MousePosition.X - 15, MouseHelper.MousePosition.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X + 15, MouseHelper.MousePosition.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 35);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 40);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 45);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(GUID))
                 return;
         }
 
@@ -172,7 +172,7 @@
         //TODO: Do something to this functions, its freaking ugly
         private static bool LetsSearch(UInt128 guid, bool multiclick, bool click)
         {
-            if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
             {
                 GamePosition.Findpos(Memory.WindowHandle);
                 if (!DoSmallestSearch(guid))
@@ -187,7 +187,7 @@
             }
             if (ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
                 return false;
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
             {
                 if (click)
                 {
@@ -249,11 +249,11 @@
             int xOffset = 0;
             int yOffset = -yValue;
             bool right = true;
-            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
             {
                 MoveMouse(GamePosition.GetCenterX + xOffset, GamePosition.GetCenterY + yOffset);
                 Thread.Sleep(10);
-                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
                     break;
                 if (right)
                 {
@@ -280,7 +280,7 @@
                     right = false;
                 }
             }
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(UInt128)).Equals(guid))
                 return true;
             return false;
         }
@@ -421,11 +421,11 @@
             }
         }
 
-        public uint Type
+        public Constants.ObjectType Type
         {
             get
             {
-                return Memory.Read<uint>(new uint[] { this.BaseAddress + 12 });
+                return (Constants.ObjectType)Memory.Read<int>(new uint[] { this.BaseAddress + 12 });
             }
         }
 

@@ -19,6 +19,7 @@ namespace LazyEvo.LFlyingEngine
 {
     internal class Prio
     {
+        internal static int Tracker = 1600;
         internal static int Combat = 1500;
         internal static int BagsFull = 1400;
         internal static int Ress = 1000;

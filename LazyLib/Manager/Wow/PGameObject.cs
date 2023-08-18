@@ -85,12 +85,11 @@ namespace LazyLib.Wow
             get { return Memory.Read<byte>(BaseAddress + (uint)Pointers.Globals.IsBobbing) != 0; }
         }
 
-
-        public int GameObjectType
+        public Constants.GameObjectTypes GameObjectType
         {
             get
             {
-                return this.GetStorageField<int>(18U) >> 8 & (int)byte.MaxValue;
+                return (Constants.GameObjectTypes)Memory.Read<Byte>(base.StorageField + 18);
             }
         }
 
@@ -125,6 +124,7 @@ namespace LazyLib.Wow
         {
             get { return Memory.Read<float>(BaseAddress + (uint) Pointers.WowObject.GameObjectZ); }
         }
+
 
         public override float Facing
         {

@@ -62,7 +62,7 @@ namespace LazyEvo.LFlyingEngine.States
                 _mailbox.BaseAddress = 0;
                 foreach (PGameObject obj in ObjectManager.GetGameObject)
                 {
-                    if (obj.GameObjectType == 19 && obj.Location.DistanceToSelf2D < SearchDistance)
+                    if (obj.GameObjectType == Constants.GameObjectTypes.Mailbox && obj.Location.DistanceToSelf2D < SearchDistance) // 19
                     {
                         _mailbox.BaseAddress = obj.BaseAddress;
                         break;

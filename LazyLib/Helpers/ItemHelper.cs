@@ -48,33 +48,5 @@ namespace LazyLib.Helpers
             }
             return "Unknown item";
         }
-
-        /*
-        //Not sure if i can update this, going to use wowhead instead
-        public static string GetNameByIdFromCache(uint itemId)
-        {
-            try
-            {
-                var itemStore = (uint) Pointers.Items.Offset;
-                string result = "Unknown item";
-                var itemMin = Memory.ReadRelative<uint>(0x958AAC);
-                var itemMax = Memory.ReadRelative<uint>(0x958AA8);
-                var dbBeginOffset = Memory.ReadRelative<uint>(itemStore + 0x2c);
-                if (itemId >= itemMin && itemId <= itemMax)
-                {
-                    uint offset = (itemId - itemMin)*4;
-                    var itemIndexOffset = Memory.Read<int>(dbBeginOffset + offset);
-                    if (itemIndexOffset != 0)
-                    {
-                        var stringAddress = Memory.Read<uint>((uint) itemIndexOffset + 0x180);
-                        result = Memory.Read<string>(stringAddress);
-                    }
-                }
-                return result;
-            } catch (Exception e)
-            {
-                return "Unknown item";
-            }
-        } */
     }
 }

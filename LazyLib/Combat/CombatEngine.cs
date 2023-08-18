@@ -123,7 +123,7 @@ namespace LazyLib.Combat
             }
         }
 
-        public virtual void LogicAttack(PUnit target)
+        public virtual void LogicAttack(PUnit target, PPlayer player = null)
         {
             try
             {

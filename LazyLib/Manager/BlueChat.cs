@@ -11,7 +11,7 @@ namespace LazyEvo.Plugins.ExtraLazy
     {
         public static String readChat()
         {
-            return Memory.ReadUtf8StringRelative(Convert.ToUInt32((uint)Pointers.Messages.EventMessage), 128);
+            return Memory.ReadUtf8StringRelative(Convert.ToUInt32((uint)Pointers.Globals.RedMessage), 128);
         }
     }
 }

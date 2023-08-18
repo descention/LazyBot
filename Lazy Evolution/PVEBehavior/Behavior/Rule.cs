@@ -19,6 +19,8 @@ namespace LazyEvo.PVEBehavior.Behavior
         Pet = 2,
         Enemy = 3,
         Unchanged = 4,
+        Player = 6,
+        Friendly = 7,
     }
     internal class Rule : IComparable<Rule>, IComparer<Rule>
     {

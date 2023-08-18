@@ -1,4 +1,3 @@
-﻿
 ﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
@@ -27,6 +26,9 @@ namespace LFishingEngine
         public static string OurDirectory;
         internal static string LureBar { get; set; }
         internal static string LureKey { get; set; }
+        internal static string BobberSleepMin { get; set; }
+        internal static string BobberSleepMax { get; set; }
+
         internal static bool UseLure { get; set; }
         public static void LoadSettings()
         {
@@ -34,6 +36,8 @@ namespace LFishingEngine
             string executableDirectoryName = executableFileInfo.DirectoryName;
             OurDirectory = executableDirectoryName;
             var pIniManager = new IniManager(OurDirectory + SettingsName);
+            BobberSleepMin = pIniManager.GetString("Fishing", "BobberSleepMin", "1");
+            BobberSleepMax = pIniManager.GetString("Fishing", "BobberSleepMax", "1");
             LureBar = pIniManager.GetString("Fishing", "LureBar", "1");
             LureKey = pIniManager.GetString("Fishing", "LureKey", "1");
             UseLure = pIniManager.GetBoolean("Fishing", "UseLure", false);
@@ -47,6 +51,8 @@ namespace LFishingEngine
             var pIniManager = new IniManager(OurDirectory + SettingsName);
             pIniManager.IniWriteValue("Fishing", "LureBar", LureBar);
             pIniManager.IniWriteValue("Fishing", "LureKey", LureKey);
+            pIniManager.IniWriteValue("Fishing", "BobberSleepMin", BobberSleepMin);
+            pIniManager.IniWriteValue("Fishing", "BobberSleepMax", BobberSleepMax);
             pIniManager.IniWriteValue("Fishing", "UseLure", UseLure.ToString());
         }
     }

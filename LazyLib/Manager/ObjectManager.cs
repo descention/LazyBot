@@ -142,7 +142,7 @@ namespace LazyLib.Wow
                 }
             }
         }
-        
+
         /// <summary>
         ///   Gets the get items.
         /// </summary>
@@ -254,7 +254,7 @@ namespace LazyLib.Wow
             ObjectList = new List<PObject>();
             ObjectDictionary = new Dictionary<UInt128, PObject>();
             MyPlayer = new PPlayerSelf(0);
-            _monitor = new Thread(Monitor) {IsBackground = true};
+            _monitor = new Thread(Monitor) { IsBackground = true };
             _monitor.Name = "ObjectManager";
             _monitor.Start();
         }
@@ -276,8 +276,8 @@ namespace LazyLib.Wow
 
                     // Clear out old references.
                     List<UInt128> toRemove = (from o in ObjectDictionary
-                                            where !o.Value.IsValid
-                                            select o.Key).ToList();
+                                              where !o.Value.IsValid
+                                              select o.Key).ToList();
                     foreach (ulong guid in toRemove)
                     {
                         ObjectDictionary.Remove(guid);
@@ -294,10 +294,10 @@ namespace LazyLib.Wow
 
         private static void ReadObjectList()
         {
-            var currentObject = new PObject(Memory.Read<uint>(CurrentManager + (uint) Pointers.ObjectManager.FirstObject));
+            var currentObject = new PObject(Memory.Read<uint>(CurrentManager + (uint)Pointers.ObjectManager.FirstObject));
             LocalGUID = Memory.Read<UInt128>(CurrentManager + (uint)Pointers.ObjectManager.LocalGUID);
             while (currentObject.BaseAddress != UInt32.MinValue &&
-                   currentObject.BaseAddress%2 == UInt32.MinValue)
+                   currentObject.BaseAddress % 2 == UInt32.MinValue)
             {
                 // Keep the static reference to the local player updated... at all times.
                 if (currentObject.GUID == LocalGUID)
@@ -312,29 +312,29 @@ namespace LazyLib.Wow
                     // is a bitmask. We want to use the type at 0x14, as it's an 'absolute' type.
                     switch (currentObject.Type)
                     {
-                            // Belive it or not, the base Object class is hardly used in WoW.
-                        case (int) Constants.ObjectType.Object:
+                        // Belive it or not, the base Object class is hardly used in WoW.
+                        case (int)Constants.ObjectType.Object:
                             obj = new PObject(currentObject.BaseAddress);
                             break;
-                        case (int) Constants.ObjectType.Unit:
+                        case Constants.ObjectType.Unit:
                             obj = new PUnit(currentObject.BaseAddress);
                             break;
-                        case (int) Constants.ObjectType.Player:
+                        case Constants.ObjectType.Player:
                             obj = new PPlayer(currentObject.BaseAddress);
                             break;
-                        case (int) Constants.ObjectType.GameObject:
+                        case Constants.ObjectType.GameObject:
                             obj = new PGameObject(currentObject.BaseAddress);
                             break;
-                        case (int) Constants.ObjectType.Item:
+                        case Constants.ObjectType.Item:
                             obj = new PItem(currentObject.BaseAddress);
                             break;
-                        case (int) Constants.ObjectType.Container:
+                        case Constants.ObjectType.Container:
                             obj = new PContainer(currentObject.BaseAddress);
                             break;
-                            // These two aren't used in most bots, as they're fairly pointless.
-                            // They are AI and area triggers for NPCs handled by the client itself.
-                        case (int) Constants.ObjectType.AiGroup:
-                        case (int) Constants.ObjectType.AreaTrigger:
+                        // These two aren't used in most bots, as they're fairly pointless.
+                        // They are AI and area triggers for NPCs handled by the client itself.
+                        case Constants.ObjectType.AiGroup:
+                        case Constants.ObjectType.AreaTrigger:
                             break;
                     }
                     if (obj != null)
@@ -351,7 +351,7 @@ namespace LazyLib.Wow
                 }
                 // We need the next object.
                 currentObject.BaseAddress =
-                    Memory.Read<uint>(currentObject.BaseAddress + (uint) Pointers.ObjectManager.NextObject);
+                    Memory.Read<uint>(currentObject.BaseAddress + (uint)Pointers.ObjectManager.NextObject);
             }
         }
 
@@ -374,7 +374,7 @@ namespace LazyLib.Wow
                 {
                     try
                     {
-                        CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint) Pointers.ObjectManager.CurMgrPointer) + (uint) Pointers.ObjectManager.CurMgrOffset);
+                        CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.ObjectManager.CurMgrPointer) + (uint)Pointers.ObjectManager.CurMgrOffset);
                         LocalGUID = Memory.Read<UInt128>(CurrentManager + (uint)Pointers.ObjectManager.LocalGUID);
                         //Logging.Write(string.Format("[Player] Local GUID: {0}", LocalGUID));
                         if (CurrentManager != UInt32.MinValue && CurrentManager != UInt32.MaxValue)
@@ -388,7 +388,7 @@ namespace LazyLib.Wow
                                 _refresher.Abort();
                                 _refresher = null;
                             }
-                        _refresher = new Thread(Pulse) {IsBackground = true};
+                        _refresher = new Thread(Pulse) { IsBackground = true };
                         _refresher.Name = "Pulse";
                         _refresher.Start();
                         if (Attach != null)
@@ -626,7 +626,6 @@ namespace LazyLib.Wow
             return TargetingMeOrPet(u) && u.InCombat;
         }
 
-
         /// <summary>
         ///   Gets the closest attacker other than the PUnit specified. .
         /// </summary>
@@ -739,8 +738,8 @@ namespace LazyLib.Wow
 
             // Clear out old references.
             List<UInt128> toRemove = (from o in ObjectDictionary
-                                    where !o.Value.IsValid
-                                    select o.Key).ToList();
+                                      where !o.Value.IsValid
+                                      select o.Key).ToList();
             foreach (ulong guid in toRemove)
             {
                 ObjectDictionary.Remove(guid);
@@ -749,7 +748,7 @@ namespace LazyLib.Wow
             // All done! Just make sure we pass up a valid list to the ObjectList.
             ObjectList = (from o in ObjectDictionary
                           where o.Value.IsValid
-                          select o.Value).ToList();       
+                          select o.Value).ToList();
         }
     }
 

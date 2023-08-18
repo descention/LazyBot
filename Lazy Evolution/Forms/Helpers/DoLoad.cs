@@ -47,7 +47,7 @@ namespace LazyEvo.Forms.Helpers
         {
             ObjectManager.MakeReady();
             Logging.Write("Visit www.ownedcore.com for support.");
-            Logging.Write("LazyBot Revolution is free and open source software!");
+            Logging.Write("Visit http://lazybot.freeforums.org/ for Lazybot Forums.");
             Logging.Write("coded by Arutha!");
             Logging.Write("Keys should be placed on bar 1-6 and position 1-9!");
             LoadNow();

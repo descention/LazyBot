@@ -29,11 +29,10 @@ namespace LazyLib.Wow
         #region Globals enum
 
         /// <summary>
-        ///   [WoW] [6.1.0 19678] 
         /// </summary>
         public enum Globals
         {
-            PlayerName = 0xF72CF8, 
+            PlayerName = 0xFEFA98,
         }
 
         #endregion
@@ -41,11 +40,10 @@ namespace LazyLib.Wow
         #region InGame enum
 
         /// <summary>
-        ///   [WoW] [6.1.0 19678] 
         /// </summary>
         public enum InGame
         {
-            InGame = 0xE3191E,   
+            InGame = 0xEAEACA,
         }
 
         #endregion
@@ -56,12 +54,11 @@ namespace LazyLib.Wow
         #region ActionBar enum
 
         /// <summary>
-        ///   [WoW] [6.1.0 19678] 
         /// </summary>
         public enum ActionBar
         {
-            ActionBarFirstSlot = 0xEA1800,
-            ActionBarBonus = 0xEA1A40, // TODO Check
+            ActionBarFirstSlot = 0xF1EC80,
+            ActionBarBonus = 0xF1EEC0,
         }
 
         #endregion
@@ -69,12 +66,11 @@ namespace LazyLib.Wow
         #region AutoLoot enum
 
         /// <summary>
-        ///    [WoW] [6.1.0 19678] 
         /// </summary>
         public enum AutoLoot
         {
             Offset = 0x34,
-            Pointer = 0xE31ACC,   
+            Pointer = 0xEAEC7C,
         }
 
         #endregion
@@ -82,25 +78,23 @@ namespace LazyLib.Wow
         #region CgUnitCGetCreatureRank enum
 
         /// <summary>
-        ///  Reversed from CGUnit_C__GetCreatureRank 
         /// </summary>
         public enum CgUnitCGetCreatureRank
         {
-            Offset1 = 0xC04,
-            Offset2 = 0x2C,        
+            Offset1 = 0xC38,
+            Offset2 = 0x2C,  
         }
 
         #endregion
 
         #region CgUnitCGetCreatureType enum
 
-        /// <summary>
-        ///   reversed from CGUnit_C__GetCreatureType 
+        /// <summary> 
         /// </summary>
         public enum CgUnitCGetCreatureType
         {
-            Offset1 = 0xC04,
-            Offset2 = 0x24,     
+            Offset1 = 0xC38,
+            Offset2 = 0x24,
         }
 
         #endregion
@@ -108,7 +102,6 @@ namespace LazyLib.Wow
         #region CgWorldFrameGetActiveCamera enum
 
         /// <summary>
-        ///  reversed from CGWorldFrame__GetActiveCamera
         /// </summary>
         public enum CgWorldFrameGetActiveCamera
         {
@@ -116,20 +109,8 @@ namespace LazyLib.Wow
             CameraY = 0xC,
             CameraZ = 0x10,
             CameraMatrix = 0x14,
-            CameraPointer = 0xE32098,
-            CameraOffset = 0x7610, 
-        }
-
-        #endregion
-
-        #region SkinningFlags enum
-        /// <summary>
-        ///   Done
-        /// </summary>
-        public enum Skinning
-        {
-            SkinnableFlags1 = 0x0C04,
-            SkinnableFlags2 = 0x5C
+            CameraPointer = 0xEAF270,
+            CameraOffset = 0x7610,  
         }
 
         #endregion
@@ -137,12 +118,11 @@ namespace LazyLib.Wow
         #region ClickToMove enum
 
         /// <summary>
-        ///   5.4
         /// </summary>
         public enum ClickToMove
         {
             Offset = 0x34,
-            Pointer = 0xE31AAC,
+            Pointer = 0xEAEC5C,
         }
 
         #endregion
@@ -150,16 +130,12 @@ namespace LazyLib.Wow
         #region Nested type: AutoAttack
 
         /// <summary>
-        ///  reversed from CGActionBar__IsCurrentAction 
         /// </summary>
         internal enum AutoAttack
         {
             AutoAttackFlag = 0xEE8,       //Old Method
             AutoAttackMask = 0xEEC,       //Old Method
-            //Address seems to show the GUID of the Auto Attack target
-            AutoAttackGUID = 0xED8,
-            //Shows 0x06 when not wanding, 0x0C or 0x0E when wanding.
-            Wanding = 0xEF8,       
+            AutoAttackGUID = 0xF44,  
         }
 
         #endregion
@@ -167,12 +143,11 @@ namespace LazyLib.Wow
         #region Nested type: CastingInfo
 
         /// <summary>
-        /// [WoW] [6.1.0 19678] 
         /// </summary>
         internal enum CastingInfo
         {
-            IsCasting = 0xF40,
-            ChanneledCasting = 0xF80, 
+            IsCasting = 0xF98,
+            ChanneledCasting = 0xFB8,  
         }
 
         #endregion
@@ -180,15 +155,15 @@ namespace LazyLib.Wow
         #region Nested type: Chat
 
         /// <summary>
-        ///   5.4
+        ///  reversed From CGChat__RecordChat
         /// </summary>
         internal enum Chat : uint
         {
-            ChatStart = 0xE8DC84,// not used currently 
-            OffsetToNextMsg = 0x17E8, // used
-            chatBufferPos = 0xE33908, // used
+            ChatStart = 0xEB0B10,
+            OffsetToNextMsg = 0x17E8,
+            chatBufferPos = 0xF0AE8C,
 
-            msgFormatedChat = 0x65, // used 
+            msgFormatedChat = 0x65,
             MsgSenderGuid = 0x00,
             MsgSenderName = 0x034,
             MsgFullMessage = 0x0065,
@@ -199,25 +174,13 @@ namespace LazyLib.Wow
 
         #endregion
 
-        #region BlueChat
-        /// <summary>
-        ///   5.4
-        /// </summary>
-        internal enum Messages
-        {
-            EventMessage = 0xE30D10 // Updated :)
-        }
-
-        #endregion
-
         #region Nested type: Container
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum Container
         {
-            EquippedBagGUID = 0xEA7F80
+            EquippedBagGUID = 0xF253F8
         }
 
         #endregion
@@ -225,30 +188,18 @@ namespace LazyLib.Wow
         #region Nested type: Globals
 
         /// <summary>
-        ///   5.4
+        ///
         /// </summary>
         internal enum Globals
         {
-            RedMessage = 0xE30D10,
-            MouseOverGUID = 0xE31CE0,
-            LootWindow = 0xEA2968,
-            ChatboxIsOpen = 0xCBEB60,
-            CursorType = 0xDF82F8,
+            RedMessage = 0xEADEB8,
+            MouseOverGUID = 0xEAEEA0,
+            LootWindow = 0xF1FDE8,
+            ChatboxIsOpen = 0xD26F08,
+            CursorType = 0xE75430,
             IsBobbing = 0x104,
-            ArchFacing = 0x268,               //TODO           
-            ArchFacingOffset2 = 0x148,        //TODO  
-        }
-
-        #endregion
-
-        #region Nested type: Items
-
-        /// <summary>
-        ///   5.4
-        /// </summary>
-        internal enum Items : uint
-        {
-            Offset = 0xC696D8,
+            ArchFacing = 0x270,
+            ArchFacingOffset2 = 0x150,
         }
 
         #endregion
@@ -256,15 +207,14 @@ namespace LazyLib.Wow
         #region Nested type: KeyBinding
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum KeyBinding
         {
-            NumKeyBindings = 0xE8F850,
+            NumKeyBindings = 0xF0CA30,
             First = 0xC8,
             Next = 0xC0,
             Key = 0x18,
-            Command = 0x2C, 
+            Command = 0x2C,    
         }
 
         #endregion
@@ -272,15 +222,14 @@ namespace LazyLib.Wow
         #region Nested type: ObjectManager
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum ObjectManager
         {
-            CurMgrPointer = 0xF72CB8,
+            CurMgrPointer = 0xFEFA58,
             CurMgrOffset = 0x62C,
             NextObject = 0x3C,
             FirstObject = 0xD8,
-            LocalGUID = 0xF8,   
+            LocalGUID = 0xF8,
         }
 
         #endregion
@@ -288,7 +237,6 @@ namespace LazyLib.Wow
         #region Nested type: Reaction
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum Reaction : uint
         {
@@ -296,7 +244,7 @@ namespace LazyLib.Wow
             HostileOffset2 = 0xC,
             FriendlyOffset1 = 010,
             HostileOffset1 = 0x14,
-            DBCPtrFactionTemplate = 0xC8A34C,
+            DBCPtrFactionTemplate = 0xD6C8D4,
         }
 
         #endregion
@@ -304,14 +252,12 @@ namespace LazyLib.Wow
         #region Nested type: InCombat
 
         /// <summary>
-        /// Reversed from Lua_UnitAffectingCombat
-        /// v4 = v2 && (*(_DWORD *)(*(_DWORD *)(v2 + 284) + 316) >> 19) & 1;
         /// </summary>
         public enum InCombat
         {
             Mask = 19,
-            Offset2 = 0x13C,
-            Offset1 = 0x11C
+            Offset2 = 0x14C,
+            Offset1 = 0x124  
         }
 
         #endregion
@@ -319,12 +265,11 @@ namespace LazyLib.Wow
         #region Nested type: Runes
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum Runes
         {
-            RuneTypes = 0xE0A218,       //Good
-            RunesOffset = 0xE0A27C,     //Good
+            RuneTypes = 0xF25814,
+            RunesOffset = 0xF25878,
         }
 
         #endregion
@@ -332,12 +277,11 @@ namespace LazyLib.Wow
         #region Nested type: ShapeshiftForm
 
         /// <summary>
-        ///  Reversed from CGUnit_C__GetShapeshiftFormId
         /// </summary>
         internal enum ShapeshiftForm
         {
-            BaseAddressOffset1 = 0x11C,       // 5.4.7 (17930)
-            BaseAddressOffset2 = 0x253,      // 5.4.7 (17930)
+            BaseAddressOffset1 = 0x0EDC,
+            BaseAddressOffset2 = 0x263,
         }
 
         #endregion
@@ -345,19 +289,20 @@ namespace LazyLib.Wow
         #region Nested type: SpellCooldown
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum SpellCooldown : uint
         {
-            CooldPown = 0xD24C78,  
+            CooldPown = 0xD94170,
         }
 
         #endregion
 
         #region Nested type: PowerIndex
+        /// <summary>
+        /// </summary>
         internal enum PowerIndex
         {
-            PowerIndexArrays = 0xDCC744,
+            PowerIndexArrays = 0xE4772C,
             Multiplicator = 0x10
         }
 
@@ -366,13 +311,12 @@ namespace LazyLib.Wow
         #region Nested type: Swimming
 
         /// <summary>
-        ///   Reversed from Lua_IsSwimming
         /// </summary>
         internal enum Swimming
         {
             Pointer = 0x12C,
             Offset = 0x40,
-            Mask = 0x100000,  
+            Mask = 0x100000,
         }
 
         #endregion
@@ -380,13 +324,12 @@ namespace LazyLib.Wow
         #region IsFlying enum
 
         /// <summary>
-        ///  Reversed from Lua_IsFlying 
         /// </summary>
         public enum IsFlying
         {
             Pointer = 0x12C,
             Offset = 0x40,
-            Mask = 0x1000000  
+            Mask = 0x1000000
         }
 
         #endregion
@@ -394,7 +337,6 @@ namespace LazyLib.Wow
         #region IsFalling enum
 
         /// <summary>
-        ///  Reversed from Lua_IsFalling
         /// </summary>
         public enum IsFalling
         {
@@ -408,19 +350,18 @@ namespace LazyLib.Wow
         #region Nested type: UnitAuras
 
         /// <summary>
-        ///   reversed from CGUnit_C__GetAura 
         /// </summary>
         internal enum UnitAuras : uint
         {
-            AuraCount1 = 0x1548,
-            AuraCount2 = 0x10C8,
-            AuraTable1 = 0x10C8,
-            AuraTable2 = 0x10CC,
+            AuraCount1 = 0x1588,
+            AuraCount2 = 0x1108,
+            AuraTable1 = 0x1108,
+            AuraTable2 = 0x110C,
             AuraSize = 0x48,
             AuraSpellId = 0x30,
-            AuraStack = 0x35,
-            TimeLeft = 0x3C,
-            OwnerGUID = 0x20,  
+            AuraStack = 0x39,
+            TimeLeft = 0x40,
+            OwnerGUID = 0x20, 
         }
 
         #endregion
@@ -428,7 +369,6 @@ namespace LazyLib.Wow
         #region Nested type: UnitName
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum UnitName : uint
         {
@@ -436,9 +376,9 @@ namespace LazyLib.Wow
             ObjectName2 = 0xB4,
             PlayerNameGUIDOffset = 0x010,
             PlayerNameStringOffset = 0x021,
-            PlayerNameCachePointer = 0xD0E5BC,
-            UnitName1 = 0xC04,
-            UnitName2 = 0x7C,    
+            PlayerNameCachePointer = 0xD7BF94,
+            UnitName1 = 0xC38,                  
+            UnitName2 = 0x7C,         
         }
 
         #endregion
@@ -446,12 +386,11 @@ namespace LazyLib.Wow
         #region Nested type: UnitSpeed
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum UnitSpeed
         {
             Pointer1 = 0x12C,
-            Pointer2 = 0x88,   
+            Pointer2 = 0x88,
         }
 
         #endregion
@@ -459,18 +398,17 @@ namespace LazyLib.Wow
         #region Nested type: WowObject
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum WowObject
         {
-            X = 0xA90,
+            X = 0xAC0,
             Y = X + 0x4,
             Z = X + 0x8,
             RotationOffset = X + 0x10,
             GameObjectX = 0x0140,
             GameObjectY = GameObjectX + 0x4,
             GameObjectZ = GameObjectX + 0x8,
-            GameObjectRotation = GameObjectX + 0x10,   
+            GameObjectRotation = GameObjectX + 0x10,  
         }
 
         #endregion
@@ -478,46 +416,44 @@ namespace LazyLib.Wow
         #region Nested type: Zone
 
         /// <summary>
-        ///   5.4
         /// </summary>
         internal enum Zone : uint
         {
-            ZoneText = 0xE31914,
-            ZoneID = 0xE31968,
+            SubZoneText = 0xEAEABC,
+            ZoneText = 0xEAEAC0,
+            ZoneID = 0xEAEB14
         }
 
         #endregion
 
         #region Nested type: UiFrame
+        /// <summary>
+        /// </summary>
         internal enum UiFrame
         {
-            //var @base = Memory.ReadRelative<uint>((uint)Pointers.UiFrame.FrameBase);
-            //var currentFrame = Memory.Read<uint>(@base + (uint)Pointers.UiFrame.FirstFrame);
+            ScrWidth = 0xC5ADC8,
+            ScrHeight = 0xC5ADCC,
+            FrameBase = 0xD1A2DC,
 
-            ScrWidth = 0xBFED88,
-            ScrHeight = 0xBFED8C,
-            FrameBase = 0xCB2254,
-            CurrentFramePtr = 0xCB2254,    
+            FirstFrame = 0x12F4,
+            NextFrame = 0x12EC,
+            RegionsFirst = 0x168,
+            RegionsNext = 0x160,
+            Visible = 0x64,
+            Visible1 = 0x1A,
+            Visible2 = 1,
+            LabelText = 0xF8,
+            Name = 0x1C,
 
-            FirstFrame = 0x12F4,            //Good
-            NextFrame = 0x12EC,             //Good
-            RegionsFirst = 0x168,           //Good
-            RegionsNext = 0x160,            //Good
-            Visible = 0x64,                 //Good
-            Visible1 = 0x1A,                //Good
-            Visible2 = 1,                   //Good
-            LabelText = 0xF8,               //Good
-            Name = 0x1C,                    //Good
-
-            ButtonEnabledPointer = 0x1F4,   //Assumed Good
-            ButtonEnabledMask = 0xF,        //Assumed Good
-            ButtonChecked = 0x230,          //Assumed Good
-            EditBoxText = 0x210,            //Assumed Good
-            FrameBottom = 0x68,             //Assumed Good
-            FrameLeft = 0x6c,               //Assumed Good
-            FrameTop = 0x70,                //Assumed Good
-            FrameRight = 0x74,              //Assumed Good
-            CurrentFrameOffset = 0x88,      //Assumed Good?   
+            ButtonEnabledPointer = 0x1F4,
+            ButtonEnabledMask = 0xF,
+            ButtonChecked = 0x230,
+            EditBoxText = 0x210,
+            FrameBottom = 0x68,
+            FrameLeft = 0x6c,
+            FrameTop = 0x70,
+            FrameRight = 0x74,
+            CurrentFrameOffset = 0x88,  
         }
         #endregion
     }

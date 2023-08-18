@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Threading;
 using LazyLib.Wow;
 using LazyLib.Manager;
+//using LazyLib.Manager.Bored;
 
 namespace LazyLib.Helpers
 {

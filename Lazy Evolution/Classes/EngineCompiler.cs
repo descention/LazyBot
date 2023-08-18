@@ -60,8 +60,6 @@ namespace LazyEvo.Classes
             Assemblys.Add(grindingEngine.Name, grindingEngine);
             var flyingEngine = new FlyingEngine();
             Assemblys.Add(flyingEngine.Name, flyingEngine);
-           // var FarmingEngine = new FarmingEngine();
-           // Assemblys.Add(FarmingEngine.Name, FarmingEngine);
             try
             {
                 if (!Directory.Exists(LazyForms.OurDirectory + "\\Engines"))

@@ -71,7 +71,7 @@ namespace LazyLib.Helpers
             {
                 return
                     new Frame(
-                        Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.UiFrame.CurrentFramePtr) +
+                        Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.UiFrame.FrameBase) +
                                           (uint)Pointers.UiFrame.CurrentFrameOffset));
             }
         }

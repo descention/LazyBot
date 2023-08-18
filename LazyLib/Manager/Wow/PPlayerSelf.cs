@@ -80,10 +80,27 @@ namespace LazyLib.Wow
         {
             get
             {
-                return new List<uint> { 
-                    base.GetStorageField<uint>((uint) 0xe48), base.GetStorageField<uint>((uint) 0xe50), base.GetStorageField<uint>((uint) 0xe58), base.GetStorageField<uint>((uint) 0xe60), base.GetStorageField<uint>((uint) 0xe68), base.GetStorageField<uint>((uint) 0xe70), base.GetStorageField<uint>((uint) 0xe78), base.GetStorageField<uint>((uint) 0xe80), base.GetStorageField<uint>((uint) 0xe88), base.GetStorageField<uint>((uint) 0xe90), base.GetStorageField<uint>((uint) 0xe98), base.GetStorageField<uint>((uint) 0xea0), base.GetStorageField<uint>((uint) 0xea8), base.GetStorageField<uint>((uint) 0xeb0), base.GetStorageField<uint>((uint) 0xeb8), base.GetStorageField<uint>((uint) 0xec0), 
-                    base.GetStorageField<uint>((uint) 0xec8), base.GetStorageField<uint>((uint) 0xed0), base.GetStorageField<uint>((uint) 0xed8)
-                 };
+                var toReturn = new List<uint>();
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x8));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x16));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x24));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x32));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x40));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x48));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x56));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x64));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x72));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x80));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x88));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x96));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x104));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x112));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x120));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x128));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x136));
+                toReturn.Add(GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x144));
+                return toReturn;
             }
         }
 
@@ -118,6 +135,11 @@ namespace LazyLib.Wow
                 }
                 return false;
             }
+        }
+
+        public int BagSlotFlags
+        {
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BagSlotFlags); }
         }
 
         internal List<UInt128> GUIDOfItemsInBag
@@ -245,16 +267,6 @@ namespace LazyLib.Wow
         }
 
         /// <summary>
-        ///   Current number of combination points displayed
-        /// </summary>
-        /// <value>The combo points.</value>
-       /* public int ComboPoints
-        {
-            get { return Memory.ReadRelative<byte>((uint) Pointers.ComboPoints.ComboPoints); }
-        }
-        */
-
-        /// <summary>
         ///   Gets a value indicating whether [winter grasp is in progress].
         /// </summary>
         /// <value>
@@ -319,6 +331,16 @@ namespace LazyLib.Wow
             get { return IsRuneReady(5); }
         }
 
+
+        /// <summary>
+        /// Gets a value indicating whether [in vashir].
+        /// </summary>
+        /// <value><c>true</c> if [in vashir]; otherwise, <c>false</c>.</value>
+        public bool InVashjir
+        {
+            get { return (ZoneId == 5145 || ZoneId == 5144 || ZoneId == 5146 || ZoneId == 4815); }
+        }
+
         /// <summary>
         ///   Returns current zoneid
         /// </summary>
@@ -328,16 +350,6 @@ namespace LazyLib.Wow
             {
                 return Memory.ReadRelative<uint>((uint)Pointers.Zone.ZoneID);
             }
-        }
-
-
-        /// <summary>
-        /// Gets a value indicating whether [in vashir].
-        /// </summary>
-        /// <value><c>true</c> if [in vashir]; otherwise, <c>false</c>.</value>
-        public bool InVashjir
-        {
-            get { return (ZoneId == 5145 || ZoneId == 5144 || ZoneId == 5146 || ZoneId == 4815); }
         }
 
 
@@ -353,14 +365,15 @@ namespace LazyLib.Wow
             }
         }
 
+
         /// <summary>
-        ///   Returns current Worldmap
+        ///   Returns current SubZoneText
         /// </summary>
-        public string WorldMap
+        public string SubZoneText
         {
             get
             {
-                return Memory.ReadUtf8(Memory.ReadRelative<uint>((uint) Pointers.Zone.ZoneText), 40);
+                return Memory.ReadUtf8(Memory.ReadRelative<uint>((uint)Pointers.Zone.SubZoneText), 40);
             }
         }
 
@@ -421,61 +434,61 @@ namespace LazyLib.Wow
             switch (slot)
             {
                 case 1:
-                    return base.GetStorageField<uint>((uint)0xe48);
+                    return base.GetStorageField<uint>((uint)(uint)Descriptors.CGPlayerData.VisibleItems);
 
                 case 2:
-                    return base.GetStorageField<uint>((uint)0xe50);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x8);
 
                 case 3:
-                    return base.GetStorageField<uint>((uint)0xe58);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x16);
 
                 case 4:
-                    return base.GetStorageField<uint>((uint)0xe60);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x24);
 
                 case 5:
-                    return base.GetStorageField<uint>((uint)0xe68);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x32);
 
                 case 6:
-                    return base.GetStorageField<uint>((uint)0xe70);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x40);
 
                 case 7:
-                    return base.GetStorageField<uint>((uint)0xe78);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x48);
 
                 case 8:
-                    return base.GetStorageField<uint>((uint)0xe80);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x56);
 
                 case 9:
-                    return base.GetStorageField<uint>((uint)0xe88);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x64);
 
                 case 10:
-                    return base.GetStorageField<uint>((uint)0xe90);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x72);
 
                 case 11:
-                    return base.GetStorageField<uint>((uint)0xe98);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x80);
 
                 case 12:
-                    return base.GetStorageField<uint>((uint)0xea0);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x88);
 
                 case 13:
-                    return base.GetStorageField<uint>((uint)0xea8);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x96);
 
                 case 14:
-                    return base.GetStorageField<uint>((uint)0xeb0);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x104);
 
                 case 15:
-                    return base.GetStorageField<uint>((uint)0xeb8);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x112);
 
                 case 0x10:
-                    return base.GetStorageField<uint>((uint)0xec0);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x120);
 
                 case 0x11:
-                    return base.GetStorageField<uint>((uint)0xec8);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x128);
 
                 case 0x12:
-                    return base.GetStorageField<uint>((uint)0xed0);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x136);
 
                 case 0x13:
-                    return base.GetStorageField<uint>((uint)0xed8);
+                    return base.GetStorageField<uint>((uint)Descriptors.CGPlayerData.VisibleItems + 0x144);
             }
             return 0;
         }

@@ -71,19 +71,16 @@
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.0.0.4, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\DevComponents.DotNetBar2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevComponents.Instrumentation">
-      <HintPath>..\LazyLib\DevComponents.Instrumentation.dll</HintPath>
+      <HintPath>..\..\..\..\cp\Documents\root\LazyBot evolution\Lazy Evolution\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
     <Reference Include="QuickGraph">
-      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.dll</HintPath>
+      <HintPath>..\..\..\[LB] [6.1.0 19702] Public Copy\Lazy Evolution\bin\Release\QuickGraph.dll</HintPath>
     </Reference>
     <Reference Include="QuickGraph.Data">
-      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.Data.dll</HintPath>
+      <HintPath>..\..\..\[LB] [6.1.0 19702] Public Copy\Lazy Evolution\bin\Release\QuickGraph.Data.dll</HintPath>
     </Reference>
     <Reference Include="QuickGraph.Graphviz">
-      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.Graphviz.dll</HintPath>
+      <HintPath>..\..\..\[LB] [6.1.0 19702] Public Copy\Lazy Evolution\bin\Release\QuickGraph.Graphviz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -334,7 +331,6 @@
     <Compile Include="PVEBehavior\Behavior\Conditions\ArcaneChargesCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\BuffCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\BurningEmbersCountCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\Class1.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\CombatCountCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\ComboPointsCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\DarkForceCondition.cs" />

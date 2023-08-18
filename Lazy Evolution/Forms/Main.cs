@@ -49,7 +49,7 @@ namespace LazyEvo.Forms
 {
     internal partial class Main : Office2007Form
     {
-        private const string LazyVersion = "6.0.3 19116";
+        private const string LazyVersion = "";
         internal static CombatEngine CombatEngine;
         internal static ILazyEngine EngineHandler;
         internal static bool OneInstance;
@@ -105,10 +105,10 @@ namespace LazyEvo.Forms
 #if RELEASE
             CBDebug.Checked = LazySettings.DebugLog;
 #endif
-//#if DEBUG
-           // buttonX1.Visible = true;
-           // buttonX2.Visible = true;        I Dont Like To Look At this In debug
-//#endif
+            //#if DEBUG
+            // buttonX1.Visible = true;
+            // buttonX2.Visible = true;        I Dont Like To Look At this In debug
+            //#endif
         }
 
         private void LogOut(object sender, NotifyEventNoAttach e)
@@ -186,8 +186,7 @@ namespace LazyEvo.Forms
             foreach (string loadedPlugin in PluginCompiler.LoadedPlugins)
             {
                 var item = new ButtonItem(PluginCompiler.Assemblys[loadedPlugin].GetName(),
-                                          PluginCompiler.Assemblys[loadedPlugin].GetName())
-                               {Tag = loadedPlugin};
+                                          PluginCompiler.Assemblys[loadedPlugin].GetName()) { Tag = loadedPlugin };
                 item.Click += ShowPluginSettings;
                 _buttons.Add(item);
                 AddToControlSettings(item);
@@ -801,7 +800,7 @@ namespace LazyEvo.Forms
             {
                 LazySettings.SelectedCombat = SelectCombat.Text;
                 LazySettings.SaveSettings();
-                var cs = (CustomClass) SelectCombat.SelectedItem;
+                var cs = (CustomClass)SelectCombat.SelectedItem;
                 CombatEngine = ClassCompiler.Assemblys[cs.AssemblyName];
             }
         }
@@ -810,7 +809,7 @@ namespace LazyEvo.Forms
 
         #region Engines
 
-      private void LoadEngines()
+        private void LoadEngines()
         {
             EngineCompiler.RecompileAll();
             SelectEngine.Items.Clear();
@@ -842,7 +841,7 @@ namespace LazyEvo.Forms
         {
             if (SelectEngine.SelectedIndex != -1)
             {
-                var cs = (CustomEngine) SelectEngine.SelectedItem;
+                var cs = (CustomEngine)SelectEngine.SelectedItem;
                 LazySettings.SelectedEngine = SelectEngine.Text;
                 LazySettings.SaveSettings();
                 EngineHandler = EngineCompiler.Assemblys[cs.AssemblyName];
@@ -871,7 +870,7 @@ namespace LazyEvo.Forms
 
         private void ShowPluginSettings(object sender, EventArgs e)
         {
-            var item = (ButtonItem) sender;
+            var item = (ButtonItem)sender;
             if (PluginCompiler.LoadedPlugins.Contains(item.Tag.ToString()))
             {
                 PluginCompiler.Assemblys[item.Tag.ToString()].Settings();

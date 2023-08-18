@@ -79,27 +79,6 @@
             GasCloud
         }
 
-    /*public enum PowerType
-    {
-        Mana,
-        Rage,
-        Focus,
-        Energy,
-        Happiness,
-        Runes,
-        RunicPower,
-        SoulShards,
-        Eclipse,
-        HolyPower,
-        Alternate,
-        DarkForce,
-        LightForce,
-        ShadowOrbs,
-        BurningEmbers,
-        DemonicFury,
-        ArcaneCharges
-    }
-     */
         public enum PowerType
         {
             Mana,
@@ -211,15 +190,6 @@
             TreeOfLife = 2
         }
 
-        public enum SkinnableType
-        {
-            None,
-            Skining,
-            Herb,
-            Mining,
-            Engineer
-        }
-
         public enum UnitClass
         {
             UnitClass_Unknown = 0,
@@ -329,6 +299,47 @@
             UnitRace_Undead = 5,
             UnitRace_Worgen = 0x16
         }
+        #region GameObjectTypes enum
+        public enum GameObjectTypes
+        {
+            Door,
+            Button,
+            QuestGiver,
+            Chest,
+            Binder,
+            Generic,
+            Trap,
+            Chair,
+            SpellFocus,
+            Text,
+            Goober,
+            Transport,
+            AreaDamage,
+            Camera,
+            MapObject,
+            MOTransport,
+            DuelFlag,
+            FishingNode,
+            SummoningRitual,
+            Mailbox,
+            DoNotUse1,
+            GuardPost,
+            SpellCaster,
+            MeetingStone,
+            FlagStand,
+            FishingHole,
+            FlagDrop,
+            MiniGame,
+            DoNotUse2,
+            CapturePoint,
+            AuraGenerator,
+            DungeonDifficulty,
+            BarberChair,
+            DestructibleBuilding,
+            GuildBank,
+            TrapDoor
+        }
+        #endregion
     }
 }
 

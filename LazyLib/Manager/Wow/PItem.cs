@@ -17,7 +17,9 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 */
 #region
 
+using LazyLib.Helpers;
 using LazyLib.Manager;
+//using LazyLib.Manager.Bored;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -49,6 +51,42 @@ namespace LazyLib.Wow
             get { return GetStorageField<ulong>(4); }
         }
 
+        public int VisibleItems
+        {
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.VisibleItems); }
+        }
+
+        public int InsertItemsLeftToRight
+        {
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.InsertItemsLeftToRight); }
+        }
+
+        public int BuybackPrice
+        {
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BuybackPrice); }
+        }
+
+        public int BuybackTimestamp
+        {
+            get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BuybackTimestamp); }
+        }
+
+        public int PropertySeed
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGItemData.PropertySeed);
+            }
+        }
+
+        public int RandomPropertiesId
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGItemData.RandomPropertiesID);
+            }
+        }
+
         /// <summary>
         ///   Returns Display ID
         /// </summary>
@@ -77,7 +115,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return ((Durability)/((float) MaximumDurability))*100;
+                    return ((Durability) / ((float)MaximumDurability)) * 100;
                 }
                 catch
                 {

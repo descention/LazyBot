@@ -1,5 +1,4 @@
-﻿
-﻿/*
+﻿﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
     LazyBot is free software: you can redistribute it and/or modify
