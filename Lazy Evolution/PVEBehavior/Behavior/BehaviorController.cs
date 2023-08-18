@@ -191,12 +191,8 @@ namespace LazyEvo.PVEBehavior.Behavior
                     condition = new SoulShardCountCondition();
                     condition.LoadData(xmlNode);
                     return condition;
-                case "BurningEmbersCount":
+                case "BurningEmbersCountCondition":
                     condition = new BurningEmbersCountCondition();
-                    condition.LoadData(xmlNode);
-                    return condition;
-                case "ChiCondition":
-                    condition = new ChiCondition();   // New For Chi
                     condition.LoadData(xmlNode);
                     return condition;
                 case "HealthStoneCountCondition":
@@ -213,6 +209,26 @@ namespace LazyEvo.PVEBehavior.Behavior
                     return condition;
                 case "MageFoodCondition":
                     condition = new MageFoodCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "HolyPowerCondition":
+                    condition = new HolyPowerCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "ShadowOrbsCondition":
+                    condition = new ShadowOrbsCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "LightForceCondition":
+                    condition = new LightForceCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "DarkForceCondition":
+                    condition = new DarkForceCondition();
+                    condition.LoadData(xmlNode);
+                    return condition;
+                case "ArcaneChargesCondition":
+                    condition = new ArcaneChargesCondition();
                     condition.LoadData(xmlNode);
                     return condition;
                 case "TempEnchantCondition":

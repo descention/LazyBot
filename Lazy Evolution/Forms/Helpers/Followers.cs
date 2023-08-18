@@ -25,13 +25,14 @@ using LazyLib;
 using LazyLib.FSM;
 using LazyLib.Helpers;
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 namespace LazyEvo.Forms.Helpers
 {
     internal class Followers
     {
         private const int Distance = 40;
-        private static readonly Dictionary<UInt64, Int32> FollowersList = new Dictionary<UInt64, Int32>();
+        private static readonly Dictionary<UInt128, Int32> FollowersList = new Dictionary<UInt128, Int32>();
         private static readonly Ticker Timer = new Ticker(5000);
 
         private static readonly SoundPlayer SoundPlayer = new SoundPlayer();

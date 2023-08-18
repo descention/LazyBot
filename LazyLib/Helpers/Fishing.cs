@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 namespace LazyLib.Helpers
 {
@@ -132,7 +133,7 @@ namespace LazyLib.Helpers
             }
         }
 
-        private static void FindTheBobber(Location loc, ulong guid)
+        private static void FindTheBobber(Location loc, UInt128 guid)
         {
             Point worldToScreen = Camera.World2Screen.WorldToScreen(loc, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);

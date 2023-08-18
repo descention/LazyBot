@@ -2,6 +2,7 @@
 {
     using LazyLib;
     using LazyLib.Helpers;
+    using LazyLib.Manager;
     using System;
     using System.Drawing;
     using System.Reflection;
@@ -22,7 +23,7 @@
             this.BaseAddress = baseAddress;
         }
 
-        private static bool DoSmallestSearch(ulong guid)
+        private static bool DoSmallestSearch(UInt128 guid)
         {
             if (ObjectManager.ShouldDefend)
                 return true;
@@ -169,7 +170,7 @@
         }
 
         //TODO: Do something to this functions, its freaking ugly
-        private static bool LetsSearch(ulong guid, bool multiclick, bool click)
+        private static bool LetsSearch(UInt128 guid, bool multiclick, bool click)
         {
             if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(guid))
             {
@@ -241,7 +242,7 @@
             }
         }
 
-        private static bool Search(ulong guid, int yValue)
+        private static bool Search(UInt128 guid, int yValue)
         {
             if (ObjectManager.ShouldDefend)
                 return true;
@@ -366,15 +367,15 @@
             }
         }
 
-        public virtual ulong GUID
+        public virtual UInt128 GUID
         {
             get
             {
                 if (this.IsValid)
                 {
-                    return this.GetStorageField<ulong>((uint)Descriptors.CGObjectData.Guid);
+                    return this.GetStorageField<UInt128>((uint)Descriptors.CGObjectData.Guid);
                 }
-                return 0;
+                return ulong.MinValue;
             }
         }
 
@@ -392,10 +393,7 @@
 
         public bool IsValid
         {
-            get
-            {
-                return (this.BaseAddress != 0);
-            }
+            get { return BaseAddress != uint.MinValue; }
         }
 
         public int Level
@@ -406,12 +404,13 @@
             }
         }
 
-        public virtual LazyLib.Wow.Location Location
+        /// <summary>
+        ///   Gets the location.
+        /// </summary>
+        /// <value>The location.</value>
+        public virtual Location Location
         {
-            get
-            {
-                return new LazyLib.Wow.Location(this.X, this.Y, this.Z);
-            }
+            get { return new Location(X, Y, Z); }
         }
 
         public uint StorageField

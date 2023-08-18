@@ -79,7 +79,7 @@
             GasCloud
         }
 
-    public enum PowerType
+    /*public enum PowerType
     {
         Mana,
         Rage,
@@ -99,6 +99,27 @@
         DemonicFury,
         ArcaneCharges
     }
+     */
+        public enum PowerType
+        {
+            Mana,
+            Rage,
+            Focus,
+            Energy,
+            ComboPoint,
+            Runes,
+            RunicPower,
+            SoulShards,
+            Eclipse,
+            HolyPower,
+            Alternate,
+            DarkForce,
+            LightForce,
+            ShadowOrbs,
+            BurningEmbers,
+            DemonicFury,
+            ArcaneCharges
+        }
 
         public enum KeyType : uint
         {
@@ -139,18 +160,32 @@
 
         public enum PlayerFactions : uint
         {
-            BloodElf = 0x64a,
-            Draenei = 0x65d,
-            Dwarf = 3,
-            Gnome = 0x73,
-            Goblin = 0x89c,
+            None = 0,
             Human = 1,
-            NightElf = 4,
             Orc = 2,
-            Tauren = 6,
-            Troll = 0x74,
+            Dwarf = 3,
+            NightElf = 4,
             Undead = 5,
-            Worgen = 0x89b
+            Tauren = 6,
+            Gnome = 7,
+            Troll = 8,
+            Goblin = 9,
+            BloodElf = 10,
+            Draenei = 11,
+            FelOrc = 12,
+            Naga = 13,
+            Broken = 14,
+            Skeleton = 15,
+            Vrykul = 16,
+            Tuskarr = 17,
+            ForestTroll = 18,
+            Taunka = 19,
+            NorthrendSkeleton = 20,
+            IceTroll = 21,
+            Worgen = 22,
+            PandarenNeutral = 24,
+            PandarenAlliance = 25,
+            PandarenHorde = 26
         }
 
         public enum ShapeshiftForm
@@ -258,7 +293,7 @@
             UnitPower_Rage,
             UnitPower_Focus,
             UnitPower_Energy,
-            UnitPower_Happiness,
+            UnitPower_ComboPoint,
             UnitPower_Runes,
             UnitPower_RunicPower,
             UnitPower_SoulShard,

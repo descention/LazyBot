@@ -48,9 +48,7 @@ namespace LazyEvo.Forms.Helpers
             ObjectManager.MakeReady();
             Logging.Write("Visit www.ownedcore.com for support.");
             Logging.Write("LazyBot Revolution is free and open source software!");
-            Logging.Write("LBR is a modified version of LazyBot originally ");
             Logging.Write("coded by Arutha!");
-            Logging.Write("(SVN Open Source Coming Soon!)");
             Logging.Write("Keys should be placed on bar 1-6 and position 1-9!");
             LoadNow();
         }

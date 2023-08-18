@@ -23,6 +23,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using LazyLib.Helpers;
+using LazyLib.Manager;
 
 #endregion
 
@@ -119,16 +120,17 @@ namespace LazyLib.Wow
             }
         }
 
-        internal List<ulong> GUIDOfItemsInBag
+        internal List<UInt128> GUIDOfItemsInBag
         {
             get
             {
-                var guids = new List<ulong>();
+                var guids = new List<UInt128>();
                 const int numberOfItems = 16;
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
                 {
                     guids.Add(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
+                    //Logging.Write(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i) + "");
                 }
                 return guids;
             }
@@ -246,10 +248,11 @@ namespace LazyLib.Wow
         ///   Current number of combination points displayed
         /// </summary>
         /// <value>The combo points.</value>
-        public int ComboPoints
+       /* public int ComboPoints
         {
             get { return Memory.ReadRelative<byte>((uint) Pointers.ComboPoints.ComboPoints); }
         }
+        */
 
         /// <summary>
         ///   Gets a value indicating whether [winter grasp is in progress].
@@ -259,14 +262,7 @@ namespace LazyLib.Wow
         /// </value>
         public bool WinterGraspInProgress
         {
-            get
-            {
-                if (!base.HasBuff(0x93a3) && !base.HasBuff(0x8200))
-                {
-                    return base.HasBuff(0xd94d);
-                }
-                return true;
-            }
+            get { return HasBuff(37795) || (HasBuff(33280) || HasBuff(55629)); }
         }
 
         /// <summary>
@@ -341,15 +337,9 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if [in vashir]; otherwise, <c>false</c>.</value>
         public bool InVashjir
         {
-            get
-            {
-                if (((this.ZoneId != 0x1419) && (this.ZoneId != 0x1418)) && (this.ZoneId != 0x141a))
-                {
-                    return (this.ZoneId == 0x12cf);
-                }
-                return true;
-            }
+            get { return (ZoneId == 5145 || ZoneId == 5144 || ZoneId == 5146 || ZoneId == 4815); }
         }
+
 
         /// <summary>
         ///   Returns current zonetext

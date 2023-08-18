@@ -27,336 +27,466 @@ namespace LazyLib.Wow
     public class PublicPointers
     {
         #region Globals enum
+
+        /// <summary>
+        ///   [WoW] [6.1.0 19678] 
+        /// </summary>
         public enum Globals
         {
-            PlayerName = 0xEBF648,     // 5.4.2 (17658) (0x1D280 diff)
+            PlayerName = 0xF72CF8, 
         }
+
         #endregion
 
-
         #region InGame enum
+
+        /// <summary>
+        ///   [WoW] [6.1.0 19678] 
+        /// </summary>
         public enum InGame
         {
-            InGame = 0xD60C2C,   // 5.4.2 (17658) (0x1D040 diff)
+            InGame = 0xE3191E,   
         }
+
         #endregion
     }
 
-
     internal class Pointers
     {
-
-
-        #region Nested type: ObjectManager
-        internal enum ObjectManager
-        {
-            //CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint) Pointers.ObjectManager.CurMgrPointer)
-            //    + (uint) Pointers.ObjectManager.CurMgrOffset);
-            //LocalGUID = Memory.Read<UInt64>(CurrentManager + (uint) Pointers.ObjectManager.LocalGUID);
-            CurMgrPointer = 0xEBF608,   // 5.4.2 (17658) (0x1D280 diff)
-            CurMgrOffset = 0x462C,      // 5.4.2 (17658) (0x0 diff)
-            NextObject = 0x34,          // 5.4.2 (17658) (0x0 diff)
-            FirstObject = 0xCC,         // 5.4.2 (17658) (0x0 diff)
-            LocalGUID = 0xE8,           // 5.4.2 (17658) (0x0 diff)
-        }
-        #endregion
-
-
-        #region Nested type: Globals
-        internal enum Globals
-        {
-            RedMessage = 0xD5FF10,      // 5.4.2 (17658) (0x1D040 diff)  
-            MouseOverGUID = 0xD60B20,   // 5.4.2 (17658) (0x1D040 diff)  
-            LootWindow = 0xDCEB8C,      // 5.4.2 (17658) (0x1D080 diff)  
-            IsBobbing = 0xCC,           // 5.4.2 (17658)
-            ArchFacing = 0x1BC,         // 5.4.2 (17658)                    
-            ArchFacingOffset2 = 0x108,  // 5.4.2 (17658)                    
-            ChatboxIsOpen = 0xBB99EC,   // 5.4.2 (17658) (0x196B0 diff)  
-            CursorType = 0xD29548       // 5.4.2 (17658) (0x1D038 diff)  
-        }
-        #endregion
-
-
         #region ActionBar enum
+
+        /// <summary>
+        ///   [WoW] [6.1.0 19678] 
+        /// </summary>
         public enum ActionBar
         {
-            ActionBarFirstSlot = 0xDD2AD8,    // 5.4.2 (17658) (0x1D070 diff)
-            ActionBarBonus = 0xDD2F60,        // 5.4.2 (17658) (0x1D070 diff)
+            ActionBarFirstSlot = 0xEA1800,
+            ActionBarBonus = 0xEA1A40, // TODO Check
         }
-        #endregion
 
+        #endregion
 
         #region AutoLoot enum
+
+        /// <summary>
+        ///    [WoW] [6.1.0 19678] 
+        /// </summary>
         public enum AutoLoot
         {
-            Offset = 0x30,         // 5.4.2 (17658)
-            Pointer = 0xD60D50,    // 5.4.2 (17658) (0x1D040 diff)
+            Offset = 0x34,
+            Pointer = 0xE31ACC,   
         }
+
         #endregion
-
-
-        #region ClickToMove enum
-        public enum ClickToMove
-        {
-            Offset = 0x30,         // 5.4.2 (17658)
-            Pointer = 0xD60D30,    // 5.4.2 (17658) (0x1D040 diff)
-        }
-        #endregion
-
 
         #region CgUnitCGetCreatureRank enum
+
+        /// <summary>
+        ///  Reversed from CGUnit_C__GetCreatureRank 
+        /// </summary>
         public enum CgUnitCGetCreatureRank
         {
-            Offset1 = 0x9B4,  // 5.4.2 (17658)  
-            Offset2 = 0x20,   // 5.4.2 (17658)  
+            Offset1 = 0xC04,
+            Offset2 = 0x2C,        
         }
-        #endregion
 
+        #endregion
 
         #region CgUnitCGetCreatureType enum
+
+        /// <summary>
+        ///   reversed from CGUnit_C__GetCreatureType 
+        /// </summary>
         public enum CgUnitCGetCreatureType
         {
-            Offset1 = 0x9B4,    // 5.4.2 (17658)
-            Offset2 = 0x18,     // 5.4.2 (17658)
+            Offset1 = 0xC04,
+            Offset2 = 0x24,     
         }
-        #endregion
 
+        #endregion
 
         #region CgWorldFrameGetActiveCamera enum
+
+        /// <summary>
+        ///  reversed from CGWorldFrame__GetActiveCamera
+        /// </summary>
         public enum CgWorldFrameGetActiveCamera
         {
-            //return Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.CgWorldFrameGetActiveCamera.CameraPointer) 
-            // + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraOffset);
-
-
-            CameraX = 0x8,             // 5.4.2 (17658)
-            CameraY = 0xC,             // 5.4.2 (17658)
-            CameraZ = 0x10,            // 5.4.2 (17658)
-            CameraMatrix = 0x14,       // 5.4.2 (17658)
-            CameraPointer = 0xD5FE4C,  // 5.4.2 (17658) (0x1D038 diff)      
-            CameraOffset = 0x8208,     // 5.4.2 (17658) (0x00 diff)        
+            CameraX = 0x8,
+            CameraY = 0xC,
+            CameraZ = 0x10,
+            CameraMatrix = 0x14,
+            CameraPointer = 0xE32098,
+            CameraOffset = 0x7610, 
         }
+
         #endregion
 
+        #region SkinningFlags enum
+        /// <summary>
+        ///   Done
+        /// </summary>
+        public enum Skinning
+        {
+            SkinnableFlags1 = 0x0C04,
+            SkinnableFlags2 = 0x5C
+        }
 
+        #endregion
 
+        #region ClickToMove enum
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
+        public enum ClickToMove
+        {
+            Offset = 0x34,
+            Pointer = 0xE31AAC,
+        }
+
+        #endregion
 
         #region Nested type: AutoAttack
+
+        /// <summary>
+        ///  reversed from CGActionBar__IsCurrentAction 
+        /// </summary>
         internal enum AutoAttack
         {
+            AutoAttackFlag = 0xEE8,       //Old Method
+            AutoAttackMask = 0xEEC,       //Old Method
+            //Address seems to show the GUID of the Auto Attack target
+            AutoAttackGUID = 0xED8,
             //Shows 0x06 when not wanding, 0x0C or 0x0E when wanding.
-            AutoAttackFlag = 0xC58,  // 5.4.2 (17658)
-            AutoAttackMask = 0xC5C,  // 5.4.2 (17658)
-            Wanding = 0xC70,         // 5.4.2 (17658)
+            Wanding = 0xEF8,       
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: CastingInfo
+
+        /// <summary>
+        /// [WoW] [6.1.0 19678] 
+        /// </summary>
         internal enum CastingInfo
         {
-            IsCasting = 0xCB8,              // 5.4.2 (17658) 
-            ChanneledCasting = 0xCD0,       // 5.4.2 (17658) 
+            IsCasting = 0xF40,
+            ChanneledCasting = 0xF80, 
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: Chat
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum Chat : uint
         {
-            ChatStart = 0xD62955,           // 5.4.2 (17658) (0x1D038 diff)
-            OffsetToNextMsg = 0x17C8,       // 5.4.2 (17658)
-        }
-        #endregion
+            ChatStart = 0xE8DC84,// not used currently 
+            OffsetToNextMsg = 0x17E8, // used
+            chatBufferPos = 0xE33908, // used
 
+            msgFormatedChat = 0x65, // used 
+            MsgSenderGuid = 0x00,
+            MsgSenderName = 0x034,
+            MsgFullMessage = 0x0065,
+            MsgOnlyMessage = 0x0C1D,
+            MsgChannelNum = 0x17D8,
+            MsgTimeStamp = 0x17E4,
+        }
+
+        #endregion
 
         #region BlueChat
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum Messages
         {
-            EventMessage = 0xD9BA38     // 5.0.4 (15929)  <--- FIX THIS
+            EventMessage = 0xE30D10 // Updated :)
         }
+
         #endregion
-
-
-        #region Nested type: ComboPoints
-        internal enum ComboPoints
-        {
-            ComboPoints = 0xD60BF1,     // 5.4.2 (17658) (0x1D040 diff)
-        }
-        #endregion
-
-
-        #region Nested type: Runes
-        internal enum Runes
-        {
-            RunesOffset = 0xDD2234,     // 5.4.2 (17658) (0x1D070 diff)
-        }
-        #endregion
-
 
         #region Nested type: Container
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum Container
         {
-            //I think this is completely wrong. Needs fixing at some point.
-            EquippedBagGUID = 0xCE3F96,  // 5.4.2 (17658) (-0x98FA diff)  //VALIDATE??
+            EquippedBagGUID = 0xEA7F80
         }
+
         #endregion
 
+        #region Nested type: Globals
 
+        /// <summary>
+        ///   5.4
+        /// </summary>
+        internal enum Globals
+        {
+            RedMessage = 0xE30D10,
+            MouseOverGUID = 0xE31CE0,
+            LootWindow = 0xEA2968,
+            ChatboxIsOpen = 0xCBEB60,
+            CursorType = 0xDF82F8,
+            IsBobbing = 0x104,
+            ArchFacing = 0x268,               //TODO           
+            ArchFacingOffset2 = 0x148,        //TODO  
+        }
 
+        #endregion
+
+        #region Nested type: Items
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
+        internal enum Items : uint
+        {
+            Offset = 0xC696D8,
+        }
+
+        #endregion
 
         #region Nested type: KeyBinding
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum KeyBinding
         {
-            NumKeyBindings = 0xDBD8F8,      // 5.4.2 (17658) (0x1d058 diff)
-            First = 0xC8,                   // 5.4.2 (17658)
-            Next = 0xC0,                    // 5.4.2 (17658)
-            Key = 0x14,                     // 5.4.2 (17658)
-            Command = 0x28,                 // 5.4.2 (17658)
+            NumKeyBindings = 0xE8F850,
+            First = 0xC8,
+            Next = 0xC0,
+            Key = 0x18,
+            Command = 0x2C, 
         }
+
         #endregion
 
+        #region Nested type: ObjectManager
 
-
-
-        #region Nested type: Macros
-        internal enum MacroManager
+        /// <summary>
+        ///   5.4
+        /// </summary>
+        internal enum ObjectManager
         {
-            //CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint) Pointers.ObjectManager.CurMgrPointer)
-            //    + (uint) Pointers.ObjectManager.CurMgrOffset);
-            //LocalGUID = Memory.Read<UInt64>(CurrentManager + (uint) Pointers.ObjectManager.LocalGUID);
-
-
-            MacroTable = 0xDD2120,     // 5.4.2 (17658) (0x1d070 diff)
-            GeneralOffset = 0x04,      // 5.4.2 (17658)
+            CurMgrPointer = 0xF72CB8,
+            CurMgrOffset = 0x62C,
+            NextObject = 0x3C,
+            FirstObject = 0xD8,
+            LocalGUID = 0xF8,   
         }
+
         #endregion
-
-
-
 
         #region Nested type: Reaction
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum Reaction : uint
         {
-            FactionPointer = FactionStartIndex + 0xC,    // 5.4.2 (17658)
-            FactionTotal = FactionStartIndex - 0x4,      // 5.4.2 (17658)
-            HostileOffset1 = 0x14,                       // 5.4.2 (17658)
-            HostileOffset2 = 0x0C,                       // 5.4.2 (17658)
-            FriendlyOffset1 = 0x10,                      // 5.4.2 (17658)
-            FriendlyOffset2 = 0x0C,                      // 5.4.2 (17658)
-            FactionStartIndex = 0xC85B9C,                // 5.4.2 (17658) (0x19BB0 diff)
+            FriendlyOffset2 = 0xC,
+            HostileOffset2 = 0xC,
+            FriendlyOffset1 = 010,
+            HostileOffset1 = 0x14,
+            DBCPtrFactionTemplate = 0xC8A34C,
         }
+
         #endregion
 
+        #region Nested type: InCombat
 
+        /// <summary>
+        /// Reversed from Lua_UnitAffectingCombat
+        /// v4 = v2 && (*(_DWORD *)(*(_DWORD *)(v2 + 284) + 316) >> 19) & 1;
+        /// </summary>
+        public enum InCombat
+        {
+            Mask = 19,
+            Offset2 = 0x13C,
+            Offset1 = 0x11C
+        }
 
+        #endregion
 
+        #region Nested type: Runes
 
+        /// <summary>
+        ///   5.4
+        /// </summary>
+        internal enum Runes
+        {
+            RuneTypes = 0xE0A218,       //Good
+            RunesOffset = 0xE0A27C,     //Good
+        }
+
+        #endregion
 
         #region Nested type: ShapeshiftForm
+
+        /// <summary>
+        ///  Reversed from CGUnit_C__GetShapeshiftFormId
+        /// </summary>
         internal enum ShapeshiftForm
         {
-            BaseAddressOffset1 = 0xE4,       // 5.4.2 (17658)
-            BaseAddressOffset2 = 0x1E3,      // 5.4.2 (17658)
+            BaseAddressOffset1 = 0x11C,       // 5.4.7 (17930)
+            BaseAddressOffset2 = 0x253,      // 5.4.7 (17930)
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: SpellCooldown
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum SpellCooldown : uint
         {
-            CooldPown = 0xC9D608,   // 5.4.2 (17658) (0x1A088 diff) 
+            CooldPown = 0xD24C78,  
         }
+
         #endregion
 
+        #region Nested type: PowerIndex
+        internal enum PowerIndex
+        {
+            PowerIndexArrays = 0xDCC744,
+            Multiplicator = 0x10
+        }
+
+        #endregion
 
         #region Nested type: Swimming
+
+        /// <summary>
+        ///   Reversed from Lua_IsSwimming
+        /// </summary>
         internal enum Swimming
         {
-            Pointer = 0xEC,     // 5.4.2 (17658)    
-            Offset = 0x38,      // 5.4.2 (17658)    
-            Mask = 0x100000,    // 5.4.2 (17658)    
+            Pointer = 0x12C,
+            Offset = 0x40,
+            Mask = 0x100000,  
         }
-        #endregion
 
+        #endregion
 
         #region IsFlying enum
+
+        /// <summary>
+        ///  Reversed from Lua_IsFlying 
+        /// </summary>
         public enum IsFlying
         {
-            Pointer = 0xEC,     // 5.4.2 (17658)    
-            Offset = 0x38,      // 5.4.2 (17658)    
-            Mask = 0x1000000    // 5.4.2 (17658)    
+            Pointer = 0x12C,
+            Offset = 0x40,
+            Mask = 0x1000000  
         }
+
         #endregion
 
+        #region IsFalling enum
 
+        /// <summary>
+        ///  Reversed from Lua_IsFalling
+        /// </summary>
+        public enum IsFalling
+        {
+            Pointer = 0x12C,
+            Offset = 0x40,
+            Mask = 0x1000000
+        }
 
+        #endregion
 
         #region Nested type: UnitAuras
+
+        /// <summary>
+        ///   reversed from CGUnit_C__GetAura 
+        /// </summary>
         internal enum UnitAuras : uint
         {
-            AuraCount1 = 0x1218, // 5.4.2 (17658)
-            AuraCount2 = 0xE18, // 5.4.2 (17658)
-            AuraTable1 = 0xE18, // 5.4.2 (17658)
-            AuraTable2 = 0xE1C, // 5.4.2 (17658)
-            AuraSize = 0x40,    // 5.4.2 (17658)
-            AuraSpellId = 0x28,  // 5.4.2 (17658)
-            AuraStack = 0x2D,    // 5.4.2 (17658)
-            TimeLeft = 0x34,    // 5.4.2 (17658)
-            OwnerGUID = 0x20,    // 5.4.2 (17658)
+            AuraCount1 = 0x1548,
+            AuraCount2 = 0x10C8,
+            AuraTable1 = 0x10C8,
+            AuraTable2 = 0x10CC,
+            AuraSize = 0x48,
+            AuraSpellId = 0x30,
+            AuraStack = 0x35,
+            TimeLeft = 0x3C,
+            OwnerGUID = 0x20,  
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: UnitName
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum UnitName : uint
         {
-            ObjectName1 = 0x1C0,            // 5.4.2 (17658)       
-            ObjectName2 = 0xB0,             // 5.4.2 (17658)
-            PlayerNameMaskOffset = 0x02c,   // 5.4.2 (17658)
-            PlayerNameBaseOffset = 0x020,   // 5.4.2 (17658)
-            PlayerNameStringOffset = 0x021, // 5.4.2 (17658)
-            PlayerNameCachePointer = 0xC81878, // 5.4.2 (17658)  (0x19CA8 diff)
-            UnitName1 = 0x9B4,              // 5.4.2 (17658)
-            UnitName2 = 0x6C,               // 5.4.2 (17658)
+            ObjectName1 = 0x274,
+            ObjectName2 = 0xB4,
+            PlayerNameGUIDOffset = 0x010,
+            PlayerNameStringOffset = 0x021,
+            PlayerNameCachePointer = 0xD0E5BC,
+            UnitName1 = 0xC04,
+            UnitName2 = 0x7C,    
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: UnitSpeed
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum UnitSpeed
         {
-            Pointer1 = 0xEC,  // 5.4.2 (17658)    
-            Pointer2 = 0x80,  // 5.4.2 (17658)
+            Pointer1 = 0x12C,
+            Pointer2 = 0x88,   
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: WowObject
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum WowObject
         {
-            X = 0x838,              // 5.4.2 (17658) 
-            Y = X + 0x4,            // 5.4.2 (17658)
-            Z = X + 0x8,            // 5.4.2 (17658)
-            RotationOffset = X + 0x10,       // 5.4.2 (17658)
-            GameObjectX = 0x01F4,             // 5.4.2 (17658)
-            GameObjectY = GameObjectX + 0x4, // 5.4.2 (17658)
-            GameObjectZ = GameObjectX + 0x8, // 5.4.2 (17658)
-            GameObjectRotation = GameObjectX + 0x10, // 5.4.2 (17658)
+            X = 0xA90,
+            Y = X + 0x4,
+            Z = X + 0x8,
+            RotationOffset = X + 0x10,
+            GameObjectX = 0x0140,
+            GameObjectY = GameObjectX + 0x4,
+            GameObjectZ = GameObjectX + 0x8,
+            GameObjectRotation = GameObjectX + 0x10,   
         }
-        #endregion
 
+        #endregion
 
         #region Nested type: Zone
+
+        /// <summary>
+        ///   5.4
+        /// </summary>
         internal enum Zone : uint
         {
-            ZoneText = 0xD60B04, // 5.4.2 (17658) (0x1d040 diff)
-            ZoneID = 0xD60BAC, // 5.4.2 (17658) (0x1d040 diff)
+            ZoneText = 0xE31914,
+            ZoneID = 0xE31968,
         }
+
         #endregion
-
-
-
 
         #region Nested type: UiFrame
         internal enum UiFrame
@@ -364,34 +494,31 @@ namespace LazyLib.Wow
             //var @base = Memory.ReadRelative<uint>((uint)Pointers.UiFrame.FrameBase);
             //var currentFrame = Memory.Read<uint>(@base + (uint)Pointers.UiFrame.FirstFrame);
 
+            ScrWidth = 0xBFED88,
+            ScrHeight = 0xBFED8C,
+            FrameBase = 0xCB2254,
+            CurrentFramePtr = 0xCB2254,    
 
-            ScrWidth = 0xADA9D4,            // 5.4.2 (17658) (0x19000 diff)
-            ScrHeight = 0xADA9D8,           // 5.4.2 (17658) (0x19000 diff)
-            FrameBase = 0xBADCB0,           // 5.4.2 (17658) (0x196AC diff)
-            CurrentFramePtr = 0xBADCB0,     // 5.4.2 (17658) (0x196AC diff)
+            FirstFrame = 0x12F4,            //Good
+            NextFrame = 0x12EC,             //Good
+            RegionsFirst = 0x168,           //Good
+            RegionsNext = 0x160,            //Good
+            Visible = 0x64,                 //Good
+            Visible1 = 0x1A,                //Good
+            Visible2 = 1,                   //Good
+            LabelText = 0xF8,               //Good
+            Name = 0x1C,                    //Good
 
-
-            ButtonEnabledPointer = 0x1F8,   // 5.4.2 (17658) <<-- FIX IT
-            ButtonEnabledMask = 0xF,        // 5.4.2 (17658) <<-- FIX IT
-            ButtonChecked = 0x234,          // 5.4.2 (17658) <<-- FIX IT
-            EditBoxText = 0x214,            // 5.4.2 (17658) <<-- FIX IT
-            FirstFrame = 0xce4,             // 5.4.2 (17658) <<-- FIX IT
-            FrameBottom = 0x68,             // 5.4.2 (17658)
-            FrameLeft = 0x6c,               // 5.4.2 (17658)
-            FrameTop = 0x70,                // 5.4.2 (17658)
-            FrameRight = 0x74,              // 5.4.2 (17658)
-            LabelText = 0xF8,               // 5.4.2 (17658)
-            Name = 0x1C,                    // 5.4.2 (17658)
-            NextFrame = 0xCDC,              // 5.4.2 (17658) <<-- FIX IT
-            RegionsFirst = 0x16c,           // 5.4.2 (17658) <<-- FIX IT
-            RegionsNext = 0x164,            // 5.4.2 (17658) <<-- FIX IT
-            Visible = 0x64,                 // 5.4.2 (17658) <<-- FIX IT
-            Visible1 = 0x1A,                // 5.4.2 (17658) <<-- FIX IT
-            Visible2 = 1,                   // 5.4.2 (17658) <<-- FIX IT
-            CurrentFrameOffset = 0x88,      // 5.4.2 (17658) <<-- FIX IT        
+            ButtonEnabledPointer = 0x1F4,   //Assumed Good
+            ButtonEnabledMask = 0xF,        //Assumed Good
+            ButtonChecked = 0x230,          //Assumed Good
+            EditBoxText = 0x210,            //Assumed Good
+            FrameBottom = 0x68,             //Assumed Good
+            FrameLeft = 0x6c,               //Assumed Good
+            FrameTop = 0x70,                //Assumed Good
+            FrameRight = 0x74,              //Assumed Good
+            CurrentFrameOffset = 0x88,      //Assumed Good?   
         }
-
-
         #endregion
     }
 }

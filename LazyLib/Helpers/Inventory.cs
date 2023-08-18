@@ -21,22 +21,23 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 namespace LazyLib.Helpers
 {
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
     public class Inventory
     {
-        public static List<ulong> GUIDOfItemsInBag
+        public static List<UInt128> GUIDOfItemsInBag
         {
             get { return ObjectManager.MyPlayer.GUIDOfItemsInBag; }
         }
 
-        private static List<UInt64> GUIDOfBags
+        private static List<UInt128> GUIDOfBags
         {
             get
             {
-                var guids = new List<UInt64>();
+                var guids = new List<UInt128>();
                 try
                 {
                     guids.Add(Bag1GUID);
@@ -73,24 +74,24 @@ namespace LazyLib.Helpers
             }
         }
 
-        private static UInt64 Bag1GUID
+        private static UInt128 Bag1GUID
         {
-            get { return Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID)); }
+            get { return Memory.ReadRelative<UInt128>(((uint)Pointers.Container.EquippedBagGUID)); }
         }
 
-        private static UInt64 Bag2GUID
+        private static UInt128 Bag2GUID
         {
-            get { return Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 1)); }
+            get { return Memory.ReadRelative<UInt128>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 1)); }
         }
 
-        private static UInt64 Bag3GUID
+        private static UInt128 Bag3GUID
         {
-            get { return Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 2)); }
+            get { return Memory.ReadRelative<UInt128>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 2)); }
         }
 
-        private static UInt64 Bag4GUID
+        private static UInt128 Bag4GUID
         {
-            get { return Memory.ReadRelative<UInt64>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 3)); }
+            get { return Memory.ReadRelative<UInt128>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 3)); }
         }
 
         public static PContainer Bag1
@@ -123,7 +124,7 @@ namespace LazyLib.Helpers
             {
                 try
                 {
-                    List<ulong> bagGuids = new List<ulong>();
+                    List<UInt128> bagGuids = new List<UInt128>();
                     try
                     {
                         bagGuids = GUIDOfBags;
@@ -133,7 +134,7 @@ namespace LazyLib.Helpers
 
                     }
                     var items = new List<PItem>();
-                    List<ulong> guids = GUIDOfItemsInBag;
+                    List<UInt128> guids = GUIDOfItemsInBag;
                     foreach (PItem pItem in ObjectManager.GetItems)
                     {
                         if (pItem != null)
@@ -146,7 +147,7 @@ namespace LazyLib.Helpers
                                     items.Add(pItem);
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
 
                             }

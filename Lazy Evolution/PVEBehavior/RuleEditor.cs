@@ -84,13 +84,13 @@ namespace LazyEvo.PVEBehavior
             if (action is ActionSpell)
             {
                 CBCastSpell.Checked = true;
-                var actionSpell = (ActionSpell) action;
+                var actionSpell = (ActionSpell)action;
                 TBSpellName.Text = actionSpell.Name;
             }
             else if (action is ActionKey)
             {
                 CBSendKey.Checked = true;
-                var actionkey = (ActionKey) action;
+                var actionkey = (ActionKey)action;
                 TBKeyName.Text = actionkey.Name;
                 TBKey.Text = actionkey.Key;
                 ComBBar.SelectedIndex = ComBBar.FindStringExact(actionkey.Bar);
@@ -137,7 +137,7 @@ namespace LazyEvo.PVEBehavior
             if (node.Tag is AbstractCondition)
             {
                 AllConditions.BeginUpdate();
-                selected = (AbstractCondition) node.Tag;
+                selected = (AbstractCondition)node.Tag;
                 ConditionEditor.Nodes.Clear();
                 foreach (Node conNode in selected.GetNodes())
                 {
@@ -199,8 +199,8 @@ namespace LazyEvo.PVEBehavior
             {
                 case WM_NCHITTEST:
                     base.WndProc(ref m);
-                    if ((int) m.Result == HTCLIENT)
-                        m.Result = (IntPtr) HTCAPTION;
+                    if ((int)m.Result == HTCLIENT)
+                        m.Result = (IntPtr)HTCAPTION;
                     return;
             }
             base.WndProc(ref m);
@@ -262,7 +262,7 @@ namespace LazyEvo.PVEBehavior
             Rule.ClearConditions();
             foreach (Node node in AllConditions.Nodes)
             {
-                Rule.AddCondition((AbstractCondition) node.Tag);
+                Rule.AddCondition((AbstractCondition)node.Tag);
             }
             if (RBEnemy.Checked)
                 Rule.ShouldTarget = Target.Enemy;
@@ -308,9 +308,29 @@ namespace LazyEvo.PVEBehavior
             AddCondition(CombatCount.Text, new CombatCountCondition());
         }
 
-        private void ChiCondition_Click(object sender, EventArgs e)
+        private void ArcaneChargesCondition_Click(object sender, EventArgs e)
         {
-            AddCondition(ChiCondition.Text, new ChiCondition());
+            AddCondition(ArcaneChargesCondition.Text, new ArcaneChargesCondition());
+        }
+
+        private void LightForceCondition_Click(object sender, EventArgs e)
+        {
+            AddCondition(LightForceCondition.Text, new LightForceCondition());
+        }
+
+        private void DarkForceCondition_Click(object sender, EventArgs e)
+        {
+            AddCondition(DarkForceCondition.Text, new DarkForceCondition());
+        }
+
+        private void ShadowOrbsCondition_Click(object sender, EventArgs e)
+        {
+            AddCondition(ShadowOrbsCondition.Text, new ShadowOrbsCondition());
+        }
+
+        private void HolyPowerCondition_Click(object sender, EventArgs e)
+        {
+            AddCondition(HolyPowerCondition.Text, new HolyPowerCondition());
         }
 
         private void DistanceToTarget_Click(object sender, EventArgs e)

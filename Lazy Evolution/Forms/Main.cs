@@ -41,12 +41,15 @@ using LazyLib.IEngine;
 using LazyLib.LazyRadar;
 using LazyLib.LazyRadar.Drawer;
 using LazyLib.Wow;
+using LazyEvo.LFlyingEngine.Helpers;
+using LazyEvo.LGrindEngine;
+using LazyEvo.LGrindEngine.Helpers;
 
 namespace LazyEvo.Forms
 {
     internal partial class Main : Office2007Form
     {
-        private const string LazyVersion = "5.4.7";
+        private const string LazyVersion = "6.0.3 19116";
         internal static CombatEngine CombatEngine;
         internal static ILazyEngine EngineHandler;
         internal static bool OneInstance;
@@ -290,6 +293,8 @@ namespace LazyEvo.Forms
                 Logging.Debug("Relogger: " + ReloggerSettings.ReloggingEnabled);
                 Logging.Debug("Engine: " + EngineHandler.Name);
                 Logging.Write("Bot started");
+                Logging.Debug("CurrentFlyingProfile: " + FlyingSettings.Profile);
+                Logging.Debug("CurrentGrindingProfile: " + GrindingSettings.Profile);
                 UpdateText(StartStopEngine, "Stop botting");
                 ShouldRelog = ReloggerSettings.ReloggingEnabled;
                 LazyForm.Engine = EngineHandler.Name;

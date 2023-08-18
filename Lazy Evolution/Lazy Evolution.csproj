@@ -10,9 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LazyEvo</RootNamespace>
     <AssemblyName>Lazy Evolution</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -76,22 +76,20 @@
     <Reference Include="DevComponents.Instrumentation">
       <HintPath>..\LazyLib\DevComponents.Instrumentation.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\QuickGraph.dll</HintPath>
+    <Reference Include="QuickGraph">
+      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph.Data, Version=3.3.51106.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\QuickGraph.Data.dll</HintPath>
+    <Reference Include="QuickGraph.Data">
+      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.Data.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph.Graphviz, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\QuickGraph.Graphviz.dll</HintPath>
+    <Reference Include="QuickGraph.Graphviz">
+      <HintPath>..\..\..\..\cp\Downloads\Release\Lazy Evolution\bin\Release\QuickGraph.Graphviz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -333,20 +331,25 @@
     <Compile Include="PVEBehavior\Behavior\AddToBehavior.cs" />
     <Compile Include="PVEBehavior\Behavior\BehaviorController.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\AbstractCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\ArcaneChargesCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\BuffCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\BurningEmbersCountCondition.cs" />
-    <Compile Include="PVEBehavior\Behavior\Conditions\ChiCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\Class1.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\CombatCountCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\ComboPointsCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\DarkForceCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\DistanceToTargetCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\FunctionsCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\HealthPowerCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\HealthStoneCountCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\HolyPowerCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\LightForceCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\MageFoodCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\MageWaterCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\PetCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\PotentialAddsCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\RuneCondition.cs" />
+    <Compile Include="PVEBehavior\Behavior\Conditions\ShadowOrbsCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\SoulShardCountCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\SpellCondition.cs" />
     <Compile Include="PVEBehavior\Behavior\Conditions\TempEnchantCondition.cs" />
@@ -367,13 +370,6 @@
     <Compile Include="PVEBehavior\Builders\Paladin\PaladinBuilder.Designer.cs">
       <DependentUpon>PaladinBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="PVEBehavior\Builders\Warrior\WarriorBuilder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Warrior\WarriorBuilder.Designer.cs">
-      <DependentUpon>WarriorBuilder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PVEBehavior\Builders\Warrior\Warrior.cs" />
     <Compile Include="PVEBehavior\PVEBehaviorCombat.cs" />
     <Compile Include="PVEBehavior\PVEBehaviorSettings.cs" />
     <Compile Include="PVEBehavior\RuleEditor.cs">
@@ -459,9 +455,6 @@
     <EmbeddedResource Include="PVEBehavior\Builders\Paladin\PaladinBuilder.resx">
       <DependentUpon>PaladinBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PVEBehavior\Builders\Warrior\WarriorBuilder.resx">
-      <DependentUpon>WarriorBuilder.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PVEBehavior\RuleEditor.resx">
       <DependentUpon>RuleEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -470,7 +463,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Collect\Herb_de.xml">
@@ -530,9 +522,6 @@
     <None Include="Resources\Target_last_target.jpg" />
     <None Include="Resources\Interact_with_target.jpg" />
     <None Include="Resources\Target_last_target1.jpg" />
-    <Content Include="QuickGraph.Data.dll" />
-    <Content Include="QuickGraph.dll" />
-    <Content Include="QuickGraph.Graphviz.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LazyLib\LazyLib.csproj">
@@ -560,15 +549,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PVEBehavior\Builders\Hunter\" />
-    <Folder Include="PVEBehavior\Builders\Mage\" />
-    <Folder Include="PVEBehavior\Builders\Monk\" />
-    <Folder Include="PVEBehavior\Builders\Priest\" />
-    <Folder Include="PVEBehavior\Builders\Rogue\" />
-    <Folder Include="PVEBehavior\Builders\Shaman\" />
-    <Folder Include="PVEBehavior\Builders\Warlock\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -17,6 +17,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 */
 #region
 
+using LazyLib.Manager;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -112,9 +113,9 @@ namespace LazyLib.Wow
         ///   Gets the contained.
         /// </summary>
         /// <value>The contained.</value>
-        public ulong Contained
+        public UInt128 Contained
         {
-            get { return GetStorageField<ulong>((uint)Descriptors.CGItemData.ContainedIn); }
+            get { return GetStorageField<UInt128>((uint)Descriptors.CGItemData.ContainedIn); }
         }
 
         /// <summary>

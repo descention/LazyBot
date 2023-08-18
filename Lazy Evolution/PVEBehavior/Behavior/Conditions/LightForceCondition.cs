@@ -19,8 +19,10 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml;
 using DevComponents.AdvTree;
+using DevComponents.DotNetBar;
 using DevComponents.Editors;
 using LazyLib.Wow;
 
@@ -28,30 +30,14 @@ using LazyLib.Wow;
 
 namespace LazyEvo.PVEBehavior.Behavior.Conditions
 {
-    public enum RuneEnum
+    internal class LightForceCondition : AbstractCondition
     {
-        Blood,
-        Frost,
-        Unholy,
-    }
-
-    internal class RuneCondition : AbstractCondition
-    {
-        private RuneEnum Rune;
         private IntegerInput valueInput;
 
-        public RuneCondition()
+        public LightForceCondition()
         {
             Condition = ConditionEnum.MoreThan;
-            Value = 1;
-            Rune = RuneEnum.Blood;
-        }
-
-        public RuneCondition(ConditionEnum conditionEnum, RuneEnum runeEnum, int value)
-        {
-            Condition = conditionEnum;
-            Value = value;
-            Rune = runeEnum;
+            Value = 4;
         }
 
         private ConditionEnum Condition { get; set; }
@@ -59,12 +45,12 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
 
         public override string Name
         {
-            get { return "Rune"; }
+            get { return "Light Force"; }
         }
 
         public override string XmlName
         {
-            get { return "RuneCondition"; }
+            get { return "LightForceCondition"; }
         }
 
         public override string GetXML
@@ -73,7 +59,6 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
             {
                 string xml = "<Condition>" + Condition + "</Condition>";
                 xml += "<Value>" + Value + "</Value>";
-                xml += "<Rune>" + Rune + "</Rune>";
                 return xml;
             }
         }
@@ -82,34 +67,12 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
         {
             get
             {
-                int count = 0;
-                if (Rune.Equals(RuneEnum.Blood))
-                {
-                    if (ObjectManager.MyPlayer.BloodRune1Ready)
-                        count++;
-                    if (ObjectManager.MyPlayer.BloodRune2Ready)
-                        count++;
-                }
-                if (Rune.Equals(RuneEnum.Frost))
-                {
-                    if (ObjectManager.MyPlayer.FrostRune1Ready)
-                        count++;
-                    if (ObjectManager.MyPlayer.FrostRune2Ready)
-                        count++;
-                }
-                if (Rune.Equals(RuneEnum.Unholy))
-                {
-                    if (ObjectManager.MyPlayer.UnholyRune1Ready)
-                        count++;
-                    if (ObjectManager.MyPlayer.UnholyRune2Ready)
-                        count++;
-                }
                 if (Condition.Equals(ConditionEnum.EqualTo))
-                    return count == Value;
+                    return ObjectManager.MyPlayer.LightForce == Value;
                 if (Condition.Equals(ConditionEnum.LessThan))
-                    return count < Value;
+                    return ObjectManager.MyPlayer.LightForce < Value;
                 if (Condition.Equals(ConditionEnum.MoreThan))
-                    return count > Value;
+                    return ObjectManager.MyPlayer.LightForce > Value;
                 return false;
             }
         }
@@ -119,25 +82,29 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
             var re = new List<Node>();
             CreateCondition(re);
             CreateValue(re);
-            CreateRuneCondition(re);
+            CreateText(re);
             return re;
         }
 
-        private void CreateRuneCondition(List<Node> re)
+        private void CreateText(List<Node> re)
         {
-            var condition = new Node();
-            condition.Text = "Rune(s) ";
-            condition.Nodes.Add(CreateRadioButton("Blood", "Blood ", "RuneEnum", Rune.Equals(RuneEnum.Blood)));
-            condition.Nodes.Add(CreateRadioButton("Frost", "Frost", "RuneEnum", Rune.Equals(RuneEnum.Frost)));
-            condition.Nodes.Add(CreateRadioButton("Unholy", "Unholy", "RuneEnum", Rune.Equals(RuneEnum.Unholy)));
-            condition.Expanded = true;
-            re.Add(condition);
+            var info = new Node();
+            info.Text = "Info";
+            var labelX = new LabelX();
+            labelX.AutoSize = true;
+            labelX.MaximumSize = new Size(300, 500);
+            labelX.Text = "This condition will allow you to check the number Light Force.";
+            labelX.Visible = true;
+            labelX.BackColor = Color.Transparent;
+            info.Nodes.Add(CreateControl("Info", "Info", labelX));
+            info.Expanded = true;
+            re.Add(info);
         }
 
         private void CreateCondition(List<Node> re)
         {
             var condition = new Node();
-            condition.Text = "Player has ";
+            condition.Text = "Light Force ";
             condition.Nodes.Add(CreateRadioButton("LessThan", "Less Than ", "ConditionEnum",
                                                   Condition.Equals(ConditionEnum.LessThan)));
             condition.Nodes.Add(CreateRadioButton("EqualTo", "Equal To", "ConditionEnum",
@@ -156,7 +123,7 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
         private void CreateValue(List<Node> re)
         {
             var value = new Node();
-            value.Text = "Value";
+            value.Text = "value";
             valueInput = new IntegerInput();
             valueInput.Value = Value;
             valueInput.ValueChanged += IntegerInput_ValueChanged;
@@ -175,10 +142,6 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                     {
                         Condition = (ConditionEnum) Enum.Parse(typeof (ConditionEnum), node.Name);
                     }
-                    if (node.Tag.Equals("RuneEnum"))
-                    {
-                        Rune = (RuneEnum) Enum.Parse(typeof (RuneEnum), node.Name);
-                    }
                     if (node.Tag.Equals("Value"))
                     {
                         var integerInput = (IntegerInput) node.HostedControl;
@@ -196,15 +159,12 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                 {
                     Condition = (ConditionEnum) Enum.Parse(typeof (ConditionEnum), node.InnerText);
                 }
-                if (node.Name.Equals("Value"))
+                else if (node.Name.Equals("Value"))
                 {
                     Value = Convert.ToInt32(node.InnerText);
-                }
-                if (node.Name.Equals("Rune"))
-                {
-                    Rune = (RuneEnum) Enum.Parse(typeof (RuneEnum), node.InnerText);
                 }
             }
         }
     }
 }
+

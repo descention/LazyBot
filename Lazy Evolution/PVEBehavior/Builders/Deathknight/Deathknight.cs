@@ -28,7 +28,7 @@ namespace LazyEvo.PVEBehavior.Builders
         {
             var add = new List<AddToBehavior>();
             //----------- Pull actions 
-            int spellId = 57330; // Horn of Winter
+            int spellId = 57330;
             string spell = BarMapper.GetNameFromSpell(spellId);
             add.Add(new AddToBehavior(spell, Type.Pull, Spec.Normal, new Rule(spell, new ActionSpell(spell), 1)));
 

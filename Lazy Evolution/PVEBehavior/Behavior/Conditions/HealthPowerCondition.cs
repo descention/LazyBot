@@ -34,13 +34,22 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
     {
         Health,
         Mana,
-        Energy,
         Rage,
-        RunicPower,
-        Happiness,
-        Eclipse,
         Focus,
+        Energy,
+        ComboPoints,
+        Runes,
+        RunicPower,
+        SoulShard,
+        Eclipse,
         HolyPower,
+        Alternate,
+        DarkForce,
+        LightForce,
+        ShadowOrbs,
+        BurningEmbers,
+        DemonicFury,
+        ArcaneCharges
     }
 
     internal class HealthPowerCondition : AbstractCondition
@@ -112,9 +121,6 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                 int value = int.MinValue;
                 switch (ConditionType)
                 {
-                    case ConditionTypeEnum.Energy:
-                        value = target.Energy;
-                        break;
                     case ConditionTypeEnum.Health:
                         value = target.Health;
                         break;
@@ -124,17 +130,26 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                     case ConditionTypeEnum.Rage:
                         value = target.Rage;
                         break;
-                    case ConditionTypeEnum.RunicPower:
-                        value = target.RunicPower;
+                    case ConditionTypeEnum.Focus:
+                        value = target.Focus;
+                        break;
+                    case ConditionTypeEnum.Energy:
+                        value = target.Energy;
+                        break;
+                    case ConditionTypeEnum.ComboPoints:
+                        value = target.ComboPoints;
+                        break;
+                    case ConditionTypeEnum.DemonicFury:
+                        value = target.DemonicFury;
                         break;
                     case ConditionTypeEnum.Eclipse:
                         value = target.Eclipse;
                         break;
-                    case ConditionTypeEnum.HolyPower:
-                        value = target.HolyPower;
+                    case ConditionTypeEnum.Alternate:
+                        value = target.Alternate;
                         break;
-                    case ConditionTypeEnum.Focus:
-                        value = target.Focus;
+                    case ConditionTypeEnum.RunicPower:
+                        value = target.RunicPower;
                         break;
                 }
                 if (value == int.MinValue)
@@ -255,18 +270,22 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
                                                       ConditionType.Equals(ConditionTypeEnum.Health)));
             conditionType.Nodes.Add(CreateRadioButton("Mana", "ConditionTypeEnum",
                                                       ConditionType.Equals(ConditionTypeEnum.Mana)));
-            conditionType.Nodes.Add(CreateRadioButton("Energy", "ConditionTypeEnum",
-                                                      ConditionType.Equals(ConditionTypeEnum.Energy)));
             conditionType.Nodes.Add(CreateRadioButton("Rage", "ConditionTypeEnum",
                                                       ConditionType.Equals(ConditionTypeEnum.Rage)));
-            conditionType.Nodes.Add(CreateRadioButton("RunicPower", "Runic Power", "ConditionTypeEnum",
-                                                      ConditionType.Equals(ConditionTypeEnum.RunicPower)));
-            conditionType.Nodes.Add(CreateRadioButton("Eclipse", "ConditionTypeEnum",
-                                                      ConditionType.Equals(ConditionTypeEnum.Eclipse)));
             conditionType.Nodes.Add(CreateRadioButton("Focus", "ConditionTypeEnum",
                                                       ConditionType.Equals(ConditionTypeEnum.Focus)));
-            conditionType.Nodes.Add(CreateRadioButton("HolyPower", "Holy Power", "ConditionTypeEnum",
-                                                      ConditionType.Equals(ConditionTypeEnum.HolyPower)));
+            conditionType.Nodes.Add(CreateRadioButton("Energy", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.Energy)));
+            conditionType.Nodes.Add(CreateRadioButton("Happiness", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.ComboPoints)));
+            conditionType.Nodes.Add(CreateRadioButton("Eclipse", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.Eclipse)));
+            conditionType.Nodes.Add(CreateRadioButton("DemonicFury", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.DemonicFury)));
+            conditionType.Nodes.Add(CreateRadioButton("Alternate", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.Alternate)));
+            conditionType.Nodes.Add(CreateRadioButton("RunicPower", "ConditionTypeEnum",
+                                                      ConditionType.Equals(ConditionTypeEnum.RunicPower)));
             conditionType.Expanded = true;
             re.Add(conditionType);
         }

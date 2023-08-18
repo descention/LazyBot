@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.ActionBar;
 using LazyLib.Helpers;
+using LazyLib.Manager;
 
 #endregion
 
@@ -118,70 +119,55 @@ namespace LazyLib.Wow
             }
             return Constants.SkinnableType.None;
         }
-
         /// <summary>
         ///   Gets the type of the power.
         /// </summary>
         /// <value>The type of the power.</value>
+        /// 
         public string PowerType
         {
             get
             {
                 //Logging.Debug("Power: " + PowerTypeId);
-                switch (this.PowerTypeId)
+                switch (PowerTypeId)
                 {
-                    case 0:
+                    case (uint)Constants.UnitPower.UnitPower_Mana:
                         return "Mana";
-
-                    case 1:
+                    case (uint)Constants.UnitPower.UnitPower_Rage:
                         return "Rage";
-
-                    case 2:
+                    case (uint)Constants.UnitPower.UnitPower_Focus:
                         return "Focus";
-
-                    case 3:
+                    case (uint)Constants.UnitPower.UnitPower_Energy:
                         return "Energy";
-
-                    case 4:
+                    case (uint)Constants.UnitPower.UnitPower_ComboPoint:
                         return "Hapiness";
-
-                    case 5:
+                    case (uint)Constants.UnitPower.UnitPower_Runes:
                         return "Runes";
-
-                    case 6:
+                    case (uint)Constants.UnitPower.UnitPower_RunicPower:
                         return "Runic Power";
-
-                    case 7:
+                    case (uint)Constants.UnitPower.UnitPower_SoulShard:
                         return "SoulShards";
-
-                    case 8:
+                    case (uint)Constants.UnitPower.UnitPower_Eclipse:
                         return "Eclipse";
-
-                    case 9:
+                    case (uint)Constants.UnitPower.UnitPower_HolyPower:
                         return "HolyPower";
-
-                    case 10:
+                    case (uint)Constants.UnitPower.UnitPower_Alternate:
                         return "Alternate";
-
-                    case 11:
+                    case (uint)Constants.UnitPower.UnitPower_DarkForce:
                         return "DarkForce";
-
-                    case 12:
+                    case (uint)Constants.UnitPower.UnitPower_LightForce:
                         return "LightForce";
-
-                    case 13:
+                    case (uint)Constants.UnitPower.UnitPower_ShadowOrbs:
                         return "ShadowOrbs";
-
-                    case 14:
+                    case (uint)Constants.UnitPower.UnitPower_BurningEmbers:
                         return "BurningEmbers";
-
-                    case 15:
+                    case (uint)Constants.UnitPower.UnitPower_DemonicFury:
                         return "DemonicFury";
-
-                    case 16:
+                    case (uint)Constants.UnitPower.UnitPower_ArcaneCharges:
                         return "ArcaneCharges";
+                    default:
+                        return "";
                 }
-                return "";
             }
         }
 
@@ -193,61 +179,65 @@ namespace LazyLib.Wow
         {
             get
             {
-                //Logging.Debug("Race:" + RaceId);
-                switch (this.RaceId)
+                string race;
+                switch (RaceId)
                 {
-                    case 1:
-                        return "Human";
-
-                    case 2:
-                        return "Orc";
-
-                    case 3:
-                        return "Dwarf";
-
-                    case 4:
-                        return "Night Elf";
-
-                    case 5:
-                        return "Undead";
-
-                    case 6:
-                        return "Tauren";
-
-                    case 7:
-                        return "Gnome";
-
-                    case 8:
-                        return "Troll";
-
-                    case 9:
-                        return "Goblin";
-
-                    case 10:
-                        return "Blood Elf";
-
-                    case 11:
-                        return "Draenei";
-
-                    case 12:
-                        return "Fel Orc";
-
-                    case 13:
-                        return "Naga";
-
-                    case 14:
-                        return "Broken";
-
-                    case 15:
-                        return "Skeleton";
-
-                    case 0x16:
-                        return "Worgen";
-
-                    case 0x18:
-                        return "Pandaren";
+                    case (uint)Constants.UnitRace.UnitRace_Human:
+                        race = @"Human";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Orc:
+                        race = @"Orc";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Dwarf:
+                        race = @"Dwarf";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_NightElf:
+                        race = @"Night Elf";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Undead:
+                        race = @"Undead";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Tauren:
+                        race = @"Tauren";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Gnome:
+                        race = @"Gnome";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Troll:
+                        race = @"Troll";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Goblin:
+                        race = @"Goblin";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_BloodElf:
+                        race = @"Blood Elf";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Draenei:
+                        race = @"Draenei";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_FelOrc:
+                        race = @"Fel Orc";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Naga:
+                        race = @"Naga";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Broken:
+                        race = @"Broken";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Skeleton:
+                        race = @"Skeleton";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Worgen:
+                        race = @"Worgen";
+                        break;
+                    case (uint)Constants.UnitRace.UnitRace_Pandaren:
+                        race = @"Pandaren";
+                        break;
+                    default:
+                        race = @"Unknown";
+                        break;
                 }
-                return "Unknown";
+                return race;
             }
         }
 
@@ -342,7 +332,6 @@ namespace LazyLib.Wow
             }
         }
 
-
         /// <summary>
         ///   Gets the class.
         /// </summary>
@@ -351,88 +340,80 @@ namespace LazyLib.Wow
         {
             get
             {
-                switch (this.UnitClassId)
+                string stringClass;
+                switch (UnitClassId)
                 {
-                    case 1:
-                        return "Warrior";
-
-                    case 2:
-                        return "Paladin";
-
-                    case 3:
-                        return "Hunter";
-
-                    case 4:
-                        return "Rogue";
-
-                    case 5:
-                        return "Priest";
-
-                    case 6:
-                        return "Death Knight";
-
-                    case 7:
-                        return "Shaman";
-
-                    case 8:
-                        return "Mage";
-
-                    case 9:
-                        return "Warlock";
-
-                    case 10:
-                        return "Monk";
-
-                    case 11:
-                        return "Druid";
+                    case (uint)Constants.UnitClass.UnitClass_Warrior:
+                        stringClass = @"Warrior";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Paladin:
+                        stringClass = @"Paladin";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Hunter:
+                        stringClass = @"Hunter";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Rogue:
+                        stringClass = @"Rogue";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Priest:
+                        stringClass = @"Priest";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_DeathKnight:
+                        stringClass = @"Death Knight";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Shaman:
+                        stringClass = @"Shaman";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Mage:
+                        stringClass = @"Mage";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Warlock:
+                        stringClass = @"Warlock";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Monk:
+                        stringClass = @"Monk";
+                        break;
+                    case (uint)Constants.UnitClass.UnitClass_Druid:
+                        stringClass = @"Druid";
+                        break;
+                    default:
+                        stringClass = @"Unknown";
+                        break;
                 }
-                return "Unknown";
+                return stringClass;
             }
         }
-
-        public LazyLib.Wow.Constants.UnitClass UnitClass
+        public Constants.UnitClass UnitClass
         {
             get
             {
-                switch (this.UnitClassId)
+                switch (UnitClassId)
                 {
-                    case 0:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Unknown;
-
-                    case 1:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Warrior;
-
-                    case 2:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Paladin;
-
-                    case 3:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Hunter;
-
-                    case 4:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue;
-
-                    case 5:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Priest;
-
-                    case 6:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_DeathKnight;
-
-                    case 7:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Shaman;
-
-                    case 8:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Mage;
-
-                    case 9:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Warlock;
-
-                    case 10:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Monk;
-
-                    case 11:
-                        return LazyLib.Wow.Constants.UnitClass.UnitClass_Druid;
+                    case (uint)Constants.UnitClass.UnitClass_Warrior:
+                        return Constants.UnitClass.UnitClass_Warrior;
+                    case (uint)Constants.UnitClass.UnitClass_Paladin:
+                        return Constants.UnitClass.UnitClass_Paladin;
+                    case (uint)Constants.UnitClass.UnitClass_Hunter:
+                        return Constants.UnitClass.UnitClass_Hunter;
+                    case (uint)Constants.UnitClass.UnitClass_Rogue:
+                        return Constants.UnitClass.UnitClass_Rogue;
+                    case (uint)Constants.UnitClass.UnitClass_Priest:
+                        return Constants.UnitClass.UnitClass_Priest;
+                    case (uint)Constants.UnitClass.UnitClass_DeathKnight:
+                        return Constants.UnitClass.UnitClass_DeathKnight;
+                    case (uint)Constants.UnitClass.UnitClass_Shaman:
+                        return Constants.UnitClass.UnitClass_Shaman;
+                    case (uint)Constants.UnitClass.UnitClass_Mage:
+                        return Constants.UnitClass.UnitClass_Mage;
+                    case (uint)Constants.UnitClass.UnitClass_Warlock:
+                        return Constants.UnitClass.UnitClass_Warlock;
+                    case (uint)Constants.UnitClass.UnitClass_Monk:
+                        return Constants.UnitClass.UnitClass_Monk;
+                    case (uint)Constants.UnitClass.UnitClass_Druid:
+                        return Constants.UnitClass.UnitClass_Druid;
+                    default:
+                        throw new Exception("Unknown class");
                 }
-                throw new Exception("Unknown class");
             }
         }
 
@@ -457,18 +438,12 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if this instance is elite; otherwise, <c>false</c>.</value>
         public bool IsElite
         {
-            get
-            {
-                return this.Classification.Equals(LazyLib.Wow.Constants.Classification.Elite);
-            }
+            get { return Classification.Equals(Constants.Classification.Elite); }
         }
 
         public bool IsBoss
         {
-            get
-            {
-                return this.Classification.Equals(LazyLib.Wow.Constants.Classification.WorldBoss);
-            }
+            get { return Classification.Equals(Constants.Classification.WorldBoss); }
         }
 
         /// <summary>
@@ -490,11 +465,11 @@ namespace LazyLib.Wow
         ///   Gets the reaction.
         /// </summary>
         /// <value>The reaction.</value>
-        public LazyLib.Wow.Reaction Reaction
+        public Reaction Reaction
         {
             get
             {
-                return LazyLib.Wow.Faction.GetReaction(LazyLib.Wow.ObjectManager.MyPlayer, this);
+                return Wow.Faction.GetReaction(ObjectManager.MyPlayer, this);
             }
         }
 
@@ -544,10 +519,7 @@ namespace LazyLib.Wow
 
         public bool IsTotem
         {
-            get
-            {
-                return (this.CreatureType == LazyLib.Wow.Constants.CreatureType.Totem);
-            }
+            get { return CreatureType == Constants.CreatureType.Totem; }
         }
 
 
@@ -615,26 +587,12 @@ namespace LazyLib.Wow
 
         public bool TravelForm
         {
-            get
-            {
-                if (!this.HasBuff(0x30f))
-                {
-                    return this.HasBuff(0xa55);
-                }
-                return true;
-            }
+            get { return HasBuff(783) || HasBuff(2645); }
         }
 
         public bool AquaticForm
         {
-            get
-            {
-                if (!this.HasBuff(0x42a))
-                {
-                    return this.ShapeshiftForm.Equals(LazyLib.Wow.Constants.ShapeshiftForm.Aqua);
-                }
-                return true;
-            }
+            get { return HasBuff(1066) || ShapeshiftForm.Equals(Constants.ShapeshiftForm.Aqua); }
         }
 
         /// <summary>
@@ -649,7 +607,14 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return (this.IsInFlightForm || (this.TravelForm || (this.AquaticForm || (base.GetStorageField<int>((uint)0x47) != 0))));
+                    if (IsInFlightForm)
+                        return true;
+                    if (TravelForm)
+                        return true;
+                    if (AquaticForm)
+                        return true;
+                    var mountid = GetStorageField<int>((uint)Descriptors.CGUnitData.MountDisplayID);
+                    return (mountid != 0);
                 }
                 catch (Exception)
                 {
@@ -759,12 +724,21 @@ namespace LazyLib.Wow
         }
 
 
-        public bool InCombat
+      /*  public bool InCombat
         {
             get
             {
                 uint num = Memory.Read<uint>(new uint[] { base.BaseAddress + (uint)Pointers.InCombat.Pointer });
                 return (((Memory.Read<uint>(new uint[] { num + (uint)Pointers.InCombat.Offset }) >> 0x13) & 1) == 1);
+            }
+        }
+       */
+
+        public bool InCombat
+        {
+            get
+            {
+                return (Memory.Read<uint>(Memory.Read<uint>(base.BaseAddress + (uint)Pointers.InCombat.Offset1) + (uint)Pointers.InCombat.Offset2) >> 19 & 1) != 0;
             }
         }
 
@@ -1017,8 +991,9 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    uint num = base.BaseAddress + (uint)Pointers.CastingInfo.IsCasting;
-                    return Memory.Read<int>(new uint[] { num });
+                    uint pointer = BaseAddress + (uint)Pointers.CastingInfo.IsCasting;
+                    //Log.log(pointer.ToString());
+                    return Memory.Read<int>(pointer);
                 }
                 catch (Exception)
                 {
@@ -1037,10 +1012,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if ((this.CastingId == 0) && (this.ChanneledCastingId == 0))
-                {
+                if (CastingId == 0 && ChanneledCastingId == 0)
                     return false;
-                }
                 return true;
             }
         }
@@ -1053,57 +1026,50 @@ namespace LazyLib.Wow
         {
             get
             {
-                uint num = base.BaseAddress + (uint)Pointers.CastingInfo.ChanneledCasting;
-                return Memory.Read<int>(new uint[] { num });
+                uint pointer = BaseAddress + (uint)Pointers.CastingInfo.ChanneledCasting;
+                //Log.log(pointer.ToString());
+                return Memory.Read<int>(pointer);
             }
         }
-
 
         /// <summary>
         ///   Is this unit a critter?
         /// </summary>
         public bool Critter
         {
-            get
-            {
-                if (base.GetStorageField<int>((uint)12) != 1)
-                {
-                    return false;
-                }
-                return true;
-            }
+            get { return GetStorageField<int>((uint)Descriptors.CGUnitData.Critter) == 1 ? true : false; }
         }
 
         /// <summary>
         ///   The GUID of the object this unit is charmed by.
         /// </summary>
-        public ulong CharmedBy
+        public UInt128 CharmedBy
         {
             get
             {
-                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.CharmedBy);
+                return base.GetStorageField<UInt128>((uint)Descriptors.CGUnitData.CharmedBy);
             }
         }
 
         /// <summary>
         ///   The GUID of the object this unit is summoned by.
         /// </summary>
-        public ulong SummonedBy
+        public UInt128 SummonedBy
         {
             get
             {
-                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.SummonedBy);
+                return base.GetStorageField<UInt128>((uint)Descriptors.CGUnitData.SummonedBy);
             }
         }
 
         /// <summary>
         ///   The GUID of the object this unit was created by.
         /// </summary>
-        public ulong CreatedBy
+        public UInt128 CreatedBy
         {
             get
             {
-                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.CreatedBy);
+                return base.GetStorageField<UInt128>((uint)Descriptors.CGUnitData.CreatedBy);
             }
         }
 
@@ -1120,28 +1086,6 @@ namespace LazyLib.Wow
                 {
                     return 0;
                 }
-            }
-        }
-
-        /// <summary>
-        ///   The unit's health.
-        /// </summary>
-        public int HealthPoints
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.Health);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's maximum health.
-        /// </summary>
-        public int MaximumHealthPoints
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.MaxHealth);
             }
         }
 
@@ -1166,10 +1110,33 @@ namespace LazyLib.Wow
             }
         }
 
+        #region Nested type: PowerTypes
 
-        /// <summary>
-        ///   The unit's health as a percentage.
-        /// </summary>
+        #region Nested type: Health
+        public int BaseHealth
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseHealth);
+            }
+        }
+
+        public int HealthPoints
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.Health);
+            }
+        }
+
+        public int MaximumHealthPoints
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.MaxHealth);
+            }
+        }
+
         public int Health
         {
             get
@@ -1185,9 +1152,33 @@ namespace LazyLib.Wow
             }
         }
 
-        /// <summary>
-        ///   The unit's health as a percentage.
-        /// </summary>
+        #endregion
+
+        #region Nested type: Mana
+        public int BaseMana
+        {
+            get
+            {
+                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseMana);
+            }
+        }
+
+        public int ManaPoints
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Mana);
+            }
+        }
+
+        public int MaximumManaPoints
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Mana);
+            }
+        }
+
         public int Mana
         {
             get
@@ -1202,39 +1193,79 @@ namespace LazyLib.Wow
                 }
             }
         }
+        #endregion
 
-        /// <summary>
-        ///   The unit's base health.
-        /// </summary>
-        public int BaseHealth
+        #region Nested type: Rage
+        public int Rage
         {
             get
             {
-                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseHealth);
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Rage);
             }
         }
 
-        /// <summary>
-        ///   The unit's base health.
-        /// </summary>
-        public int BaseMana
+        public int MaximumRage
         {
             get
             {
-                return base.GetStorageField<int>((uint)Descriptors.CGUnitData.BaseMana);
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Rage);
+            }
+        }
+        public int RagePercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Rage) / MaximumRage;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: Energy
+        public int Energy
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Energy);
             }
         }
 
+        public int MaximumEnergy
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Energy);
+            }
+        }
+
+        public int EnergyPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Energy) / MaximumEnergy;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: BurningEmbers
         public int BurningEmbers
         {
             get
             {
-                int num = base.GetStorageField<int>((uint)0x25) / 10;
-                if (LazySettings.DebugMode)
-                {
-                    //Logging.Write("BurningEmbers = " + num.ToString(), new object[0]);
-                }
-                return num;
+                return (int)this.GetPowerByPowerType(Constants.PowerType.BurningEmbers);
             }
         }
 
@@ -1242,351 +1273,480 @@ namespace LazyLib.Wow
         {
             get
             {
-                return (base.GetStorageField<int>((uint)0x2b) / 10);
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.BurningEmbers);
             }
         }
 
-
-        private int MonkEnergy
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x23);
-            }
-        }
-
-        private int MonkEnergyMax
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x29);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's mana.
-        /// </summary>
-        public int ManaPoints
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x22);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's maximum mana.
-        /// </summary>
-        public int MaximumManaPoints
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)40);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Chi.
-        /// </summary>
-        public int Chi
-        {
-            get
-            {
-                int storageField = base.GetStorageField<int>((uint)0x26);
-                if (LazySettings.DebugMode)
-                {
-                    // Logging.Write("chi = " + storageField.ToString(), new object[0]);
-                }
-                return storageField;
-            }
-        }
-
-        /// <summary>
-        ///   The unit's maxx Chi.
-        /// </summary>
-        public int MaximumChi
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x2c);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's rage.
-        /// </summary>
-        public int Rage
+        public int BurningEmbersPercentage
         {
             get
             {
                 try
                 {
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
-                    {
-                        return this.DruidRage;
-                    }
+                    return (100 * BurningEmbers) / MaximumBurningEmbers;
                 }
-                catch (Exception)
+                catch
                 {
+                    return 0;
                 }
-                return (base.GetStorageField<int>((uint)0x22) / 10);
+            }
+        }
+        #endregion
+
+        #region Nested type: LightForce
+        public int LightForce // Aka Chi
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.LightForce);
             }
         }
 
-        /// <summary>
-        ///   The unit's focus.
-        /// </summary>
+        public int MaximumLightForce
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.LightForce);
+            }
+        }
+
+        public int LightForcePercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * LightForce) / MaximumLightForce;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: Alternate
+        public int Alternate
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Alternate);
+            }
+        }
+
+        public int MaximumAlternate
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Alternate);
+            }
+        }
+
+        public int AlternatePercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Alternate) / MaximumAlternate;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: ComboPoints
+        public int ComboPoints
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.ComboPoint);
+            }
+        }
+
+        public int MaximumComboPoints
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.ComboPoint);
+            }
+        }
+
+        public int ComboPointsPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * ComboPoints) / MaximumComboPoints;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: DarkForce
+        public int DarkForce
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.DarkForce);
+            }
+        }
+
+        public int MaximumDarkForce
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.DarkForce);
+            }
+        }
+
+        public int DarkForcePercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * DarkForce) / MaximumDarkForce;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: Focus
         public int Focus
         {
             get
             {
-                return base.GetStorageField<int>((uint)0x22);
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Focus);
             }
         }
 
-        /// <summary>
-        ///   The unit's Eclipse power.
-        /// </summary>
-        public int Eclipse
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x25);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Max Eclipse power.
-        /// </summary>
-        public int MaximumEclipse
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x2b);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Soul Shards.
-        /// </summary>
-        public int SoulShard
-        {
-            get
-            {
-                int num = base.GetStorageField<int>((uint)0x23) / 100;
-                if (LazySettings.DebugMode)
-                {
-                    //Logging.Write("SoulShard = " + num.ToString(), new object[0]);
-                }
-                return num;
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Max Soul Shards.
-        /// </summary>
-        public int MaximumSoulShard
-        {
-            get
-            {
-                return (base.GetStorageField<int>((uint)0x29) / 100);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Holy Power.
-        /// </summary>
-        public int HolyPower
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x23);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's Max Holy Power.
-        /// </summary>
-        public int MaximumHolyPower
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x29);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's energy.
-        /// </summary>
-        public int Energy
-        {
-            get
-            {
-                try
-                {
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
-                    {
-                        return this.DruidEnergy;
-                    }
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue)
-                    {
-                        return this.RogueEnergy;
-                    }
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Monk)
-                    {
-                        return this.MonkEnergy;
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                return base.GetStorageField<int>((uint)0x22);
-            }
-        }
-
-        private int DruidEnergy
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x24);
-            }
-        }
-
-        private int DruidEnergyMax
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x2a);
-            }
-        }
-
-        private int DruidRage
-        {
-            get
-            {
-                return (base.GetStorageField<int>((uint)0x23) / 10);
-            }
-        }
-
-        private int DruidRageMax
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x2c);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's happinnes.
-        /// </summary>
-        public int Happinnes
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x25);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's runic power.
-        /// </summary>
-        public int RunicPower
-        {
-            get
-            {
-                return (base.GetStorageField<int>((uint)0x22) / 10);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's maximum rage.
-        /// </summary>
-        public int MaximumRage
-        {
-            get
-            {
-                try
-                {
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
-                    {
-                        return this.DruidRageMax;
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                return base.GetStorageField<int>((uint)40);
-            }
-        }
-
-
-        private int RogueEnergy
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x23);
-            }
-        }
-
-        private int RogueEnergyMax
-        {
-            get
-            {
-                return base.GetStorageField<int>((uint)0x29);
-            }
-        }
-
-        /// <summary>
-        ///   The unit's maximum focus.
-        /// </summary>
         public int MaximumFocus
         {
             get
             {
-                return base.GetStorageField<int>((uint)40);
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Focus);
             }
         }
-
-        /// <summary>
-        ///   The unit's maximum energy.
-        /// </summary>
-        public int MaximumEnergy
+        public int FocusPercentage
         {
             get
             {
                 try
                 {
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Druid)
-                    {
-                        return this.DruidEnergyMax;
-                    }
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Rogue)
-                    {
-                        return this.RogueEnergyMax;
-                    }
-                    if (this.UnitClass == LazyLib.Wow.Constants.UnitClass.UnitClass_Monk)
-                    {
-                        return this.MonkEnergyMax;
-                    }
+                    return (100 * Focus) / MaximumFocus;
                 }
-                catch (Exception)
+                catch
                 {
+                    return 0;
                 }
-                return base.GetStorageField<int>((uint)40);
+            }
+        }
+        #endregion
+
+        #region Nested type: Eclipse
+        public int Eclipse
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Eclipse);
             }
         }
 
-        /// <summary>
-        ///   The unit's maximum runic power.
-        /// </summary>
+        public int MaximumEclipse
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Eclipse);
+            }
+        }
+        public int EclipsePercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Eclipse) / MaximumEclipse;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: SoulShard
+        public int SoulShard
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.SoulShards);
+            }
+        }
+
+        public int MaximumSoulShard
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.SoulShards);
+            }
+        }
+        public int SoulShardPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * SoulShard) / MaximumSoulShard;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: ShadowOrbs
+        public int ShadowOrbs
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.ShadowOrbs);
+            }
+        }
+
+        public int MaximumShadowOrbs
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.ShadowOrbs);
+            }
+        }
+        public int ShadowOrbsPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * ShadowOrbs) / MaximumShadowOrbs;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: HolyPower
+        public int HolyPower
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.HolyPower);
+            }
+        }
+
+        public int MaximumHolyPower
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.HolyPower);
+            }
+        }
+        public int HolyPowerPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * HolyPower) / MaximumHolyPower;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: DemonicFury
+        public int DemonicFury
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.DemonicFury);
+            }
+        }
+
+        public int MaximumDemonicFury
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.DemonicFury);
+            }
+        }
+        public int DemonicFuryPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * DemonicFury) / MaximumDemonicFury;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: ArcaneCharges
+        public int ArcaneCharges
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.ArcaneCharges);
+            }
+        }
+
+        public int MaximumArcaneCharges
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.ArcaneCharges);
+            }
+        }
+        public int ArcaneChargesPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * ArcaneCharges) / MaximumArcaneCharges;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: RunicPower
+        public int RunicPower
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.RunicPower);
+            }
+        }
 
         public int MaximumRunicPower
         {
             get
             {
-                return base.GetStorageField<int>((uint)40);
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.RunicPower);
             }
         }
+        public int RunicPowerPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * RunicPower) / MaximumRunicPower;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Nested type: Runes
+        public int Runes
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Runes);
+            }
+        }
+
+        public int MaximumRunes
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Runes);
+            }
+        }
+        public int RunesPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Runes) / MaximumRunes;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+
+        /*   #region Nested type: Happiness
+        public int Happiness
+        {
+            get
+            {
+                return (int)this.GetPowerByPowerType(Constants.PowerType.Happiness);
+            }
+        }
+
+        public int MaximumHappiness
+        {
+            get
+            {
+                return (int)this.GetMaxPowerByPowerType(Constants.PowerType.Happiness);
+            }
+        }
+        public int HappinessPercentage
+        {
+            get
+            {
+                try
+                {
+                    return (100 * Happiness) / MaximumHappiness;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        #endregion
+      */
+
+        #endregion
 
         /// <summary>
         ///   The unit's level.
@@ -1649,11 +1809,11 @@ namespace LazyLib.Wow
         /// <summary>
         ///   The GUID of the object this unit is targeting.
         /// </summary>
-        public ulong TargetGUID
+        public UInt128 TargetGUID
         {
             get
             {
-                return base.GetStorageField<ulong>((uint)Descriptors.CGUnitData.Target);
+                return base.GetStorageField<UInt128>((uint)Descriptors.CGUnitData.Target);
             }
         }
 
@@ -1667,7 +1827,9 @@ namespace LazyLib.Wow
         {
             get
             {
-                return ((this.Target != null) && this.Target.TargetGUID.Equals(LazyLib.Wow.ObjectManager.MyPlayer.GUID));
+                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
+                    return true;
+                return false;
             }
         }
 
@@ -1694,7 +1856,7 @@ namespace LazyLib.Wow
         /// <remarks>
         ///   Does not look at non combat pets
         /// </remarks>
-        public virtual ulong PetGUID
+        public virtual UInt128 PetGUID
         {
             get
             {
@@ -1921,21 +2083,21 @@ namespace LazyLib.Wow
                       int localSpellId;
                       byte stackCount;
                       uint timeLeft;
-                      ulong ownerGuid;
+                      UInt128 ownerGuid;
                       if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
                       {
                           var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
                           localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
                           stackCount = Memory.Read<byte>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
                           timeLeft = Memory.Read<uint>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                          ownerGuid = Memory.Read<ulong>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i );
+                          ownerGuid = Memory.Read<UInt128>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
                       }
                       else
                       {
                           localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
                           stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
                           timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                          ownerGuid = Memory.Read<ulong>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i )));
+                          ownerGuid = Memory.Read<UInt128>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
                       }
                       if (localSpellId != 0)
                       {
@@ -2184,12 +2346,34 @@ namespace LazyLib.Wow
             }
         }
 
+        public uint GetMaxPowerByPowerType(LazyLib.Wow.Constants.PowerType PowerType)
+        {
+            uint num = this.GetPowerIndexByPowerType(PowerType);
+            uint num2 = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
+            return Memory.Read<uint>(num2 + (0x10C + num * 4));
+        }
+
+        public uint GetPowerByPowerType(LazyLib.Wow.Constants.PowerType PowerType)
+        {
+            uint num = this.GetPowerIndexByPowerType(PowerType);
+            uint num2 = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
+            return Memory.Read<uint>(num2 + (0xF0 + num * 4));
+        }
+
+        private uint GetPowerIndexByPowerType(LazyLib.Wow.Constants.PowerType PowerType)
+        {
+            uint num = Memory.Read<uint>(base.BaseAddress + Descriptors.StartDescriptors);
+            uint num2 = num + 0xE0;
+            uint num3 = (uint)((int)Memory.Read<Byte>(num2 + 1) + PowerType + (int)((uint)Pointers.PowerIndex.Multiplicator * Memory.Read<Byte>(num2 + 1)));
+            return Memory.Read<uint>(Memory.BaseAddress + (uint)Pointers.PowerIndex.PowerIndexArrays + num3 * 4);
+        }
+
         public struct WoWAura
         {
             public int SpellId;
             public short Stack;
             public uint SecondsLeft;
-            public ulong OwnerGUID;
+            public UInt128 OwnerGUID;
         }
 
         internal enum UnitNPCFlags2 : uint

@@ -20,12 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using LazyLib;
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 namespace LazyEvo.LFlyingEngine.Helpers
 {
     public class LootedBlacklist
     {
-        private static readonly Dictionary<ulong, DateTime> LootedDic = new Dictionary<ulong, DateTime>();
+        private static readonly Dictionary<UInt128, DateTime> LootedDic = new Dictionary<UInt128, DateTime>();
 
         private static void Check()
         {
@@ -33,7 +34,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
             {
                 lock (LootedDic)
                 {
-                    List<ulong> remove =
+                    List<UInt128> remove =
                         (from node in LootedDic
                          let diff = node.Value - DateTime.Now
                          where diff.TotalSeconds < 0
@@ -87,7 +88,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
             }
         }
 
-        private static void Unblacklist(ulong guid)
+        private static void Unblacklist(UInt128 guid)
         {
             lock (LootedDic)
             {

@@ -80,11 +80,6 @@ namespace LazyEvo.PVEBehavior
                     var pa = new PaladinBuilder();
                     pa.Show();
                     break;
-                case 2:
-                    var wa = new WarriorBuilder();
-                    wa.Show();
-                    break;
-
             }
         }
 

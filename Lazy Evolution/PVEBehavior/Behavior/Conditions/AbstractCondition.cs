@@ -32,6 +32,7 @@ namespace LazyEvo.PVEBehavior.Behavior.Conditions
         Player = 0,
         Pet = 1,
         Target = 2,
+        Party
     }
 
     public enum ConditionEnum

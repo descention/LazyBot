@@ -27,6 +27,7 @@ using LazyLib.Helpers;
 
 #endregion
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 namespace LazyLib.Wow
 {
@@ -40,7 +41,7 @@ namespace LazyLib.Wow
         private static bool _alearted;
         private static readonly object Locker = new object();
         private static List<PObject> ObjectList { get; set; }
-        private static Dictionary<ulong, PObject> ObjectDictionary { get; set; }
+        private static Dictionary<UInt128, PObject> ObjectDictionary { get; set; }
         public static IntPtr WowHandle { get; set; }
         public static PPlayerSelf MyPlayer { get; private set; }
         public static bool Initialized { get; private set; }
@@ -240,7 +241,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name="guid">The GUID.</param>
         /// <returns></returns>
-        public static PObject GetObjectByGuid(ulong guid)
+        public static PObject GetObjectByGuid(UInt128 guid)
         {
             lock (Locker)
             {
@@ -251,7 +252,7 @@ namespace LazyLib.Wow
         public static void MakeReady()
         {
             ObjectList = new List<PObject>();
-            ObjectDictionary = new Dictionary<ulong, PObject>();
+            ObjectDictionary = new Dictionary<UInt128, PObject>();
             MyPlayer = new PPlayerSelf(0);
             _monitor = new Thread(Monitor) {IsBackground = true};
             _monitor.Name = "ObjectManager";
@@ -274,7 +275,7 @@ namespace LazyLib.Wow
                     ReadObjectList();
 
                     // Clear out old references.
-                    List<ulong> toRemove = (from o in ObjectDictionary
+                    List<UInt128> toRemove = (from o in ObjectDictionary
                                             where !o.Value.IsValid
                                             select o.Key).ToList();
                     foreach (ulong guid in toRemove)
@@ -294,7 +295,7 @@ namespace LazyLib.Wow
         private static void ReadObjectList()
         {
             var currentObject = new PObject(Memory.Read<uint>(CurrentManager + (uint) Pointers.ObjectManager.FirstObject));
-            LocalGUID = Memory.Read<UInt64>(CurrentManager + (uint) Pointers.ObjectManager.LocalGUID);
+            LocalGUID = Memory.Read<UInt128>(CurrentManager + (uint)Pointers.ObjectManager.LocalGUID);
             while (currentObject.BaseAddress != UInt32.MinValue &&
                    currentObject.BaseAddress%2 == UInt32.MinValue)
             {
@@ -374,7 +375,7 @@ namespace LazyLib.Wow
                     try
                     {
                         CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint) Pointers.ObjectManager.CurMgrPointer) + (uint) Pointers.ObjectManager.CurMgrOffset);
-                        LocalGUID = Memory.Read<UInt64>(CurrentManager + (uint) Pointers.ObjectManager.LocalGUID);
+                        LocalGUID = Memory.Read<UInt128>(CurrentManager + (uint)Pointers.ObjectManager.LocalGUID);
                         //Logging.Write(string.Format("[Player] Local GUID: {0}", LocalGUID));
                         if (CurrentManager != UInt32.MinValue && CurrentManager != UInt32.MaxValue)
                         {
@@ -721,7 +722,7 @@ namespace LazyLib.Wow
 
         #region <Properties>
 
-        public static ulong LocalGUID { get; set; }
+        public static UInt128 LocalGUID { get; set; }
 
         #endregion
 
@@ -737,7 +738,7 @@ namespace LazyLib.Wow
             ReadObjectList();
 
             // Clear out old references.
-            List<ulong> toRemove = (from o in ObjectDictionary
+            List<UInt128> toRemove = (from o in ObjectDictionary
                                     where !o.Value.IsValid
                                     select o.Key).ToList();
             foreach (ulong guid in toRemove)

@@ -44,17 +44,25 @@
             this.PotentialAdds = new DevComponents.DotNetBar.ButtonItem();
             this.Ticker = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem5 = new DevComponents.DotNetBar.LabelItem();
-            this.ChiCondition = new DevComponents.DotNetBar.ButtonItem();
             this.HasPet = new DevComponents.DotNetBar.ButtonItem();
             this.ComboPointsCondition = new DevComponents.DotNetBar.ButtonItem();
-            this.RuneCondition = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem6 = new DevComponents.DotNetBar.LabelItem();
             this.SoulShardCount = new DevComponents.DotNetBar.ButtonItem();
-            this.BurningEmbersCount = new DevComponents.DotNetBar.ButtonItem();
+            this.BurningEmbersCount = new DevComponents.DotNetBar.ButtonItem();// new
             this.HealthStoneCount = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem8 = new DevComponents.DotNetBar.LabelItem();
-            this.MageWaterCondition = new DevComponents.DotNetBar.ButtonItem();
+            this.MageWaterCondition = new DevComponents.DotNetBar.ButtonItem(); 
             this.MageFoodCondition = new DevComponents.DotNetBar.ButtonItem();
+            this.ArcaneChargesCondition = new DevComponents.DotNetBar.ButtonItem(); // new
+            this.labelItem9 = new DevComponents.DotNetBar.LabelItem();
+            this.LightForceCondition = new DevComponents.DotNetBar.ButtonItem(); // new
+            this.DarkForceCondition = new DevComponents.DotNetBar.ButtonItem(); // new
+            this.labelItem10 = new DevComponents.DotNetBar.LabelItem();
+            this.ShadowOrbsCondition = new DevComponents.DotNetBar.ButtonItem(); // new
+            this.labelItem11 = new DevComponents.DotNetBar.LabelItem();
+            this.RuneCondition = new DevComponents.DotNetBar.ButtonItem();
+            this.labelItem12 = new DevComponents.DotNetBar.LabelItem();
+            this.HolyPowerCondition = new DevComponents.DotNetBar.ButtonItem(); // new
             this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
             this.BtnRemoveCon = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem4 = new DevComponents.DotNetBar.LabelItem();
@@ -175,19 +183,27 @@
             this.DistanceToTarget,
             this.HasTempEnchant,
             this.PotentialAdds,
+            this.HasPet,
             this.Ticker,
             this.labelItem5,
-            this.ChiCondition,
-            this.HasPet,
             this.ComboPointsCondition,
-            this.RuneCondition,
             this.labelItem6,
             this.SoulShardCount,
             this.BurningEmbersCount,
             this.HealthStoneCount,
             this.labelItem8,
             this.MageWaterCondition,
-            this.MageFoodCondition});
+            this.MageFoodCondition,
+            this.ArcaneChargesCondition,
+            this.labelItem9,
+            this.LightForceCondition,
+            this.DarkForceCondition,
+            this.labelItem10,
+            this.ShadowOrbsCondition,
+            this.labelItem11,
+            this.RuneCondition,
+            this.labelItem12,
+            this.HolyPowerCondition,});
             this.BtnCancel.Text = "Add condition";
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
@@ -265,6 +281,12 @@
             this.PotentialAdds.Text = "Potential Mobs Pulled";
             this.PotentialAdds.Click += new System.EventHandler(this.PotentialAddsCondition_Click);
             // 
+            // HasPet
+            // 
+            this.HasPet.Name = "HasPet";
+            this.HasPet.Text = "Has Pet";
+            this.HasPet.Click += new System.EventHandler(this.HasPet_Click);
+            // 
             // Ticker
             // 
             this.Ticker.Name = "Ticker";
@@ -282,29 +304,13 @@
             this.labelItem5.PaddingLeft = 10;
             this.labelItem5.PaddingTop = 1;
             this.labelItem5.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.labelItem5.Text = "Class functions:";
-            // 
-            // HasPet
-            // 
-            this.ChiCondition.Name = "ChiCondition";
-            this.ChiCondition.Text = "Chi Condition";
-            this.ChiCondition.Click += new System.EventHandler(this.ChiCondition_Click);
-
-            this.HasPet.Name = "HasPet";
-            this.HasPet.Text = "Has Pet";
-            this.HasPet.Click += new System.EventHandler(this.HasPet_Click);
+            this.labelItem5.Text = "Rogue:";
             // 
             // ComboPointsCondition
             // 
             this.ComboPointsCondition.Name = "ComboPointsCondition";
             this.ComboPointsCondition.Text = "Combo Points";
             this.ComboPointsCondition.Click += new System.EventHandler(this.ComboPointsCondition_Click);
-            // 
-            // RuneCondition
-            // 
-            this.RuneCondition.Name = "RuneCondition";
-            this.RuneCondition.Text = "Rune Condition";
-            this.RuneCondition.Click += new System.EventHandler(this.RuneCondition_Click);
             // 
             // labelItem6
             // 
@@ -361,6 +367,94 @@
             this.MageFoodCondition.Name = "MageFoodCondition";
             this.MageFoodCondition.Text = "Mage Food";
             this.MageFoodCondition.Click += new System.EventHandler(this.MageFoodCondition_Click);
+            // 
+            // ArcaneChargesCondition
+            // 
+            this.ArcaneChargesCondition.Name = "ArcaneChargesCondition";
+            this.ArcaneChargesCondition.Text = "ArcaneCharges";
+            this.ArcaneChargesCondition.Click += new System.EventHandler(this.ArcaneChargesCondition_Click);
+            // 
+            // labelItem9
+            // 
+            this.labelItem9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(231)))), ((int)(((byte)(238)))));
+            this.labelItem9.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.labelItem9.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.labelItem9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(21)))), ((int)(((byte)(110)))));
+            this.labelItem9.Name = "labelItem9";
+            this.labelItem9.PaddingBottom = 1;
+            this.labelItem9.PaddingLeft = 10;
+            this.labelItem9.PaddingTop = 1;
+            this.labelItem9.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.labelItem9.Text = "Monk";
+            // 
+            // MonkLightForceCondition
+            // 
+            this.LightForceCondition.Name = "LightForce";
+            this.LightForceCondition.Text = "Monk LightForce";
+            this.LightForceCondition.Click += new System.EventHandler(this.LightForceCondition_Click);
+            // 
+            // MonkDarkForceCondition
+            // 
+            this.DarkForceCondition.Name = "DarkForce";
+            this.DarkForceCondition.Text = "Monk DarkForce";
+            this.DarkForceCondition.Click += new System.EventHandler(this.DarkForceCondition_Click);
+            // 
+            // labelItem10
+            // 
+            this.labelItem10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(231)))), ((int)(((byte)(238)))));
+            this.labelItem10.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.labelItem10.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.labelItem10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(21)))), ((int)(((byte)(110)))));
+            this.labelItem10.Name = "labelItem10";
+            this.labelItem10.PaddingBottom = 1;
+            this.labelItem10.PaddingLeft = 10;
+            this.labelItem10.PaddingTop = 1;
+            this.labelItem10.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.labelItem10.Text = "Priest";
+            // 
+            // ShadowOrbsCondition
+            // 
+            this.ShadowOrbsCondition.Name = "ShadowOrbs";
+            this.ShadowOrbsCondition.Text = "ShadowOrbs";
+            this.ShadowOrbsCondition.Click += new System.EventHandler(this.ShadowOrbsCondition_Click);
+            // 
+            // labelItem11
+            // 
+            this.labelItem11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(231)))), ((int)(((byte)(238)))));
+            this.labelItem11.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.labelItem11.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.labelItem11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(21)))), ((int)(((byte)(110)))));
+            this.labelItem11.Name = "labelItem11";
+            this.labelItem11.PaddingBottom = 1;
+            this.labelItem11.PaddingLeft = 10;
+            this.labelItem11.PaddingTop = 1;
+            this.labelItem11.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.labelItem11.Text = "DeathKnight";
+            // 
+            // RuneCondition
+            // 
+            this.RuneCondition.Name = "RuneCondition";
+            this.RuneCondition.Text = "Rune Condition";
+            this.RuneCondition.Click += new System.EventHandler(this.RuneCondition_Click);
+            // 
+            // labelItem12
+            // 
+            this.labelItem12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(231)))), ((int)(((byte)(238)))));
+            this.labelItem12.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.labelItem12.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.labelItem12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(21)))), ((int)(((byte)(110)))));
+            this.labelItem12.Name = "labelItem12";
+            this.labelItem12.PaddingBottom = 1;
+            this.labelItem12.PaddingLeft = 10;
+            this.labelItem12.PaddingTop = 1;
+            this.labelItem12.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.labelItem12.Text = "Paladin";
+            // 
+            // HolyPowerCondition
+            // 
+            this.HolyPowerCondition.Name = "HolyPower";
+            this.HolyPowerCondition.Text = "HolyPower Condition";
+            this.HolyPowerCondition.Click += new System.EventHandler(this.HolyPowerCondition_Click);
             // 
             // labelItem1
             // 
@@ -1418,6 +1512,15 @@
         private DevComponents.DotNetBar.ButtonItem CombatCount;
         private DevComponents.DotNetBar.ButtonItem DistanceToTarget;
         private DevComponents.DotNetBar.LabelItem labelItem5;
+        private DevComponents.DotNetBar.LabelItem labelItem10;
+        private DevComponents.DotNetBar.LabelItem labelItem9;
+        private DevComponents.DotNetBar.LabelItem labelItem11;
+        private DevComponents.DotNetBar.LabelItem labelItem12;
+        private DevComponents.DotNetBar.ButtonItem HolyPowerCondition;
+        private DevComponents.DotNetBar.ButtonItem DarkForceCondition;
+        private DevComponents.DotNetBar.ButtonItem LightForceCondition;
+        private DevComponents.DotNetBar.ButtonItem ShadowOrbsCondition;
+        private DevComponents.DotNetBar.ButtonItem ArcaneChargesCondition;
         private DevComponents.DotNetBar.ButtonItem SoulShardCount;
         private DevComponents.DotNetBar.ButtonItem ComboPointsCondition;
         private DevComponents.DotNetBar.ButtonItem MageWaterCondition;
@@ -1433,7 +1536,6 @@
         private DevComponents.DotNetBar.ButtonItem Functions;
         private DevComponents.DotNetBar.LabelItem Othershj;
         private DevComponents.DotNetBar.ButtonItem Ticker;
-        private DevComponents.DotNetBar.ButtonItem ChiCondition;
         private DevComponents.DotNetBar.ButtonItem HasPet;
         private System.Windows.Forms.RadioButton RBUnchanged;
         private DevComponents.DotNetBar.ButtonItem BtnSpellDetection;

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LazyLib;
 using LazyLib.Wow;
+using LazyLib.Manager;
 
 #endregion
 
@@ -30,7 +31,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
     internal class FlyingBlackList
     {
         internal static List<Location> BadNodes = new List<Location>();
-        private static readonly Dictionary<ulong, DateTime> blacklist = new Dictionary<ulong, DateTime>();
+        private static readonly Dictionary<UInt128, DateTime> blacklist = new Dictionary<UInt128, DateTime>();
         /*
         private static void Check()
         {
@@ -107,7 +108,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
             return false;
         }
 
-        public static bool IsBlacklisted(ulong target)
+        public static bool IsBlacklisted(UInt128 target)
         {
             try
             {
@@ -129,7 +130,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
             return false;
         }
 
-        public static void Blacklist(ulong target, uint length, bool writeText)
+        public static void Blacklist(UInt128 target, uint length, bool writeText)
         {
             try
             {
@@ -148,7 +149,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
             }
         }
 
-        public static void Unblacklist(ulong target)
+        public static void Unblacklist(UInt128 target)
         {
             //Logging.Write("Removed: '" + target + " from badlist'");
             lock (blacklist)

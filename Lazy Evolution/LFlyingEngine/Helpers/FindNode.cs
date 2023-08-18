@@ -152,7 +152,7 @@ namespace LazyEvo.LFlyingEngine.Helpers
                     return searchForNode;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //Logging.Write("SearchForNode: " + e);
             }
