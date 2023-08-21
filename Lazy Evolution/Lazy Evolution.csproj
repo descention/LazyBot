@@ -101,11 +101,11 @@
     <Compile Include="Classes\PrivCombatHandler.cs" />
     <Compile Include="Classes\EngineCompiler.cs" />
     <Compile Include="Classes\PluginCompiler.cs" />
-    <Compile Include="Debug\NameValuePair.cs" />
-    <Compile Include="Debug\PObjectUtils.cs" />
-    <Compile Include="Debug\PPlayerSelfUtils.cs" />
-    <Compile Include="Debug\PPlayerUtils.cs" />
-    <Compile Include="Debug\PUnitUtils.cs" />
+    <Compile Include="DebugFormClasses\NameValuePair.cs" />
+    <Compile Include="DebugFormClasses\PObjectUtils.cs" />
+    <Compile Include="DebugFormClasses\PPlayerSelfUtils.cs" />
+    <Compile Include="DebugFormClasses\PPlayerUtils.cs" />
+    <Compile Include="DebugFormClasses\PUnitUtils.cs" />
     <Compile Include="Forms\Debug.cs">
       <SubType>Form</SubType>
     </Compile>
