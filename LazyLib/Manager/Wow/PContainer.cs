@@ -4,7 +4,6 @@
 // Assembly location: E:\VeryOldLazyBots\Lazy Evolution\LazyLib.dll
 
 using LazyLib.Helpers;
-using LazyLib.Manager;
 using System;
 using System.Reflection;
 

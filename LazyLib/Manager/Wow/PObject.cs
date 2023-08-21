@@ -2,7 +2,6 @@
 {
     using LazyLib;
     using LazyLib.Helpers;
-    using LazyLib.Manager;
     using LazyLib.PInvoke;
     using System;
     using System.Drawing;

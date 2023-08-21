@@ -25,7 +25,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.ActionBar;
 using LazyLib.Helpers;
-using LazyLib.Manager;
 //using LazyLib.Helpers.DBCReads;
 
 #endregion
@@ -1949,12 +1948,6 @@ namespace LazyLib.Wow
             return false;
         }
 
-
-        [DllImport("KERNEL32")]
-        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-
-        [DllImport("Kernel32.dll")]
-        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
         public uint BuffTimeLeft(int spellId)
         {
             try

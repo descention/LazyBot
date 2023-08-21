@@ -18,7 +18,6 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 #region
 
 using LazyLib.Helpers;
-using LazyLib.Manager;
 using System;
 //using LazyLib.Manager.Bored;
 using System.Collections.Generic;

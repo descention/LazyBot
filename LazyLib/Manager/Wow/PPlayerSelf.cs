@@ -23,7 +23,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using LazyLib.Helpers;
-using LazyLib.Manager;
 
 #endregion
 

@@ -20,7 +20,6 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 using System.Reflection;
 using System.Threading;
 using LazyLib.Helpers;
-using LazyLib.Manager;
 using System;
 using System.Collections.Generic;
 
