@@ -132,13 +132,13 @@ namespace LazyLib.LazyRadar
 
         private void PrintPlayer()
         {
-            PrintArrow(_colorMe, Width/2, Height/2, ObjectManager.MyPlayer.Facing, "", "");
-           // Logging.Write("PL: " + ObjectManager.MyPlayer.Facing);
+            PrintArrow(_colorMe, Width/2, Height/2, ObjectManager<T>.MyPlayer.Facing, "", "");
+           // Logging.Write("PL: " + ObjectManager<T>.MyPlayer.Facing);
         }
 
         private void MapTimerTick(object sender, EventArgs eventArgs)
         {
-            if (ObjectManager.Initialized)
+            if (ObjectManager<T>.Initialized)
             {
                 try
                 {

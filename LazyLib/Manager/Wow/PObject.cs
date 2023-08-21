@@ -3,6 +3,7 @@
     using LazyLib;
     using LazyLib.Helpers;
     using LazyLib.Manager;
+    using LazyLib.PInvoke;
     using System;
     using System.Drawing;
     using System.Reflection;
@@ -12,7 +13,7 @@
     using System.Windows.Forms;
 
     [Obfuscation(Feature="renaming", ApplyToMembers=true)]
-    public class PObject<T>
+    public class PObject<T> where T: struct, IEquatable<T>
     {
         private static Point _oldPoint;
         private const int iRestore = 9;
@@ -25,7 +26,7 @@
 
         private static bool DoSmallestSearch(T guid)
         {
-            if (ObjectManager.ShouldDefend)
+            if (ObjectManager<T>.ShouldDefend)
                 return true;
             GamePosition.Findpos(Memory.WindowHandle);
             int xOffset = -40;
@@ -123,7 +124,7 @@
 
         public bool InteractOrTarget(bool multiclick)
         {
-            if (ObjectManager.MyPlayer.TargetGUID == GUID)
+            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
             {
                 KeyHelper.SendKey("InteractWithMouseOver");
                 return true;
@@ -148,7 +149,7 @@
             Thread.Sleep(50);
             KeyHelper.SendKey("InteractWithMouseOver");
             Thread.Sleep(500);
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             return false;
         }
@@ -182,7 +183,7 @@
                                         // DoSmallSearch(guid);
                                     }
             }
-            if (ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
+            if (ObjectManager<T>.GetAttackers.Count != 0 && ObjectManager<T>.ShouldDefend)
                 return false;
             if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
             {
@@ -235,13 +236,13 @@
             }
             else
             {
-                SetCursorPos(x, y);
+                User32.SetCursorPos(x, y);
             }
         }
 
         private static bool Search(T guid, int yValue)
         {
-            if (ObjectManager.ShouldDefend)
+            if (ObjectManager<T>.ShouldDefend)
                 return true;
             int xOffset = 0;
             int yOffset = -yValue;
@@ -283,55 +284,50 @@
         }
 
 
-        [DllImport("user32.dll")]
-        private static extern bool SetCursorPos(int x, int y);
-        [DllImport("user32.dll")]
-        private static extern int SetForegroundWindow(IntPtr Hwnd);
+        
         private static void SetForGround()
         {
             IntPtr hwnd = Memory.WindowHandle;
             if (hwnd.ToInt32() > 0)
             {
-                SetForegroundWindow(hwnd);
-                ShowWindow(hwnd, IsIconic(hwnd) ? iRestore : iShow);
+                User32.SetForegroundWindow(hwnd);
+                User32.ShowWindow(hwnd, User32.IsIconic(hwnd) ? iRestore : iShow);
             }
         }
 
-        [DllImport("user32.dll")]
-        private static extern int ShowWindow(IntPtr Hwnd, int iCmdShow);
-        public PGameObject ToGameObject(PObject obj)
+        public PGameObject<T> ToGameObject(PObject<T> obj)
         {
-            return new PGameObject(obj.BaseAddress);
+            return new PGameObject<T>(obj.BaseAddress);
         }
 
-        public PPlayer ToPlayer(PItem obj)
+        public PPlayer<T> ToPlayer(PItem<T> obj)
         {
-            return new PPlayer(obj.BaseAddress);
+            return new PPlayer<T>(obj.BaseAddress);
         }
 
-        public PPlayer ToPlayer(PObject obj)
+        public PPlayer<T> ToPlayer(PObject<T> obj)
         {
-            return new PPlayer(obj.BaseAddress);
+            return new PPlayer<T>(obj.BaseAddress);
         }
 
-        public PPlayer ToPlayer(PPlayer obj)
+        public PPlayer<T> ToPlayer(PPlayer<T> obj)
         {
-            return new PPlayer(obj.BaseAddress);
+            return new PPlayer<T>(obj.BaseAddress);
         }
 
-        public PPlayer ToPlayer(PUnit obj)
+        public PPlayer<T> ToPlayer(PUnit<T> obj)
         {
-            return new PPlayer(obj.BaseAddress);
+            return new PPlayer<T>(obj.BaseAddress);
         }
 
-        public PUnit ToUnit(PItem obj)
+        public PUnit<T> ToUnit(PItem<T> obj)
         {
-            return new PUnit(obj.BaseAddress);
+            return new PUnit<T>(obj.BaseAddress);
         }
 
-        public PUnit ToUnit(PObject obj)
+        public PUnit<T> ToUnit(PObject<T> obj)
         {
-            return new PUnit(obj.BaseAddress);
+            return new PUnit<T>(obj.BaseAddress);
         }
 
         internal void UpdateBaseAddress(uint address)
@@ -372,7 +368,7 @@
                 {
                     return this.GetStorageField<T>((uint)Descriptors.CGObjectData.Guid);
                 }
-                return ulong.MinValue;
+                return new T();
             }
         }
 
@@ -382,7 +378,7 @@
         {
             get
             {
-                if (this.GUID != LazyLib.Wow.ObjectManager.MyPlayer.GUID)
+                if (!GUID.Equals(ObjectManager<T>.MyPlayer.GUID))
                 {
                     return false;
                 }

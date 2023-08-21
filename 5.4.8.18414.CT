@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="16">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"Game Build"</Description>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+B94E74</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"Game State"</Description>
+      <Color>80000008</Color>
+      <VariableType>Byte</VariableType>
+      <Address>Wow.exe+D65B16</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Camera Struct"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+D64E5C</Address>
+      <Offsets>
+        <Offset>8208</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>36</ID>
+      <Description>"Name Cache"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+C86838</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"First Name"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+C86838+10</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"Local Player"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+CFF49C</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"Is Looting"</Description>
+          <Color>80000008</Color>
+          <VariableType>Byte</VariableType>
+          <Address>Wow.exe+DD3D44</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"Is Texting"</Description>
+          <Color>80000008</Color>
+          <VariableType>Byte</VariableType>
+          <Address>Wow.exe+BBE9AC</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Mouse GUID"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D65B28</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"Target GUID"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D65B40</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Entity List"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+CB47C4</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Entity 0"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Entity 1"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Entity 2"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Entity 3"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"Entity 4"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Entity 5"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Entity 6"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"Entity 7"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"Entity 8"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Entity 9"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Wow.exe+CB47C4</Address>
+          <Offsets>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>34</Offset>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Chat Position"</Description>
+      <Color>80000008</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Wow.exe+DC1090</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Chat Buffer"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <Color>80000008</Color>
+      <VariableType>8 Bytes</VariableType>
+      <Address>Wow.exe+D67918</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Message 0"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Message 1"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+17C8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Message 2"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+2F90</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Message 3"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+4758</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"Message 4"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+5F20</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"Message 5"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+76E8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Message 6"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+8EB0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Message 7"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+A678</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Message 8"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+BE40</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"Message 9"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>80000008</Color>
+          <VariableType>8 Bytes</VariableType>
+          <Address>Wow.exe+D67918+D608</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Structures StructVersion="2">
+    <Structure Name="Camera" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="8" Vartype="Float" Bytesize="4" Description="X" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="12" Vartype="Float" Bytesize="4" Description="Y" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="16" Vartype="Float" Bytesize="4" Description="Z" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="20" Vartype="Float" Bytesize="4" Description="Dir X" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="24" Vartype="Float" Bytesize="4" Description="Dir Y" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="28" Vartype="Float" Bytesize="4" Description="Dir Z" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="56" Vartype="Float" Bytesize="4" Description="Fov" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Unit" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="4" Vartype="Pointer" Bytesize="4" Description="Descriptors" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+          <Structure Name="Descriptors" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="0" Vartype="8 Bytes" Bytesize="8" Description="Guid" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+              <Element Offset="20" Vartype="4 Bytes" Bytesize="4" Description="Entity ID" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="24" Vartype="4 Bytes" Bytesize="4" Description="Flags D" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+              <Element Offset="72" Vartype="8 Bytes" Bytesize="8" Description="Creator" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+              <Element Offset="132" Vartype="4 Bytes" Bytesize="4" Description="Health" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="136" Vartype="4 Bytes" Bytesize="4" Description="Power" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="156" Vartype="4 Bytes" Bytesize="4" Description="Health Max" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="160" Vartype="4 Bytes" Bytesize="4" Description="Power Max" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="220" Vartype="4 Bytes" Bytesize="4" Description="Level" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="244" Vartype="4 Bytes" Bytesize="4" Description="Flags 1" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" Description="Entity Type" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="2096" Vartype="8 Bytes" Bytesize="8" Description="Transport" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+        <Element Offset="2104" Vartype="Float" Bytesize="4" Description="X" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="2108" Vartype="Float" Bytesize="4" Description="Y" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="2112" Vartype="Float" Bytesize="4" Description="Z" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="2120" Vartype="Float" Bytesize="4" Description="Angle" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="2484" Vartype="Pointer" Bytesize="4" Description="Npc Cache" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+          <Structure Name="Cache" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="108" Vartype="Pointer" Bytesize="4" Description="Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+                <Structure Name="Name" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="0" Vartype="String" Bytesize="80" Description="Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+                  </Elements>
+                </Structure>
+              </Element>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="3256" Vartype="4 Bytes" Bytesize="4" Description="Casting" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="3280" Vartype="4 Bytes" Bytesize="4" Description="Channel" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Object" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="4" Vartype="Pointer" Bytesize="4" Description="Descriptors" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+          <Structure Name="Descriptors" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="0" Vartype="8 Bytes" Bytesize="8" Description="Guid" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+              <Element Offset="20" Vartype="4 Bytes" Bytesize="4" Description="Entity ID" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+              <Element Offset="32" Vartype="8 Bytes" Bytesize="8" Description="Creator" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" Description="Display" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" Description="Type" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="204" Vartype="Byte" Bytesize="1" Description="Bobbing" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="240" Vartype="8 Bytes" Bytesize="8" Description="Transport" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+        <Element Offset="248" Vartype="Float" Bytesize="4" Description="X" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="252" Vartype="Float" Bytesize="4" Description="Y" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="256" Vartype="Float" Bytesize="4" Description="Z" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="264" Vartype="8 Bytes" Bytesize="8" Description="Rotation" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+        <Element Offset="448" Vartype="Pointer" Bytesize="4" Description="Cache" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+          <Structure Name="Cache" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="176" Vartype="Pointer" Bytesize="4" Description="Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005">
+                <Structure Name="Name" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="0" Vartype="String" Bytesize="80" Description="Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+                  </Elements>
+                </Structure>
+              </Element>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="452" Vartype="Float" Bytesize="4" Description="Transform" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Name" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Pointer" Bytesize="4" ChildStruct="Name" Description="Next" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="12" Vartype="8 Bytes" Bytesize="8" Description="Guid" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+        <Element Offset="21" Vartype="String" Bytesize="48" Description="Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="92" Vartype="4 Bytes" Bytesize="4" Description="Race" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="100" Vartype="4 Bytes" Bytesize="4" Description="Class" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Message" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="8 Bytes" Bytesize="8" Description="Sender Guid" DisplayMethod="Hexadecimal" BackgroundColor="80000005"/>
+        <Element Offset="20" Vartype="String" Bytesize="40" Description="Sender Name" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="69" Vartype="String" Bytesize="3000" Description="Full Message" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="3069" Vartype="String" Bytesize="3000" Description="Only Message" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="6072" Vartype="4 Bytes" Bytesize="4" Description="Channel Number" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+        <Element Offset="6084" Vartype="4 Bytes" Bytesize="4" Description="Time Stamp" DisplayMethod="Unsigned Integer" BackgroundColor="80000005"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>

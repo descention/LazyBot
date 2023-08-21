@@ -38,7 +38,7 @@ namespace LazyLib.Helpers.Vendor
                 //Target vendor TODO: Looking for a better solution
                 LazyLib.Helpers.KeyHelper.ChatboxSendText("/target " + unit_name);
                 Thread.Sleep(3000);
-                if (LazyLib.Wow.ObjectManager.MyPlayer.Target.Name != unit_name)
+                if (LazyLib.Wow.ObjectManager<T>.MyPlayer.Target.Name != unit_name)
                 {
                     Logging.Write("Could not target vendor: " + unit_name);
                     return;
@@ -77,7 +77,7 @@ namespace LazyLib.Helpers.Vendor
                 vendor.Location.Face();
                 vendor.Interact(false);
                 Thread.Sleep(1000);
-                if (ObjectManager.MyPlayer.Target != vendor)
+                if (ObjectManager<T>.MyPlayer.Target != vendor)
                 {
                     vendor.Location.Face();
                     vendor.Interact(false);
@@ -112,7 +112,7 @@ namespace LazyLib.Helpers.Vendor
             LoadWowHead();
             SellLoop();
             /*
-            foreach (PItem item in Inventory.GetItemsInBags)
+            foreach (PItem<T> item in Inventory.GetItemsInBags)
             {
                 if (ItemDatabase.GetItem(item.EntryId.ToString()) != null)
                 {
@@ -153,7 +153,7 @@ namespace LazyLib.Helpers.Vendor
 
         private static void LoadWowHead()
         {
-            foreach (PItem item in Inventory.GetItemsInBags)
+            foreach (PItem<T> item in Inventory.GetItemsInBags)
             {
                 if (ItemDatabase.GetItem(item.EntryId.ToString()) == null)
                 {
@@ -245,7 +245,7 @@ namespace LazyLib.Helpers.Vendor
         {
             try
             {
-                foreach (PItem item in Inventory.GetItemsInBags)
+                foreach (PItem<T> item in Inventory.GetItemsInBags)
                 {
                     try
                     {

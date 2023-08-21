@@ -33,7 +33,7 @@ namespace LazyLib.Wow
     ///   Representing us ingame
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayerSelf<T> : PPlayer<T>
+    public class PPlayerSelf<T> : PPlayer<T> where T : struct, IEquatable<T>
     {
         private readonly uint[] _healthStone = new uint[] {  0x901c, 0x901e, 0x901d, 0x9019, 0x901b, 0x901a, 0x5659, 0x5657, 0x5658, 0x24cd, 0x4a45, 0x4a44, 0x4a43, 0x4a42, 0x1586, 0x1585, 0x1587, 0x1588, 0x4a3d, 0x4a3c, 0x4a41, 0x4a40, 0x4a3f};
 
@@ -230,11 +230,11 @@ namespace LazyLib.Wow
         ///   Return a item pointer to the offhand
         /// </summary>
         /// <value>The off hand.</value>
-        public PItem OffHand
+        public PItem<T> OffHand
         {
             get
             {
-                foreach (PItem pItem in ObjectManager.GetItems)
+                foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
@@ -254,7 +254,7 @@ namespace LazyLib.Wow
         /// <value>The mage refreshment.</value>
         public int MageRefreshment 
         {
-            get { return ObjectManager.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
+            get { return ObjectManager<T>.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace LazyLib.Wow
         /// <value>The health stone count.</value>
         public int HealthStoneCount
         {
-            get { return ObjectManager.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
+            get { return ObjectManager<T>.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
         }
 
         /// <summary>

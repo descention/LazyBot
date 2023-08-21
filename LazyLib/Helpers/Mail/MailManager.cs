@@ -268,7 +268,7 @@ namespace LazyLib.Helpers.Mail
         /// <returns></returns>
         public static bool TargetMailBox()
         {
-            foreach (PGameObject node in ObjectManager.GetGameObject)
+            foreach (PGameObject<T> node in ObjectManager<T>.GetGameObject)
             {
                 if (node.GameObjectType == Constants.GameObjectTypes.Mailbox && node.Location.DistanceToSelf < 6) //19
                 {
@@ -297,7 +297,7 @@ namespace LazyLib.Helpers.Mail
             return false;
         }
 
-        private static void RetryMailOpen(PGameObject node)
+        private static void RetryMailOpen(PGameObject<T> node)
         {
             MoveHelper.StrafeLeft(true);
             Thread.Sleep(500);

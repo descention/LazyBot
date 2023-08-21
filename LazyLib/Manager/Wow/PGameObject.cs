@@ -29,7 +29,7 @@ namespace LazyLib.Wow
     ///   Representing a game object (Nodes)
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PGameObject<T> : PObject<T>
+    public class PGameObject<T> : PObject<T> where T : struct, IEquatable<T>
     {
         public PGameObject(uint baseAddress)
             : base(baseAddress)

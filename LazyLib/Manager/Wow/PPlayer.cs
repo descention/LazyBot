@@ -32,7 +32,7 @@ namespace LazyLib.Wow
     ///   Representing a player
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayer<T> : PUnit<T>
+    public class PPlayer<T> : PUnit<T> where T : struct, IEquatable<T>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PPlayer" /> class.
@@ -127,8 +127,8 @@ namespace LazyLib.Wow
                  while (index != 0x00)
                 {
                 var next = Memory.Read<int>((uint)(index + 0x0));
-                var guid = Memory.Read<UInt128>((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
-                if (guid == GUID)
+                var guid = Memory.Read<T>((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
+                if (guid.Equals(GUID))
                 {
                  string name = Memory.ReadUtf8((uint)(index + (uint)Pointers.UnitName.PlayerNameStringOffset), 40);
                  return name;

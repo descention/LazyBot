@@ -107,7 +107,7 @@ namespace LazyLib.ActionBar
             Spells.Clear();
             const int barSize = 0x60;
             int maxSlots = 60;
-            switch (ObjectManager.MyPlayer.UnitClass)
+            switch (ObjectManager<T>.MyPlayer.UnitClass)
             {
                 case Constants.UnitClass.UnitClass_Warrior:
                     maxSlots = 0x60;
@@ -307,7 +307,7 @@ namespace LazyLib.ActionBar
         public static bool HasBuff(PUnit check, string name)
         {
             List<int> idsFromName = BarMapper.GetIdsFromName(name);
-            return ObjectManager.Initialized && check.HasBuff(idsFromName);
+            return ObjectManager<T>.Initialized && check.HasBuff(idsFromName);
         }
 
         public static bool DoesBuffExist(string name)

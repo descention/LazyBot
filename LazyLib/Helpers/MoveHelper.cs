@@ -45,7 +45,7 @@ namespace LazyLib.Helpers
         public static void ReleaseKeys()
         {
             StopMove();
-            if (ObjectManager.Initialized)
+            if (ObjectManager<T>.Initialized)
             {
                 KeyHelper.ReleaseKey("Space");
                 KeyHelper.ReleaseKey("X");
@@ -312,7 +312,7 @@ namespace LazyLib.Helpers
         public static bool MoveToUnit(PUnit targetObject, double distance)
         {
             //Start by facing
-            Location oldPos = ObjectManager.MyPlayer.Location;
+            Location oldPos = ObjectManager<T>.MyPlayer.Location;
             Forwards(false);
             var timer = new Ticker(1000*1.1);
             var timerWaypoint = new Ticker(1000*16);
@@ -321,13 +321,13 @@ namespace LazyLib.Helpers
             {
                 targetObject.Face();
                 Forwards(true);
-                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
+                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
                 {
-                    oldPos = ObjectManager.MyPlayer.Location;
+                    oldPos = ObjectManager<T>.MyPlayer.Location;
                     timer.Reset();
                 }
                 Forwards(true);
-                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
+                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
                 {
                     if (stuck > 3)
                         return false;
@@ -401,7 +401,7 @@ namespace LazyLib.Helpers
         /// <returns></returns>
         public static bool MoveToLoc(Location targetObject, double distance, bool continueMove, bool breakOnCombat)
         {
-            Location oldPos = ObjectManager.MyPlayer.Location;
+            Location oldPos = ObjectManager<T>.MyPlayer.Location;
             var timer = new Ticker(1000*1.1);
             var timerWaypoint = new Ticker(1000*30);
             int stuck = 0;
@@ -409,18 +409,18 @@ namespace LazyLib.Helpers
             {
                 targetObject.Face();
                 Forwards(true);
-                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
+                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
                 {
-                    oldPos = ObjectManager.MyPlayer.Location;
+                    oldPos = ObjectManager<T>.MyPlayer.Location;
                     timer.Reset();
                 }
-                if (breakOnCombat && ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
+                if (breakOnCombat && ObjectManager<T>.GetAttackers.Count != 0 && ObjectManager<T>.ShouldDefend)
                 {
                     Forwards(false);
                     return false;
                 }
                 Forwards(true);
-                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
+                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
                 {
                     if (stuck > 3)
                         return false;

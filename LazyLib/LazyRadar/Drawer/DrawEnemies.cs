@@ -31,17 +31,17 @@ namespace LazyLib.LazyRadar.Drawer
         {
             string othBot;
             foreach (
-                PPlayer play in
-                    ObjectManager.GetPlayers.Where(
-                        cur => !cur.PlayerFaction.Equals(ObjectManager.MyPlayer.PlayerFaction)))
+                PPlayer<T> play in
+                    ObjectManager<T>.GetPlayers.Where(
+                        cur => !cur.PlayerFaction.Equals(ObjectManager<T>.MyPlayer.PlayerFaction)))
             {
-                if (play.GUID.Equals(ObjectManager.MyPlayer.GUID))
+                if (play.GUID.Equals(ObjectManager<T>.MyPlayer.GUID))
                     continue;
                 string othTop = play.Name;
                 othBot = " Lvl: " + play.Level;
                 othBot = othBot.TrimEnd();
-                form.PrintArrow(_colorEnemies, form.OffsetY(play.Location.Y, ObjectManager.MyPlayer.Location.Y),
-                                form.OffsetX(play.Location.X, ObjectManager.MyPlayer.Location.X),
+                form.PrintArrow(_colorEnemies, form.OffsetY(play.Location.Y, ObjectManager<T>.MyPlayer.Location.Y),
+                                form.OffsetX(play.Location.X, ObjectManager<T>.MyPlayer.Location.X),
                                 play.Facing, othTop, othBot);
             }
         }

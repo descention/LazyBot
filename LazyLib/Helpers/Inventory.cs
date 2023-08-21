@@ -31,7 +31,7 @@ namespace LazyLib.Helpers
     {
         public static List<UInt128> GUIDOfItemsInBag
         {
-            get { return ObjectManager.MyPlayer.GUIDOfItemsInBag; }
+            get { return ObjectManager<T>.MyPlayer.GUIDOfItemsInBag; }
         }
 
         private static List<UInt128> GUIDOfBags
@@ -97,22 +97,22 @@ namespace LazyLib.Helpers
 
         public static PContainer Bag1
         {
-            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag1GUID == container.GUID); }
+            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag1GUID == container.GUID); }
         }
 
         public static PContainer Bag2
         {
-            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag2GUID == container.GUID); }
+            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag2GUID == container.GUID); }
         }
 
         public static PContainer Bag3
         {
-            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag3GUID == container.GUID); }
+            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag3GUID == container.GUID); }
         }
 
         public static PContainer Bag4
         {
-            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag4GUID == container.GUID); }
+            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag4GUID == container.GUID); }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace LazyLib.Helpers
                     }
                     var items = new List<PItem>();
                     List<UInt128> guids = GUIDOfItemsInBag;
-                    foreach (PItem pItem in ObjectManager.GetItems)
+                    foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
                     {
                         if (pItem != null)
                         {

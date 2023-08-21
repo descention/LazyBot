@@ -19,6 +19,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 
 using LazyLib.Helpers;
 using LazyLib.Manager;
+using System;
 //using LazyLib.Manager.Bored;
 using System.Collections.Generic;
 using System.Reflection;
@@ -31,7 +32,7 @@ namespace LazyLib.Wow
     ///   Contains all information related to a WowItem.
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PItem<T> : PObject<T>
+    public class PItem<T> : PObject<T> where T : struct, IEquatable<T>
     {
         public PItem(uint baseAddress)
             : base(baseAddress)
@@ -151,9 +152,9 @@ namespace LazyLib.Wow
         ///   Gets the contained.
         /// </summary>
         /// <value>The contained.</value>
-        public UInt128 Contained
+        public T Contained
         {
-            get { return GetStorageField<UInt128>((uint)Descriptors.CGItemData.ContainedIn); }
+            get { return GetStorageField<T>((uint)Descriptors.CGItemData.ContainedIn); }
         }
 
         /// <summary>

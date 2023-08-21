@@ -57,7 +57,7 @@ namespace LazyEvo.Forms
 
         private void InitializePlayerListViewItem()
         {
-            NameValuePair[] pairs = GetPlayerMeNameValuePairs(ObjectManager.MyPlayer);
+            NameValuePair[] pairs = GetPlayerMeNameValuePairs(ObjectManager<T>.MyPlayer);
 
             _wowPlayerListViewItemArray = new ListViewItem[pairs.Length];
 
@@ -74,7 +74,7 @@ namespace LazyEvo.Forms
 
         private void InitializeTargetListViewItem()
         {
-            PUnit wu = ObjectManager.MyPlayer.Target;
+            PUnit wu = ObjectManager<T>.MyPlayer.Target;
             var pairs = new NameValuePair[] {};
             if (wu != null && wu.BaseAddress != 0)
             {
@@ -101,7 +101,7 @@ namespace LazyEvo.Forms
 
         public void UpdatePlayerTabValues()
         {
-            NameValuePair[] playerMePairs = GetPlayerMeNameValuePairs(ObjectManager.MyPlayer);
+            NameValuePair[] playerMePairs = GetPlayerMeNameValuePairs(ObjectManager<T>.MyPlayer);
             for (int j = 0; j < _wowPlayerListViewItemArray.Length; j++)
             {
                 _wowPlayerListViewItemArray[j].SubItems.RemoveAt(1);
@@ -111,7 +111,7 @@ namespace LazyEvo.Forms
 
         public void UpdateTargetTabValues()
         {
-            PUnit wu = ObjectManager.MyPlayer.Target;
+            PUnit wu = ObjectManager<T>.MyPlayer.Target;
             if (wu != null)
             {
                 if (_wowTargetListViewItemArray != null && _wowTargetListViewItemArray.Length < 2)
@@ -161,7 +161,7 @@ namespace LazyEvo.Forms
             return wuUtils.GetNameValuePairs().ToArray();
         }
 
-        private static NameValuePair[] GetPlayerNameValuePairs(PPlayer me)
+        private static NameValuePair[] GetPlayerNameValuePairs(PPlayer<T> me)
         {
             var wpUtils = new PPlayerUtils(me.BaseAddress);
             return wpUtils.GetNameValuePairs().ToArray();
@@ -175,7 +175,7 @@ namespace LazyEvo.Forms
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (ObjectManager.InGame)
+            if (ObjectManager<T>.InGame)
             {
                 // update current information
                 UpdatePlayerTabValues();

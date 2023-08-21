@@ -128,7 +128,7 @@ namespace LazyLib.FSM
                     }
                     catch (Exception e)
                     {
-                        if (ObjectManager.InGame)
+                        if (ObjectManager<T>.InGame)
                         {
                             Logging.Write("[Engine] Exception " + e);
                         }

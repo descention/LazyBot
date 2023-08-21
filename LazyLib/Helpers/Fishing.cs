@@ -35,12 +35,12 @@ namespace LazyLib.Helpers
         private static readonly Ticker TimeOut = new Ticker(2000);
         public static bool FindBobberAndClick(bool waitForLoot)
         {
-            PGameObject bobber = null;
+            PGameObject<T> bobber = null;
             Thread.Sleep(1000);
             _triedWorldToScreen = false;
             _saidSomethingManager = false;
             _tryingSearch = false;
-            while(ObjectManager.MyPlayer.IsCasting)
+            while(ObjectManager<T>.MyPlayer.IsCasting)
             {
                 if (bobber != null)
                 {
@@ -57,7 +57,7 @@ namespace LazyLib.Helpers
                             Thread.Sleep(1500);
                             if (waitForLoot)
                             {
-                                while (ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                                while (ObjectManager<T>.MyPlayer.LootWinOpen && !TimeOut.IsReady)
                                     Thread.Sleep(100);
                                 Thread.Sleep(1300);
                             }
@@ -90,7 +90,7 @@ namespace LazyLib.Helpers
                                 Thread.Sleep(1500);
                                 if (waitForLoot)
                                 {
-                                    while (ObjectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                                    while (ObjectManager<T>.MyPlayer.LootWinOpen && !TimeOut.IsReady)
                                         Thread.Sleep(100);
                                     Thread.Sleep(1300);
                                 }
@@ -228,9 +228,9 @@ namespace LazyLib.Helpers
             }
         }
                
-        private static PGameObject Bobber()
+        private static PGameObject<T> Bobber()
         {
-            return ObjectManager.GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
+            return ObjectManager<T>.GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
         }
     }
 }

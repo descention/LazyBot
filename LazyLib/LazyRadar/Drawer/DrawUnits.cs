@@ -30,9 +30,9 @@ namespace LazyLib.LazyRadar.Drawer
         {
             const string othTop = "";
             string othBot;
-            foreach (PUnit mob in ObjectManager.GetUnits)
+            foreach (PUnit mob in ObjectManager<T>.GetUnits)
             {
-                if (mob.GUID.Equals(ObjectManager.MyPlayer.GUID))
+                if (mob.GUID.Equals(ObjectManager<T>.MyPlayer.GUID))
                     continue;
 
                 if (mob.IsPlayer)
@@ -45,8 +45,8 @@ namespace LazyLib.LazyRadar.Drawer
                 othBot = othBot.TrimEnd();
 
                 form.PrintArrow(_colorUnits,
-                                form.OffsetY(mob.Location.Y, ObjectManager.MyPlayer.Location.Y),
-                                form.OffsetX(mob.Location.X, ObjectManager.MyPlayer.Location.X),
+                                form.OffsetY(mob.Location.Y, ObjectManager<T>.MyPlayer.Location.Y),
+                                form.OffsetX(mob.Location.X, ObjectManager<T>.MyPlayer.Location.X),
                                 mob.Facing, othTop, othBot);
             }
         }

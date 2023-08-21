@@ -57,30 +57,30 @@ namespace LazyLib.Helpers
 
         public static Double Distance3D(float x, float y, float z)
         {
-            float dx = x - ObjectManager.MyPlayer.X;
-            float dy = y - ObjectManager.MyPlayer.Y;
-            float dz = z - ObjectManager.MyPlayer.Z;
+            float dx = x - ObjectManager<T>.MyPlayer.X;
+            float dy = y - ObjectManager<T>.MyPlayer.Y;
+            float dz = z - ObjectManager<T>.MyPlayer.Z;
 
             return Math.Sqrt(((dx*dx) + (dy*dy) + (dz*dz)));
         }
 
         public static Double Distance2D(float x, float y)
         {
-            float dx = x - ObjectManager.MyPlayer.X;
-            float dy = y - ObjectManager.MyPlayer.Y;
+            float dx = x - ObjectManager<T>.MyPlayer.X;
+            float dy = y - ObjectManager<T>.MyPlayer.Y;
 
             return Math.Sqrt(((dx*dx) + (dy*dy)));
         }
 
         public static Double Distance2D(Location pos)
         {
-            return Distance2D(pos.X, pos.Y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
+            return Distance2D(pos.X, pos.Y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
         }
 
         public static Double Distance3D(Location pos)
         {
-            return Distance3D(pos.X, pos.Y, pos.Z, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y,
-                              ObjectManager.MyPlayer.Z);
+            return Distance3D(pos.X, pos.Y, pos.Z, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y,
+                              ObjectManager<T>.MyPlayer.Z);
         }
 
         public static Double Distance2D(Location from, Location to)
@@ -109,28 +109,28 @@ namespace LazyLib.Helpers
 
         public static Single CalculateFace(Single x, Single y)
         {
-            return CalculateFace(x, y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
+            return CalculateFace(x, y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
         }
 
         public static float CalculateFace(Location to)
         {
-            return CalculateFace(to.X, to.Y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
+            return CalculateFace(to.X, to.Y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
         }
 
         public static bool IsFacingH(float angle, float errorMarge)
         {
             float face;
 
-            if (NegativeAngle(angle - ObjectManager.MyPlayer.Facing) < Math.PI)
+            if (NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing) < Math.PI)
             {
-                face = NegativeAngle(angle - ObjectManager.MyPlayer.Facing);
+                face = NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing);
 
                 if (face < errorMarge)
                     return true;
             }
             else
             {
-                face = NegativeAngle(ObjectManager.MyPlayer.Facing - angle);
+                face = NegativeAngle(ObjectManager<T>.MyPlayer.Facing - angle);
 
                 if (face < errorMarge)
                     return true;

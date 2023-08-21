@@ -11,7 +11,7 @@ using System.Reflection;
 namespace LazyLib.Wow
 {
     [Obfuscation(ApplyToMembers = true, Feature = "renaming")]
-    public class PContainer<T> : PObject<T>
+    public class PContainer<T> : PObject<T> where T : struct, IEquatable<T>
     {
         public int Slots
         {

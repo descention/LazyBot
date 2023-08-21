@@ -63,12 +63,12 @@ namespace LazyLib.Combat
         ///   Gets a value indicating whether this instance is ready.
         /// </summary>
         /// <remarks>
-        ///   Base class autochecks IsSpellReadyByName(SpellName) and !ObjectManager.MyPlayer.IsCasting
+        ///   Base class autochecks IsSpellReadyByName(SpellName) and !ObjectManager<T>.MyPlayer.IsCasting
         /// </remarks>
         /// <value><c>true</c> if this instance is ready; otherwise, <c>false</c>.</value>
         public virtual bool IsReady
         {
-            get { return BarMapper.IsSpellReadyByName(SpellName) && !ObjectManager.MyPlayer.IsCasting; }
+            get { return BarMapper.IsSpellReadyByName(SpellName) && !ObjectManager<T>.MyPlayer.IsCasting; }
         }
 
         public virtual bool WaitUntilReady

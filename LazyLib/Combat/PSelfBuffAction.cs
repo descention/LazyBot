@@ -46,7 +46,7 @@ namespace LazyLib.Combat
         {
             get
             {
-                if (base.IsWanted && !ObjectManager.MyPlayer.HasWellKnownBuff(SpellName))
+                if (base.IsWanted && !ObjectManager<T>.MyPlayer.HasWellKnownBuff(SpellName))
                     return true;
                 return false;
             }

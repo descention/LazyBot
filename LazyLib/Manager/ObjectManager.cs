@@ -32,7 +32,7 @@ using LazyLib.Manager;
 namespace LazyLib.Wow
 {
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public static class ObjectManager<T>
+    public static class ObjectManager<T> where T : struct, IEquatable<T>
     {
         private static Process[] _wowProc = Process.GetProcessesByName("Wow");
         private static int _processPid;
@@ -43,7 +43,7 @@ namespace LazyLib.Wow
         private static List<PObject<T>> ObjectList { get; set; }
         private static Dictionary<T, PObject<T>> ObjectDictionary { get; set; }
         public static IntPtr WowHandle { get; set; }
-        public static PPlayerSelf MyPlayer { get; private set; }
+        public static PPlayerSelf<T> MyPlayer { get; private set; }
         public static bool Initialized { get; private set; }
         public static bool Closing { get; set; }
         public static bool ForceIngame { get; set; }
@@ -302,7 +302,7 @@ namespace LazyLib.Wow
                    currentObject.BaseAddress % 2 == UInt32.MinValue)
             {
                 // Keep the static reference to the local player updated... at all times.
-                if (currentObject.GUID == LocalGUID)
+                if (currentObject.GUID.Equals(LocalGUID))
                 {
                     //MessageBox.Show("Found localplayer! 0x" + currentObject.ToString("X8"));
                     MyPlayer.UpdateBaseAddress(currentObject.BaseAddress);
@@ -602,7 +602,7 @@ namespace LazyLib.Wow
             {
                 return false;
             }
-            if (u.TargetGUID == MyPlayer.GUID)
+            if (u.TargetGUID.Equals(MyPlayer.GUID))
             {
                 return true;
             }
@@ -610,7 +610,7 @@ namespace LazyLib.Wow
             {
                 return false;
             }
-            if (u.TargetGUID == MyPlayer.PetGUID)
+            if (u.TargetGUID.Equals(MyPlayer.PetGUID))
             {
                 return true;
             }
@@ -641,7 +641,7 @@ namespace LazyLib.Wow
                 List<PUnit<T>> units = GetAttackers;
                 foreach (PUnit<T> u in units)
                 {
-                    if (u.GUID != exclude.GUID)
+                    if (!u.GUID.Equals(exclude.GUID))
                     {
                         if (closestAttacker == null) closestAttacker = u;
                         else if (u.DistanceToSelf < closestAttacker.DistanceToSelf) closestAttacker = u;
@@ -678,7 +678,7 @@ namespace LazyLib.Wow
         public static bool IsItSafeAt(ulong ignore, Location l)
         {
             List<PUnit<T>> mobs = CheckForMobsAtLoc(l, 15.0f, false); // Setting for radius?
-            return mobs.Where(mob => !mob.GUID.Equals(ignore)).All(mob => mob.IsDead || mob.TargetGUID == 0);
+            return mobs.Where(mob => !mob.GUID.Equals(ignore)).All(mob => mob.IsDead || mob.TargetGUID.Equals(0));
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace LazyLib.Wow
 
         #region <Properties>
 
-        public static UInt128 LocalGUID { get; set; }
+        public static T LocalGUID { get; set; }
 
         #endregion
 
@@ -739,10 +739,10 @@ namespace LazyLib.Wow
             ReadObjectList();
 
             // Clear out old references.
-            List<UInt128> toRemove = (from o in ObjectDictionary
+            List<T> toRemove = (from o in ObjectDictionary
                                       where !o.Value.IsValid
                                       select o.Key).ToList();
-            foreach (ulong guid in toRemove)
+            foreach (T guid in toRemove)
             {
                 ObjectDictionary.Remove(guid);
             }

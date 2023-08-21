@@ -28,15 +28,15 @@ namespace LazyLib.LazyRadar.Drawer
 
         public void Draw(RadarForm form)
         {
-            foreach (PGameObject selectNode in ObjectManager.GetGameObject)
+            foreach (PGameObject<T> selectNode in ObjectManager<T>.GetGameObject)
             {
                 if (selectNode.Name.Contains("Survey"))
                 {
                     try
                     {
                         form.PrintArrow(_colorObjects,
-                                        form.OffsetY(selectNode.Location.Y, ObjectManager.MyPlayer.Location.Y),
-                                        form.OffsetX(selectNode.Location.X, ObjectManager.MyPlayer.Location.X),
+                                        form.OffsetY(selectNode.Location.Y, ObjectManager<T>.MyPlayer.Location.Y),
+                                        form.OffsetX(selectNode.Location.X, ObjectManager<T>.MyPlayer.Location.X),
                                         selectNode.Facing, selectNode.Name, "");
                         Logging.Write("" + selectNode.Facing);
                     } catch {}
@@ -44,8 +44,8 @@ namespace LazyLib.LazyRadar.Drawer
                 else
                 {
                     form.PrintCircle(_colorObjects,
-                                     form.OffsetY(selectNode.Location.Y, ObjectManager.MyPlayer.Location.Y),
-                                     form.OffsetX(selectNode.Location.X, ObjectManager.MyPlayer.Location.X),
+                                     form.OffsetY(selectNode.Location.Y, ObjectManager<T>.MyPlayer.Location.Y),
+                                     form.OffsetX(selectNode.Location.X, ObjectManager<T>.MyPlayer.Location.X),
                                      selectNode.Name);
                 }
             }

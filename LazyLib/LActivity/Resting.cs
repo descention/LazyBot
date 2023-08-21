@@ -40,16 +40,16 @@ namespace LazyLib.LActivity
                 bool need = false;
                 _regenMana = false;
                 _regenHealth = false;
-                if (!ObjectManager.MyPlayer.IsAlive)
+                if (!ObjectManager<T>.MyPlayer.IsAlive)
                     return false;
-                if (LazySettings.CombatBoolDrink && ObjectManager.MyPlayer.PowerType.Equals("Mana") &&
-                    ObjectManager.MyPlayer.Mana < Convert.ToInt32(LazySettings.CombatDrinkAt))
+                if (LazySettings.CombatBoolDrink && ObjectManager<T>.MyPlayer.PowerType.Equals("Mana") &&
+                    ObjectManager<T>.MyPlayer.Mana < Convert.ToInt32(LazySettings.CombatDrinkAt))
                 {
                     _regenMana = true;
                     need = true;
                 }
                 if (LazySettings.CombatBoolEat &&
-                    ObjectManager.MyPlayer.Health < Convert.ToInt32(LazySettings.CombatEatAt))
+                    ObjectManager<T>.MyPlayer.Health < Convert.ToInt32(LazySettings.CombatEatAt))
                 {
                     _regenHealth = true;
                     need = true;
@@ -60,9 +60,9 @@ namespace LazyLib.LActivity
 
         public static void Rest()
         {
-            while (ObjectManager.MyPlayer.InCombat && !ObjectManager.ShouldDefend)
+            while (ObjectManager<T>.MyPlayer.InCombat && !ObjectManager<T>.ShouldDefend)
                 Thread.Sleep(1000);
-            if (ObjectManager.ShouldDefend)
+            if (ObjectManager<T>.ShouldDefend)
                 return;
             if (_regenHealth)
                 EatSomething();
@@ -73,23 +73,23 @@ namespace LazyLib.LActivity
                 while (true)
                 {
                     Thread.Sleep(101);
-                    if (ObjectManager.MyPlayer.IsDead || ObjectManager.MyPlayer.IsGhost)
+                    if (ObjectManager<T>.MyPlayer.IsDead || ObjectManager<T>.MyPlayer.IsGhost)
                         break;
-                    if (ObjectManager.GetAttackers.Count != 0)
+                    if (ObjectManager<T>.GetAttackers.Count != 0)
                         break;
                     if (_bIsEating && !_bIsDrinking)
-                        if (ObjectManager.MyPlayer.Health == 100) break;
+                        if (ObjectManager<T>.MyPlayer.Health == 100) break;
                     if (!_bIsEating && _bIsDrinking)
-                        if (ObjectManager.MyPlayer.Mana == 100) break;
+                        if (ObjectManager<T>.MyPlayer.Mana == 100) break;
                     if (EatTimer.IsReady && _bIsEating)
                         break;
                     if (DrinkTimer.IsReady && _bIsDrinking)
                     {
                         break;
                     }
-                    if (ObjectManager.MyPlayer.IsDead)
+                    if (ObjectManager<T>.MyPlayer.IsDead)
                         break;
-                    if (ObjectManager.MyPlayer.Health == 100 && ObjectManager.MyPlayer.Mana == 100) break;
+                    if (ObjectManager<T>.MyPlayer.Health == 100 && ObjectManager<T>.MyPlayer.Mana == 100) break;
                 }
             }
             Logging.Write("[Rest]We are not eating or drinking lets continue");
@@ -99,8 +99,8 @@ namespace LazyLib.LActivity
 
         private static void EatSomething()
         {
-            if (ObjectManager.MyPlayer.IsDead) return;
-            if (ObjectManager.GetAttackers.Count == 0)
+            if (ObjectManager<T>.MyPlayer.IsDead) return;
+            if (ObjectManager<T>.GetAttackers.Count == 0)
             {
                 EatTimer.Reset();
                 Logging.Write("[Rest]Eating");
@@ -112,8 +112,8 @@ namespace LazyLib.LActivity
 
         private static void DrinkSomething()
         {
-            if (ObjectManager.MyPlayer.IsDead) return;
-            if (ObjectManager.GetAttackers.Count == 0)
+            if (ObjectManager<T>.MyPlayer.IsDead) return;
+            if (ObjectManager<T>.GetAttackers.Count == 0)
             {
                 DrinkTimer.Reset();
                 Logging.Write("[Rest]Drinking");
