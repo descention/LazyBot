@@ -1,19 +1,19 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
@@ -65,9 +65,9 @@ namespace LazyLib.Helpers
             {
                 string parameters = "?spell=" + id + "&xml";
                 var uri = new Uri("http://www.wowhead.com/" + parameters);
-                var request = (HttpWebRequest) WebRequest.Create(uri);
+                var request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = WebRequestMethods.Http.Get;
-                var response = (HttpWebResponse) request.GetResponse();
+                var response = (HttpWebResponse)request.GetResponse();
                 var reader = new StreamReader(response.GetResponseStream());
                 string output = reader.ReadToEnd();
                 response.Close();
@@ -134,9 +134,9 @@ namespace LazyLib.Helpers
                         uri = new Uri("http://www.wowhead.com/" + parameters);
                         break;
                 }
-                var request = (HttpWebRequest) WebRequest.Create(uri);
+                var request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = WebRequestMethods.Http.Get;
-                var response = (HttpWebResponse) request.GetResponse();
+                var response = (HttpWebResponse)request.GetResponse();
                 var reader = new StreamReader(response.GetResponseStream());
                 string output = reader.ReadToEnd();
                 response.Close();
@@ -150,7 +150,7 @@ namespace LazyLib.Helpers
 
         private static Dictionary<string, string> ProcessWhData(string data)
         {
-            var rd = new Dictionary<string, string>();           
+            var rd = new Dictionary<string, string>();
             string name = string.Empty;
             string quality = string.Empty;
 

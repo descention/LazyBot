@@ -1,11 +1,10 @@
 ﻿using LazyLib.Helpers;
 using System;
-using LazyLib;
 
 
 namespace LazyLib.Wow
 {
-    internal class Faction<T>
+    internal class Faction
     {
         private static Reaction CompareFactionHash(uint localBitHash, uint mobBitHash)
         {
@@ -29,7 +28,7 @@ namespace LazyLib.Wow
             return Reaction.Neutral;
         }
 
-        public Reaction GetReaction<T>(PUnit<T> localObj, PUnit<T> mobObj) where T: struct, IEquatable<T>
+        public Reaction GetReaction(PUnit localObj, PUnit mobObj) 
         {
             DBC<IntPtr> dbc = new DBC<IntPtr>((IntPtr)(uint)Pointers.Reaction.DBCPtrFactionTemplate);
             try

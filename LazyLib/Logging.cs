@@ -1,26 +1,26 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Helpers;
 
 namespace LazyLib
 {
@@ -102,7 +102,7 @@ namespace LazyLib
         static Logging()
         {
             LogOnWrite = true;
-            QueueThread = new Thread(WriteQueue) {IsBackground = true};
+            QueueThread = new Thread(WriteQueue) { IsBackground = true };
             QueueThread.Name = "Logging";
             QueueThread.Start(true);
         }
@@ -155,7 +155,7 @@ namespace LazyLib
                         {
                             tw.WriteLine(LogQueue.Dequeue());
                         }
-                        if (!((bool) blocking))
+                        if (!((bool)blocking))
                         {
                             break;
                         }
@@ -197,7 +197,7 @@ namespace LazyLib
 
         public static void ExtendedDebug(string format, params object[] args)
         {
-            if(LazySettings.DebugMode)
+            if (LazySettings.DebugMode)
             {
                 Debug(format, args);
             }

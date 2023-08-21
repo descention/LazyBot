@@ -1,25 +1,25 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.PInvoke;
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 #endregion
@@ -61,7 +61,7 @@ namespace LazyLib.Helpers
         /// <param name = "countDowntime">The count downtime.</param>
         public Ticker(double countDowntime)
         {
-            _countDowntime = countDowntime*10;
+            _countDowntime = countDowntime * 10;
             _varforceReady = false;
             Frequency = GetFrequency();
             Reset();
@@ -174,7 +174,7 @@ namespace LazyLib.Helpers
         /// </exception>
         public long Peek()
         {
-            return (long) (((GetValue() - StartTime)/(double) Frequency)*10000);
+            return (long)(((GetValue() - StartTime) / (double)Frequency) * 10000);
         }
 
         /// <summary>
@@ -191,8 +191,7 @@ namespace LazyLib.Helpers
         /// </returns>
         public static long GetValue()
         {
-            long ret = 0;
-            if (Kernel32.QueryPerformanceCounter(ref ret) == 0)
+            if (!Kernel32.QueryPerformanceCounter(out long ret))
                 throw new NotSupportedException("Error while querying " + "the high-resolution performance counter.");
             return ret;
         }
@@ -212,8 +211,7 @@ namespace LazyLib.Helpers
         /// </returns>
         public static long GetFrequency()
         {
-            long ret = 0;
-            if (Kernel32.QueryPerformanceFrequency(ref ret) == 0)
+            if (!Kernel32.QueryPerformanceFrequency(out long ret))
                 throw new NotSupportedException(
                     "Error while querying "
                     + "the performance counter frequency.");

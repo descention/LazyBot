@@ -16,6 +16,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 */
 #region
 
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Xml;
-using LazyLib.Wow;
 
 #endregion
 

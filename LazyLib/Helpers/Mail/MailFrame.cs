@@ -1,7 +1,6 @@
 ﻿namespace LazyLib.Helpers.Mail
 {
     using LazyLib.Helpers;
-    using System;
     using System.Threading;
 
     internal class MailFrame

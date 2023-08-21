@@ -3,14 +3,13 @@
 // MVID: A92FE1A9-C28E-4E6F-9BAC-5C48387A25CC
 // Assembly location: E:\VeryOldLazyBots\Lazy Evolution\LazyLib.dll
 
-using LazyLib.Helpers;
 using System;
 using System.Reflection;
 
 namespace LazyLib.Wow
 {
     [Obfuscation(ApplyToMembers = true, Feature = "renaming")]
-    public class PContainer<T> : PObject<T> where T : struct, IEquatable<T>
+    public class PContainer : PObject 
     {
         public int Slots
         {

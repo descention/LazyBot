@@ -1,32 +1,33 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using DevComponents.DotNetBar;
+using LazyLib.Helpers;
+using LazyLib.LazyRadar.Drawer;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
-using DevComponents.DotNetBar;
-using LazyLib.Helpers;
-using LazyLib.LazyRadar.Drawer;
-using LazyLib.Wow;
+using Unity;
 
 #endregion
 
@@ -49,6 +50,7 @@ namespace LazyLib.LazyRadar
         private Bitmap _offScreenBmp;
         private double _scale = 1;
         private bool _updateFormSize = true;
+        private readonly IObjectManager _objectManager;
 
         #endregion
 
@@ -61,6 +63,7 @@ namespace LazyLib.LazyRadar
             string executableDirectoryName = executableFileInfo.DirectoryName;
             OurDirectory = executableDirectoryName;
             pIniManager = new IniManager(OurDirectory + SettingsName);
+            _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
         }
 
         public void Start()
@@ -70,7 +73,7 @@ namespace LazyLib.LazyRadar
 
         private void MapControlLoad(object sender, EventArgs e)
         {
-            _fontText = new Font("Verdana", (float) 6.5);
+            _fontText = new Font("Verdana", (float)6.5);
             Log("Radar starting");
             AddDrawItem(new DrawEnemies());
             AddDrawItem(new DrawFriends());
@@ -101,11 +104,11 @@ namespace LazyLib.LazyRadar
 
         private void DrawItemClick(object sender, EventArgs e)
         {
-            var cb = (CheckBoxItem) sender;
+            var cb = (CheckBoxItem)sender;
             lock (_locker)
             {
-                _itemsShouldDraw[(string) cb.Tag] = cb.Checked;
-                pIniManager.IniWriteValue("Radar", (string) cb.Tag, cb.Checked.ToString());
+                _itemsShouldDraw[(string)cb.Tag] = cb.Checked;
+                pIniManager.IniWriteValue("Radar", (string)cb.Tag, cb.Checked.ToString());
             }
         }
 
@@ -117,28 +120,28 @@ namespace LazyLib.LazyRadar
 
         public int OffsetY(float obj, float me)
         {
-            return Width/2 - Convert.ToInt32((obj - me)*(float) _scale);
+            return Width / 2 - Convert.ToInt32((obj - me) * (float)_scale);
         }
 
         public int OffsetX(float obj, float me)
         {
-            return Height/2 - Convert.ToInt32((obj - me)*(float) _scale);
+            return Height / 2 - Convert.ToInt32((obj - me) * (float)_scale);
         }
 
         private static double ConvertHeading(double heading)
         {
-            return heading*-1 - Math.PI/2;
+            return heading * -1 - Math.PI / 2;
         }
 
         private void PrintPlayer()
         {
-            PrintArrow(_colorMe, Width/2, Height/2, ObjectManager<T>.MyPlayer.Facing, "", "");
-           // Logging.Write("PL: " + ObjectManager<T>.MyPlayer.Facing);
+            PrintArrow(_colorMe, Width / 2, Height / 2, _objectManager.MyPlayer.Facing, "", "");
+            // Logging.Write("PL: " + ObjectManager.MyPlayer.Facing);
         }
 
         private void MapTimerTick(object sender, EventArgs eventArgs)
         {
-            if (ObjectManager<T>.Initialized)
+            if (ObjectManager.Initialized)
             {
                 try
                 {
@@ -176,16 +179,16 @@ namespace LazyLib.LazyRadar
             heading = ConvertHeading(heading);
             //Define arrow/rotation
             var arrow = new Point[5];
-            arrow[0] = new Point(Convert.ToInt32(x + Math.Cos(heading)*10),
-                                 Convert.ToInt32(y + Math.Sin(heading)*10));
+            arrow[0] = new Point(Convert.ToInt32(x + Math.Cos(heading) * 10),
+                                 Convert.ToInt32(y + Math.Sin(heading) * 10));
 
-            arrow[1] = new Point(Convert.ToInt32(x + Math.Cos(heading + Math.PI*2/3)*2),
-                                 Convert.ToInt32(y + Math.Sin(heading + Math.PI*2/3)*2));
+            arrow[1] = new Point(Convert.ToInt32(x + Math.Cos(heading + Math.PI * 2 / 3) * 2),
+                                 Convert.ToInt32(y + Math.Sin(heading + Math.PI * 2 / 3) * 2));
             arrow[2] = new Point(x, y);
-            arrow[3] = new Point(Convert.ToInt32(x + Math.Cos(heading + Math.PI*2/-3)*2),
-                                 Convert.ToInt32(y + Math.Sin(heading + Math.PI*2/-3)*2));
-            arrow[4] = new Point(Convert.ToInt32(x + Math.Cos(heading)*10),
-                                 Convert.ToInt32(y + Math.Sin(heading)*10));
+            arrow[3] = new Point(Convert.ToInt32(x + Math.Cos(heading + Math.PI * 2 / -3) * 2),
+                                 Convert.ToInt32(y + Math.Sin(heading + Math.PI * 2 / -3) * 2));
+            arrow[4] = new Point(Convert.ToInt32(x + Math.Cos(heading) * 10),
+                                 Convert.ToInt32(y + Math.Sin(heading) * 10));
             //Do whatever should be printed
             //Print arrow
             ScreenDc.DrawLines(new Pen(color), arrow);
@@ -193,19 +196,19 @@ namespace LazyLib.LazyRadar
             if (topString.Length > 0)
             {
                 ScreenDc.DrawString(topString, _fontText, new SolidBrush(color),
-                                    new PointF(x - topString.Length*(float) 2.2, y - 15));
+                                    new PointF(x - topString.Length * (float)2.2, y - 15));
             }
             //Print Bottom String
             if (botString.Length > 0)
             {
                 ScreenDc.DrawString(botString, _fontText, new SolidBrush(color),
-                                    new PointF(x - botString.Length*2, y + 6));
+                                    new PointF(x - botString.Length * 2, y + 6));
             }
             const int radius = 3;
             var redBrush = new SolidBrush(color);
             //Do whatever should be printed
-            ScreenDc.DrawEllipse(new Pen(color), x - radius, y - radius, 2*radius, 2*radius);
-            ScreenDc.FillEllipse(redBrush, x - radius, y - radius, 2*radius, 2*radius);
+            ScreenDc.DrawEllipse(new Pen(color), x - radius, y - radius, 2 * radius, 2 * radius);
+            ScreenDc.FillEllipse(redBrush, x - radius, y - radius, 2 * radius, 2 * radius);
             redBrush.Dispose();
         }
 
@@ -214,11 +217,11 @@ namespace LazyLib.LazyRadar
             const int radius = 3;
             var redBrush = new SolidBrush(color);
             //Do whatever should be printed
-            ScreenDc.DrawEllipse(new Pen(color), x - radius, y - radius, 2*radius, 2*radius);
-            ScreenDc.FillEllipse(redBrush, x - radius, y - radius, 2*radius, 2*radius);
+            ScreenDc.DrawEllipse(new Pen(color), x - radius, y - radius, 2 * radius, 2 * radius);
+            ScreenDc.FillEllipse(redBrush, x - radius, y - radius, 2 * radius, 2 * radius);
 
             ScreenDc.DrawString(name, _fontText, new SolidBrush(color),
-                                new PointF(x - name.Length*2, y - 15));
+                                new PointF(x - name.Length * 2, y - 15));
             redBrush.Dispose();
         }
 

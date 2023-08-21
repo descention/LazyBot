@@ -1,19 +1,19 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using LazyLib.Wow;
 
@@ -25,15 +25,15 @@ namespace LazyLib.Helpers
         {
             KeyBindings.LoadBindings();
             bool result = true;
-            if(!KeyBindings.CheckBind("ACTIONPAGE1", "SHIFT-1")) 
+            if (!KeyBindings.CheckBind("ACTIONPAGE1", "SHIFT-1"))
                 result = false;
-            if(!KeyBindings.CheckBind("ACTIONPAGE2", "SHIFT-2")) 
+            if (!KeyBindings.CheckBind("ACTIONPAGE2", "SHIFT-2"))
                 result = false;
-            if(!KeyBindings.CheckBind("ACTIONPAGE3", "SHIFT-3")) 
+            if (!KeyBindings.CheckBind("ACTIONPAGE3", "SHIFT-3"))
                 result = false;
-            if(!KeyBindings.CheckBind("ACTIONPAGE4", "SHIFT-4")) 
+            if (!KeyBindings.CheckBind("ACTIONPAGE4", "SHIFT-4"))
                 result = false;
-            if(!KeyBindings.CheckBind("ACTIONPAGE5", "SHIFT-5")) 
+            if (!KeyBindings.CheckBind("ACTIONPAGE5", "SHIFT-5"))
                 result = false;
             if (!KeyBindings.CheckBind("ACTIONPAGE6", "SHIFT-6"))
                 result = false;
@@ -106,6 +106,6 @@ namespace LazyLib.Helpers
                         (uint)Pointers.ClickToMove.Offset) == 1;
 
             }
-        } 
+        }
     }
 }

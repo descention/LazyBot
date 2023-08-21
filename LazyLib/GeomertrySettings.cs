@@ -1,23 +1,23 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Helpers;
 using System.IO;
 using System.Windows.Forms;
-using LazyLib.Helpers;
 
 namespace LazyLib
 {
@@ -50,14 +50,14 @@ namespace LazyLib
 
         public static void Save()
         {
-             var pIniManager = new IniManager(OurDirectory + SettingsName);
-             pIniManager.IniWriteValue("Geometry", "MainGeometry", MainGeometry);
-             pIniManager.IniWriteValue("Geometry", "RotatorStatus", RotatorStatus);
-             pIniManager.IniWriteValue("Geometry", "RotationForm", RotationForm);
-             pIniManager.IniWriteValue("Geometry", "ProcessSelector", ProcessSelector);
-             pIniManager.IniWriteValue("Geometry", "RotatorForm", RotatorForm);
-             pIniManager.IniWriteValue("Geometry", "RuleEditor", RuleEditor);
-             pIniManager.IniWriteValue("Geometry", "ScriptEditor", ScriptEditor);
+            var pIniManager = new IniManager(OurDirectory + SettingsName);
+            pIniManager.IniWriteValue("Geometry", "MainGeometry", MainGeometry);
+            pIniManager.IniWriteValue("Geometry", "RotatorStatus", RotatorStatus);
+            pIniManager.IniWriteValue("Geometry", "RotationForm", RotationForm);
+            pIniManager.IniWriteValue("Geometry", "ProcessSelector", ProcessSelector);
+            pIniManager.IniWriteValue("Geometry", "RotatorForm", RotatorForm);
+            pIniManager.IniWriteValue("Geometry", "RuleEditor", RuleEditor);
+            pIniManager.IniWriteValue("Geometry", "ScriptEditor", ScriptEditor);
         }
     }
 }

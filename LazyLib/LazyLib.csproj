@@ -60,30 +60,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevComponents.DotNetBar2, Version=11.3.0.0, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+    <Reference Include="DevComponents.DotNetBar2, Version=9.0.0.4, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lazy Evolution\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.Instrumentation, Version=11.3.0.0, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lazy Evolution\DevComponents.Instrumentation.dll</HintPath>
-    </Reference>
-    <Reference Include="ReadOnlyCollectionsExtensions">
-      <HintPath>..\packages\ReadOnlyCollectionExtensions.1.3.0\lib\NET40-client\ReadOnlyCollectionsExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="ReadOnlyCollectionsInterfaces">
-      <HintPath>..\packages\ReadOnlyCollectionInterfaces.1.0.0\lib\NET40-client\ReadOnlyCollectionsInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Numerics"/>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -91,10 +77,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionBar\KeyType.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="*.cs" />
+    <Compile Include="ActionBar\*.cs" />
     <Compile Include="Attributes\*.cs" />
+    <Compile Include="Combat\*.cs" />
+    <Compile Include="FSM\*.cs" />
+    <Compile Include="Helpers\*.cs" />
+    <Compile Include="IEngine\*.cs" />
+    <Compile Include="Interfaces\*.cs" />
+    <Compile Include="IPlugin\*.cs" />
+    <Compile Include="Manager\*.cs" />
+    <Compile Include="Manager\*\*.cs" />
+    <Compile Include="PInvoke\*.cs" />
     <Compile Include="GeomertrySettings.cs" />
     <Compile Include="Helpers\Mail\MailFrame.cs" />
     <Compile Include="Helpers\Mail\MailList.cs" />
@@ -104,12 +98,7 @@
     <Compile Include="Helpers\Vendor\ProtectedList.cs" />
     <Compile Include="Helpers\Vendor\VendorManager.cs" />
     <Compile Include="Helpers\Wowhead.cs" />
-    <Compile Include="Interfaces\*.cs" />
     <Compile Include="LActivity\Resting.cs" />
-    <Compile Include="Combat\*.cs" />
-    <Compile Include="IEngine\*.cs" />
-    <Compile Include="FSM\*.cs" />
-    <Compile Include="IPlugin\*.cs" />
     <Compile Include="LazyRadar\Drawer\DrawEnemies.cs" />
     <Compile Include="LazyRadar\Drawer\DrawFriends.cs" />
     <Compile Include="LazyRadar\Drawer\DrawObjects.cs" />
@@ -124,11 +113,6 @@
     </Compile>
     <Compile Include="Logging.cs" />
     <Compile Include="LogType.cs" />
-    <Compile Include="Helpers\*.cs" />
-    <Compile Include="Manager\*\*.cs" />
-    <Compile Include="Manager\**.cs" />
-    <Compile Include="ActionBar\*.cs" />
-    <Compile Include="PInvoke\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LazySettings.cs" />
     <Compile Include="Resource.Designer.cs">
@@ -160,10 +144,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ReadOnlyCollectionExtensions" Version="1.3.0" />
+    <PackageReference Include="ReadOnlyCollectionInterfaces" Version="1.0.0" />
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.118</Version>
+    </PackageReference>
+    <PackageReference Include="Unity.Container" Version="5.11.*" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\Spells.txt" />
   </ItemGroup>
   <ItemGroup>

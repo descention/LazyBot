@@ -1,7 +1,5 @@
 ﻿namespace LazyLib.Wow
 {
-    using System;
-
     public enum Reaction
     {
         Friendly = 4,

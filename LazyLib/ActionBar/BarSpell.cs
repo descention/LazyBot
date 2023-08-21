@@ -61,7 +61,7 @@ namespace LazyLib.ActionBar
         {
             KeyHelper.SendKey(this.Name);
             this._globalCooldown.Reset();
-            while (ObjectManager<T>.MyPlayer.IsCasting || !this._globalCooldown.IsReady)
+            while (ObjectManager.MyPlayer.IsCasting || !this._globalCooldown.IsReady)
                 Thread.Sleep(10);
         }
     }

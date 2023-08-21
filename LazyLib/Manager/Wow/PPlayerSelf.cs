@@ -1,28 +1,28 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Helpers;
 
 #endregion
 
@@ -32,9 +32,9 @@ namespace LazyLib.Wow
     ///   Representing us ingame
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayerSelf<T> : PPlayer<T> where T : struct, IEquatable<T>
+    public class PPlayerSelf : PPlayer
     {
-        private readonly uint[] _healthStone = new uint[] {  0x901c, 0x901e, 0x901d, 0x9019, 0x901b, 0x901a, 0x5659, 0x5657, 0x5658, 0x24cd, 0x4a45, 0x4a44, 0x4a43, 0x4a42, 0x1586, 0x1585, 0x1587, 0x1588, 0x4a3d, 0x4a3c, 0x4a41, 0x4a40, 0x4a3f};
+        private readonly uint[] _healthStone = new uint[] { 0x901c, 0x901e, 0x901d, 0x9019, 0x901b, 0x901a, 0x5659, 0x5657, 0x5658, 0x24cd, 0x4a45, 0x4a44, 0x4a43, 0x4a42, 0x1586, 0x1585, 0x1587, 0x1588, 0x4a3d, 0x4a3c, 0x4a41, 0x4a40, 0x4a3f };
 
         private readonly uint[] _mageFood = new uint[] { 0xffdb, 0xaa03, 0xa9fe, 0xffed, 0xffec, 0xffeb, 0xffdc };
 
@@ -63,7 +63,7 @@ namespace LazyLib.Wow
 
         public bool HasAttackers
         {
-            get { return ObjectManager<T>.GetAttackers.Count != 0; }
+            get { return ObjectManager.GetAttackers.Count != 0; }
         }
 
         public int CoinAge
@@ -106,14 +106,14 @@ namespace LazyLib.Wow
 
         public bool LootWinOpen
         {
-            get { return Memory.Read<uint>(Memory.BaseAddress + (uint) Pointers.Globals.LootWindow) != 0; }
+            get { return Memory.Read<uint>(Memory.BaseAddress + (uint)Pointers.Globals.LootWindow) != 0; }
         }
 
         public bool MainHandHasTempEnchant
         {
             get
             {
-                PItem<T> item = ObjectManager<T>.MyPlayer.MainHand;
+                PItem item = ObjectManager.MyPlayer.MainHand;
                 if (item == null)
                     return true;
                 return item.TempEnchants.Any(oneEnchant => oneEnchant != 0);
@@ -124,7 +124,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                PItem<T> item = ObjectManager<T>.MyPlayer.OffHand;
+                PItem item = ObjectManager.MyPlayer.OffHand;
                 if (item == null)
                     return true;
                 foreach (uint oneEnchant in item.TempEnchants)
@@ -141,16 +141,16 @@ namespace LazyLib.Wow
             get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BagSlotFlags); }
         }
 
-        internal List<T> GUIDOfItemsInBag
+        internal List GUIDOfItemsInBag
         {
             get
             {
-                var guids = new List<T>();
+                var guids = new List();
                 const int numberOfItems = 16;
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
                 {
-                    guids.Add(GetStorageField<T>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
+                    guids.Add(GetStorageField((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
                     //Logging.Write(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i) + "");
                 }
                 return guids;
@@ -208,11 +208,11 @@ namespace LazyLib.Wow
         ///   Returns a item pointer to the mainhand
         /// </summary>
         /// <value>The main hand.</value>
-        public PItem<T> MainHand
+        public PItem MainHand
         {
             get
             {
-                foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
+                foreach (PItem pItem in ObjectManager.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
@@ -229,11 +229,11 @@ namespace LazyLib.Wow
         ///   Return a item pointer to the offhand
         /// </summary>
         /// <value>The off hand.</value>
-        public PItem<T> OffHand
+        public PItem OffHand
         {
             get
             {
-                foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
+                foreach (PItem pItem in ObjectManager.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
@@ -251,9 +251,9 @@ namespace LazyLib.Wow
         /// Gets the mage refreshment.
         /// </summary>
         /// <value>The mage refreshment.</value>
-        public int MageRefreshment 
+        public int MageRefreshment
         {
-            get { return ObjectManager<T>.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
+            get { return ObjectManager.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace LazyLib.Wow
         /// <value>The health stone count.</value>
         public int HealthStoneCount
         {
-            get { return ObjectManager<T>.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
+            get { return ObjectManager.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace LazyLib.Wow
             get
             {
                 return Memory.ReadUtf8(
-                    Memory.ReadRelative<uint>((uint) Pointers.Zone.ZoneText), 40);
+                    Memory.ReadRelative<uint>((uint)Pointers.Zone.ZoneText), 40);
             }
         }
 
@@ -386,7 +386,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return (100*Experience)/NextLevel;
+                    return (100 * Experience) / NextLevel;
                 }
                 catch
                 {

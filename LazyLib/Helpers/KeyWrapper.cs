@@ -1,19 +1,19 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Reflection;
@@ -123,7 +123,7 @@ namespace LazyLib.Helpers
                     //MessageBox.Show("Unsupported key: " + @char);
                 }
             }
-            if (!Enum.IsDefined(typeof (MicrosoftVirtualKeys), _wParam2))
+            if (!Enum.IsDefined(typeof(MicrosoftVirtualKeys), _wParam2))
             {
                 Logging.Write(LogType.Warning, "[KeyWrapper] Unsupported key: " + _wParam2 + " : " + keyName);
             }
@@ -141,29 +141,29 @@ namespace LazyLib.Helpers
         {
             if (_bar != MicrosoftVirtualKeys.Indifferent)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) MicrosoftVirtualKeys.VK_SHIFT, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _bar, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) MicrosoftVirtualKeys.VK_SHIFT, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _bar, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)MicrosoftVirtualKeys.VK_SHIFT, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_bar, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)MicrosoftVirtualKeys.VK_SHIFT, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_bar, (IntPtr)0);
                 Thread.Sleep(350);
             }
         }
 
         public void SendKey()
         {
-            Logging.Debug("SendKey: " + Name + " Bar: " +  Bar + " Key: " + Key);
+            Logging.Debug("SendKey: " + Name + " Bar: " + Bar + " Key: " + Key);
             ChangeBar();
             if (!_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam2, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
             if (_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam2, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
         }
 
@@ -172,12 +172,12 @@ namespace LazyLib.Helpers
             ChangeBar();
             if (!_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
             if (_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, PressKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
         }
 
@@ -186,12 +186,12 @@ namespace LazyLib.Helpers
             ChangeBar();
             if (!_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
             if (_shift)
             {
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam, (IntPtr)0);
-                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr) _wParam2, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam, (IntPtr)0);
+                KeyLowHelper.PostMessage(Memory.WindowHandle, ReleaseKeyCode, (IntPtr)_wParam2, (IntPtr)0);
             }
         }
     }

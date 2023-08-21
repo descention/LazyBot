@@ -4,13 +4,8 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-    using LazyLib.Wow;
-    using LazyLib;
 
-    public class DBC<T> : IEnumerable<T>, IEnumerable where T: struct
+    public class DBC : IEnumerable, IEnumerable where T : struct
     {
         private readonly WoWClientDB m_dbInfo;
         private readonly DBCFile m_fileHdr;
@@ -21,7 +16,7 @@
         {
             m_dbInfo = Memory.ReadRelative<WoWClientDB>(new uint[] { (uint)dbcBase });
             m_fileHdr = Memory.Read<DBCFile>(m_dbInfo.Data);
-            
+
 
             if (enableCache)
             {
@@ -44,11 +39,11 @@
         {
             if (this.m_dbInfo.RowEntrySize == 2)
             {
-                return Memory.Read<short>(new uint[] { (uint) (((ulong) ((int) arrayPtr)) + (ulong)(2 * index)) });
+                return Memory.Read<short>(new uint[] { (uint)(((ulong)((int)arrayPtr)) + (ulong)(2 * index)) });
             }
-            return Memory.Read<int>(new uint[] { (uint) (((ulong) ((int) arrayPtr)) + (ulong)(4 * index)) });
+            return Memory.Read<int>(new uint[] { (uint)(((ulong)((int)arrayPtr)) + (ulong)(4 * index)) });
         }
-        
+
         public IntPtr GetRowPtr(int index)
         {
 
@@ -58,11 +53,11 @@
             }
             int num = index - this.MinIndex;
 
-            int num2 = Memory.Read<int>(new uint[] { ((uint) this.m_dbInfo.Unk1) + (uint)(4 * ((int) num >> 5)) });
+            int num2 = Memory.Read<int>(new uint[] { ((uint)this.m_dbInfo.Unk1) + (uint)(4 * ((int)num >> 5)) });
 
-            int num3 = num & ((int) 0x1fL);
+            int num3 = num & ((int)0x1fL);
 
-            if (((((int) 1) << num3) & num2) == 0)
+            if (((((int)1) << num3) & num2) == 0)
             {
                 return IntPtr.Zero;
             }
@@ -72,7 +67,7 @@
             {
                 arrayEntryBySizeType = this.GetArrayEntryBySizeType(this.m_dbInfo.Rows, arrayEntryBySizeType);
             }
-            return (IntPtr) (((ulong) ((int) this.m_dbInfo.FirstRow)) + (ulong)(this.m_fileHdr.RecordSize * arrayEntryBySizeType));
+            return (IntPtr)(((ulong)((int)this.m_dbInfo.FirstRow)) + (ulong)(this.m_fileHdr.RecordSize * arrayEntryBySizeType));
         }
 
         public bool HasRow(int index)
@@ -85,7 +80,7 @@
             get
             {
                 IntPtr[] addresses = new IntPtr[] { this.GetRowPtr(index) };
-                return Memory.Read<T>(addresses);
+                return Memory.Read(addresses);
             }
         }
 
@@ -112,7 +107,7 @@
                 return this.m_dbInfo.NumRows;
             }
         }
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
             if (m_cacheEnabled)
             {
@@ -124,7 +119,7 @@
             else
             {
                 for (int i = 0; i < NumRows; ++i)
-                yield return Memory.Read<T>(new IntPtr(m_dbInfo.FirstRow.ToInt64() + (i * m_fileHdr.RecordSize)));
+                    yield return Memory.Read(new IntPtr(m_dbInfo.FirstRow.ToInt64() + (i * m_fileHdr.RecordSize)));
             }
         }
 

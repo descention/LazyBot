@@ -1,31 +1,31 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.Helpers;
+using LazyLib.IEngine;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using LazyLib.Helpers;
-using LazyLib.IEngine;
-using LazyLib.Wow;
 
 #endregion
 
@@ -59,11 +59,11 @@ namespace LazyLib.FSM
             Paused = false;
             Running = true;
             // Leave it as a background thread.
-            _workerThread = new Thread(Run) {IsBackground = true};
+            _workerThread = new Thread(Run) { IsBackground = true };
             _workerThread.Name = "Engine";
             _workerThread.SetApartmentState(ApartmentState.STA);
             _workerThread.Start();
-            Logging.Write("[Engine]Started bot thread");          
+            Logging.Write("[Engine]Started bot thread");
         }
 
         public static void AddState(MainState state)
@@ -103,7 +103,7 @@ namespace LazyLib.FSM
                             KeyHelper.ChatboxSendText(ChatQueu.GetItem);
                             Thread.Sleep(100);
                             _engine.Resume();
-                        }                     
+                        }
                         foreach (MainState state in States.Where(state => state.NeedToRun))
                         {
                             if (LastState != state)
@@ -128,7 +128,7 @@ namespace LazyLib.FSM
                     }
                     catch (Exception e)
                     {
-                        if (ObjectManager<T>.InGame)
+                        if (ObjectManager.InGame)
                         {
                             Logging.Write("[Engine] Exception " + e);
                         }

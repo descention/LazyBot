@@ -1,43 +1,43 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Wow;
 //using LazyLib.Manager.Bored;
 
 namespace LazyLib.Helpers
 {
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class Inventory<T> where T: struct, IEquatable<T>
+    public class Inventory 
     {
-        public static List<T> GUIDOfItemsInBag
+        public static List GUIDOfItemsInBag
         {
-            get { return ObjectManager<T>.MyPlayer.GUIDOfItemsInBag; }
+            get { return ObjectManager.MyPlayer.GUIDOfItemsInBag; }
         }
 
-        private static List<T> GUIDOfBags
+        private static List GUIDOfBags
         {
             get
             {
-                var guids = new List<T>();
+                var guids = new List();
                 try
                 {
                     guids.Add(Bag1GUID);
@@ -76,55 +76,55 @@ namespace LazyLib.Helpers
 
         private static T Bag1GUID
         {
-            get { return Memory.ReadRelative<T>(((uint)Pointers.Container.EquippedBagGUID)); }
+            get { return Memory.ReadRelative(((uint)Pointers.Container.EquippedBagGUID)); }
         }
 
         private static T Bag2GUID
         {
-            get { return Memory.ReadRelative<T>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 1)); }
+            get { return Memory.ReadRelative(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 1)); }
         }
 
         private static T Bag3GUID
         {
-            get { return Memory.ReadRelative<T>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 2)); }
+            get { return Memory.ReadRelative(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 2)); }
         }
 
         private static T Bag4GUID
         {
-            get { return Memory.ReadRelative<T>(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 3)); }
+            get { return Memory.ReadRelative(((uint)Pointers.Container.EquippedBagGUID + 0x8 * 3)); }
         }
 
-        public static PContainer<T> Bag1
+        public static PContainer Bag1
         {
-            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag1GUID == container.GUID); }
+            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag1GUID.Equals(container.GUID)); }
         }
 
-        public static PContainer<T> Bag2
+        public static PContainer Bag2
         {
-            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag2GUID == container.GUID); }
+            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag2GUID.Equals(container.GUID)); }
         }
 
-        public static PContainer<T> Bag3
+        public static PContainer Bag3
         {
-            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag3GUID == container.GUID); }
+            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag3GUID.Equals(container.GUID)); }
         }
 
-        public static PContainer<T> Bag4
+        public static PContainer Bag4
         {
-            get { return ObjectManager<T>.GetContainers.FirstOrDefault(container => Bag4GUID == container.GUID); }
+            get { return ObjectManager.GetContainers.FirstOrDefault(container => Bag4GUID.Equals(container.GUID)); }
         }
 
         /// <summary>
         ///   Gets the get items in bags.
         /// </summary>
         /// <value>The get items in bags.</value>
-        public static List<PItem<T>> GetItemsInBags
+        public static List<PItem> GetItemsInBags
         {
             get
             {
                 try
                 {
-                    List<T> bagGuids = new List<T>();
+                    List bagGuids = new List();
                     try
                     {
                         bagGuids = GUIDOfBags;
@@ -134,8 +134,8 @@ namespace LazyLib.Helpers
 
                     }
                     var items = new List<PItem>();
-                    List<T> guids = GUIDOfItemsInBag;
-                    foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
+                    List guids = GUIDOfItemsInBag;
+                    foreach (PItem pItem in ObjectManager.GetItems)
                     {
                         if (pItem != null)
                         {

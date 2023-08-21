@@ -1,6 +1,5 @@
 ﻿namespace LazyLib.Wow
 {
-    using System;
     using System.Reflection;
 
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]

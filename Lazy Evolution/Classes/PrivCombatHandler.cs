@@ -257,9 +257,8 @@ namespace LazyEvo.Classes
                         defendUnit = un;
                     }
                 }
-                return defendUnit;
             }
-            return null;
+            return defendUnit;
         }
 
         private static void DoCombat()

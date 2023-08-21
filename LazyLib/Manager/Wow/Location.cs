@@ -1,29 +1,29 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyEvo.LGrindEngine;
+using LazyLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using LazyEvo.LGrindEngine;
-using LazyLib.Helpers;
 
 #endregion
 
@@ -41,10 +41,10 @@ namespace LazyLib.Wow
         {
             try
             {
-                string[] split = loc.Split(new[] {' '});
-                X = (float) Convert.ToDouble(split[0]);
-                Y = (float) Convert.ToDouble(split[1]);
-                Z = (float) Convert.ToDouble(split[2]);
+                string[] split = loc.Split(new[] { ' ' });
+                X = (float)Convert.ToDouble(split[0]);
+                Y = (float)Convert.ToDouble(split[1]);
+                Z = (float)Convert.ToDouble(split[2]);
             }
             catch (Exception)
             {
@@ -85,7 +85,7 @@ namespace LazyLib.Wow
         /// <value>The bearing.</value>
         public float Bearing
         {
-            get { return NegativeAngle((float) Math.Atan2((Y - ObjectManager<T>.MyPlayer.Y), (X - ObjectManager<T>.MyPlayer.X))); }
+            get { return NegativeAngle((float)Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X))); }
         }
 
 
@@ -93,8 +93,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (LazyMath.NegativeAngle(Bearing - ObjectManager<T>.MyPlayer.Facing) > 5.5 ||
-                    LazyMath.NegativeAngle(Bearing - ObjectManager<T>.MyPlayer.Facing) < 0.6)
+                if (LazyMath.NegativeAngle(Bearing - ObjectManager.MyPlayer.Facing) > 5.5 ||
+                    LazyMath.NegativeAngle(Bearing - ObjectManager.MyPlayer.Facing) < 0.6)
                     return true;
                 return false;
             }
@@ -128,7 +128,7 @@ namespace LazyLib.Wow
             //if the turning angle is negative
             if (angle < 0)
                 //add the maximum possible angle (PI x 2) to normalize the negative angle
-                angle += (float) (Math.PI*2);
+                angle += (float)(Math.PI * 2);
             return angle;
         }
 
@@ -222,11 +222,11 @@ namespace LazyLib.Wow
         {
             float face;
 
-            if (LazyMath.NegativeAngle(AngleHorizontal - ObjectManager<T>.MyPlayer.Facing) < Math.PI)
+            if (LazyMath.NegativeAngle(AngleHorizontal - ObjectManager.MyPlayer.Facing) < Math.PI)
             {
-                face = LazyMath.NegativeAngle(AngleHorizontal - ObjectManager<T>.MyPlayer.Facing);
+                face = LazyMath.NegativeAngle(AngleHorizontal - ObjectManager.MyPlayer.Facing);
 
-                bool moving = ObjectManager<T>.MyPlayer.IsMoving;
+                bool moving = ObjectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -236,9 +236,9 @@ namespace LazyLib.Wow
             }
             else
             {
-                face = LazyMath.NegativeAngle(ObjectManager<T>.MyPlayer.Facing - AngleHorizontal);
+                face = LazyMath.NegativeAngle(ObjectManager.MyPlayer.Facing - AngleHorizontal);
 
-                bool moving = ObjectManager<T>.MyPlayer.IsMoving;
+                bool moving = ObjectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -251,10 +251,10 @@ namespace LazyLib.Wow
         public static void FaceAngle(float angle)
         {
             float face;
-            if (LazyMath.NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing) < Math.PI)
+            if (LazyMath.NegativeAngle(angle - ObjectManager.MyPlayer.Facing) < Math.PI)
             {
-                face = LazyMath.NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing);
-                bool moving = ObjectManager<T>.MyPlayer.IsMoving;
+                face = LazyMath.NegativeAngle(angle - ObjectManager.MyPlayer.Facing);
+                bool moving = ObjectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -264,8 +264,8 @@ namespace LazyLib.Wow
             }
             else
             {
-                face = LazyMath.NegativeAngle(ObjectManager<T>.MyPlayer.Facing - angle);
-                bool moving = ObjectManager<T>.MyPlayer.IsMoving;
+                face = LazyMath.NegativeAngle(ObjectManager.MyPlayer.Facing - angle);
+                bool moving = ObjectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -291,7 +291,7 @@ namespace LazyLib.Wow
                 return;
             Int32 turnTime = moving ? 1328 : 980;
             KeyHelper.PressKey(key);
-            Thread.Sleep((int) ((radius*turnTime*Math.PI)/10));
+            Thread.Sleep((int)((radius * turnTime * Math.PI) / 10));
             KeyHelper.ReleaseKey(key);
         }
 
@@ -316,8 +316,8 @@ namespace LazyLib.Wow
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Location)) return false;
-            return Equals((Location) obj);
+            if (obj.GetType() != typeof(Location)) return false;
+            return Equals((Location)obj);
         }
 
         public bool Equals(Location other)
@@ -332,8 +332,8 @@ namespace LazyLib.Wow
             unchecked
             {
                 int result = X.GetHashCode();
-                result = (result*397) ^ Y.GetHashCode();
-                result = (result*397) ^ Z.GetHashCode();
+                result = (result * 397) ^ Y.GetHashCode();
+                result = (result * 397) ^ Z.GetHashCode();
                 return result;
             }
         }

@@ -1,24 +1,24 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LazyLib.Wow;
 
 namespace LazyLib.Helpers
 {
@@ -30,7 +30,7 @@ namespace LazyLib.Helpers
 
     public static class KeyBindings
     {
-        private static List<KeyBinding> _bindings =  new List<KeyBinding>();
+        private static List<KeyBinding> _bindings = new List<KeyBinding>();
         internal static void LoadBindings()
         {
             var result = new List<KeyBinding>();
@@ -44,7 +44,7 @@ namespace LazyLib.Helpers
                 if (key.Length > 0 && command.Length > 0)
                 {
                     var newKey = new KeyBinding { Command = command, Key = key };
-                   // Logging.Write(string.Format("Command: {0} Key {1}", command, key));
+                    // Logging.Write(string.Format("Command: {0} Key {1}", command, key));
                     result.Add(newKey);
                 }
                 nextBind = Memory.Read<uint>(nextBind + Memory.Read<uint>(numOfBindings + (uint)Pointers.KeyBinding.Next) + 4);

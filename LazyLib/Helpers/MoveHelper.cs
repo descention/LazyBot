@@ -1,24 +1,24 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Wow;
 using System;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Wow;
 
 namespace LazyLib.Helpers
 {
@@ -45,7 +45,7 @@ namespace LazyLib.Helpers
         public static void ReleaseKeys()
         {
             StopMove();
-            if (ObjectManager<T>.Initialized)
+            if (ObjectManager.Initialized)
             {
                 KeyHelper.ReleaseKey("Space");
                 KeyHelper.ReleaseKey("X");
@@ -140,7 +140,7 @@ namespace LazyLib.Helpers
         public static float NegativeValue(float value)
         {
             if (value < 0)
-                value = value*-1;
+                value = value * -1;
             return value;
         }
 
@@ -154,7 +154,7 @@ namespace LazyLib.Helpers
             //if the turning angle is negative
             if (angle < 0)
                 //add the maximum possible angle (PI x 2) to normalize the negative angle
-                angle += (float) (Math.PI*2);
+                angle += (float)(Math.PI * 2);
             return angle;
         }
 
@@ -298,7 +298,7 @@ namespace LazyLib.Helpers
             return _rotateLeft;
         }
 
-        public static bool MoveToUnit<T>(PUnit<T> targetObject, double distance, bool dummy) where T: struct, IEquatable<T>
+        public static bool MoveToUnit(PUnit targetObject, double distance, bool dummy) 
         {
             return MoveToUnit(targetObject, distance);
         }
@@ -309,25 +309,25 @@ namespace LazyLib.Helpers
         /// <param name = "targetObject">The unit to approach.</param>
         /// <param name = "distance">The distance.</param>
         /// <returns>Returns true on sucess</returns>
-        public static bool MoveToUnit<T>(PUnit<T> targetObject, double distance) where T: struct, IEquatable<T>
+        public static bool MoveToUnit(PUnit targetObject, double distance) 
         {
             //Start by facing
-            Location oldPos = ObjectManager<T>.MyPlayer.Location;
+            Location oldPos = ObjectManager.MyPlayer.Location;
             Forwards(false);
-            var timer = new Ticker(1000*1.1);
-            var timerWaypoint = new Ticker(1000*16);
+            var timer = new Ticker(1000 * 1.1);
+            var timerWaypoint = new Ticker(1000 * 16);
             int stuck = 0;
             while (targetObject.DistanceToSelf > distance && !timerWaypoint.IsReady)
             {
                 targetObject.Face();
                 Forwards(true);
-                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
+                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
                 {
-                    oldPos = ObjectManager<T>.MyPlayer.Location;
+                    oldPos = ObjectManager.MyPlayer.Location;
                     timer.Reset();
                 }
                 Forwards(true);
-                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
+                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
                 {
                     if (stuck > 3)
                         return false;
@@ -401,26 +401,26 @@ namespace LazyLib.Helpers
         /// <returns></returns>
         public static bool MoveToLoc(Location targetObject, double distance, bool continueMove, bool breakOnCombat)
         {
-            Location oldPos = ObjectManager<T>.MyPlayer.Location;
-            var timer = new Ticker(1000*1.1);
-            var timerWaypoint = new Ticker(1000*30);
+            Location oldPos = ObjectManager.MyPlayer.Location;
+            var timer = new Ticker(1000 * 1.1);
+            var timerWaypoint = new Ticker(1000 * 30);
             int stuck = 0;
             while (targetObject.DistanceToSelf > distance && !timerWaypoint.IsReady)
             {
                 targetObject.Face();
                 Forwards(true);
-                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
+                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) > 1)
                 {
-                    oldPos = ObjectManager<T>.MyPlayer.Location;
+                    oldPos = ObjectManager.MyPlayer.Location;
                     timer.Reset();
                 }
-                if (breakOnCombat && ObjectManager<T>.GetAttackers.Count != 0 && ObjectManager<T>.ShouldDefend)
+                if (breakOnCombat && ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
                 {
                     Forwards(false);
                     return false;
                 }
                 Forwards(true);
-                if (ObjectManager<T>.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
+                if (ObjectManager.MyPlayer.Location.GetDistanceTo(oldPos) < 1 && timer.IsReady)
                 {
                     if (stuck > 3)
                         return false;

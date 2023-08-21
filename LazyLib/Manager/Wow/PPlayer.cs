@@ -1,27 +1,25 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
-using System.Reflection;
-using System.Threading;
 using LazyLib.Helpers;
 using System;
-using System.Collections.Generic;
+using System.Reflection;
 
 #endregion
 
@@ -31,7 +29,7 @@ namespace LazyLib.Wow
     ///   Representing a player
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayer<T> : PUnit<T> where T : struct, IEquatable<T>
+    public class PPlayer : PUnit
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PPlayer" /> class.
@@ -122,26 +120,26 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                 var index = Memory.ReadRelative<int>((uint)Pointers.UnitName.PlayerNameCachePointer);
-                 while (index != 0x00)
-                {
-                var next = Memory.Read<int>((uint)(index + 0x0));
-                var guid = Memory.Read<T>((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
-                if (guid.Equals(GUID))
-                {
-                 string name = Memory.ReadUtf8((uint)(index + (uint)Pointers.UnitName.PlayerNameStringOffset), 40);
-                 return name;
-                }
-             index = next;
-                }
+                    var index = Memory.ReadRelative<int>((uint)Pointers.UnitName.PlayerNameCachePointer);
+                    while (index != 0x00)
+                    {
+                        var next = Memory.Read<int>((uint)(index + 0x0));
+                        var guid = Memory.Read((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
+                        if (guid.Equals(GUID))
+                        {
+                            string name = Memory.ReadUtf8((uint)(index + (uint)Pointers.UnitName.PlayerNameStringOffset), 40);
+                            return name;
+                        }
+                        index = next;
+                    }
 
                 }
                 catch
-               {
-             return "Error Reading Name";
-             }
-             return "Error Reading Name";
-           }
-       }
+                {
+                    return "Error Reading Name";
+                }
+                return "Error Reading Name";
+            }
+        }
     }
 }

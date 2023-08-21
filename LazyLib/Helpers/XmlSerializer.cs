@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace LazyLib.Helpers
 {
     public class XmlSerializer
     {
-        public static T Deserialize<T>(string Path)
+        public static T Deserialize(string Path)
         {
-            T local = Activator.CreateInstance<T>();
+            T local = Activator.CreateInstance();
             try
             {
                 FileStream stream = new FileStream(Path, FileMode.Open);
@@ -23,9 +22,9 @@ namespace LazyLib.Helpers
             }
         }
 
-        public static T DeserializeWithData<T>(string Data)
+        public static T DeserializeWithData(string Data)
         {
-            T local = Activator.CreateInstance<T>();
+            T local = Activator.CreateInstance();
             try
             {
                 StringReader textReader = new StringReader(Data);

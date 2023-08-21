@@ -1,27 +1,27 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.ActionBar;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using LazyLib.ActionBar;
-using LazyLib.Wow;
 
 #endregion
 
@@ -63,12 +63,12 @@ namespace LazyLib.Combat
         ///   Gets a value indicating whether this instance is ready.
         /// </summary>
         /// <remarks>
-        ///   Base class autochecks IsSpellReadyByName(SpellName) and !ObjectManager<T>.MyPlayer.IsCasting
+        ///   Base class autochecks IsSpellReadyByName(SpellName) and !ObjectManager.MyPlayer.IsCasting
         /// </remarks>
         /// <value><c>true</c> if this instance is ready; otherwise, <c>false</c>.</value>
         public virtual bool IsReady
         {
-            get { return BarMapper.IsSpellReadyByName(SpellName) && !ObjectManager<T>.MyPlayer.IsCasting; }
+            get { return BarMapper.IsSpellReadyByName(SpellName) && !ObjectManager.MyPlayer.IsCasting; }
         }
 
         public virtual bool WaitUntilReady

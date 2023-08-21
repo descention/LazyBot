@@ -1,29 +1,29 @@
-﻿﻿/*
+﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.Helpers;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using LazyLib.Helpers;
-using LazyLib.Wow;
 
 #endregion
 
@@ -53,7 +53,7 @@ namespace LazyLib.Combat
         {
         }
 
-        public abstract PullResult Pull<T>(PUnit<T> target) where T: struct, IEquatable<T>;
+        public abstract PullResult Pull(PUnit target) ;
 
         public virtual void Rest()
         {
@@ -63,7 +63,7 @@ namespace LazyLib.Combat
         {
         }
 
-        public abstract void Combat<T>(PUnit<T> target) where T: struct, IEquatable<T>;
+        public abstract void Combat(PUnit target) ;
         public abstract Form Settings();
 
         public virtual void OnRess()
@@ -123,7 +123,7 @@ namespace LazyLib.Combat
             }
         }
 
-        public virtual void LogicAttack<T>(PUnit<T> target, PPlayer<T> player = null) where T:struct, IEquatable<T>
+        public virtual void LogicAttack(PUnit target, PPlayer player = null) 
         {
             try
             {

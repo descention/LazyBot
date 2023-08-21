@@ -2405,7 +2405,7 @@ namespace LazyLib.Manager
                 {
                     // Perform a normal step and try again.
                     UInt128 rem;
-                    Remainder(out rem, ref a1, ref  b1);
+                    Remainder(out rem, ref a1, ref b1);
                     a1 = b1;
                     b1 = rem;
                     continue;
@@ -2449,7 +2449,7 @@ namespace LazyLib.Manager
                 if (x0 == 1 && y0 == 0)
                 {
                     UInt128 rem;
-                    Remainder(out rem, ref a1, ref  b1);
+                    Remainder(out rem, ref a1, ref b1);
                     a1 = b1;
                     b1 = rem;
                     continue;

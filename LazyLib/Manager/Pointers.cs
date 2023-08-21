@@ -1,19 +1,19 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
@@ -82,7 +82,7 @@ namespace LazyLib.Wow
         public enum CgUnitCGetCreatureRank
         {
             Offset1 = 0xC38,
-            Offset2 = 0x2C,  
+            Offset2 = 0x2C,
         }
 
         #endregion
@@ -110,7 +110,7 @@ namespace LazyLib.Wow
             CameraZ = 0x10,
             CameraMatrix = 0x14,
             CameraPointer = 0xEAF270,
-            CameraOffset = 0x7610,  
+            CameraOffset = 0x7610,
         }
 
         #endregion
@@ -135,7 +135,7 @@ namespace LazyLib.Wow
         {
             AutoAttackFlag = 0xEE8,       //Old Method
             AutoAttackMask = 0xEEC,       //Old Method
-            AutoAttackGUID = 0xF44,  
+            AutoAttackGUID = 0xF44,
         }
 
         #endregion
@@ -147,7 +147,7 @@ namespace LazyLib.Wow
         internal enum CastingInfo
         {
             IsCasting = 0xF98,
-            ChanneledCasting = 0xFB8,  
+            ChanneledCasting = 0xFB8,
         }
 
         #endregion
@@ -214,7 +214,7 @@ namespace LazyLib.Wow
             First = 0xC8,
             Next = 0xC0,
             Key = 0x18,
-            Command = 0x2C,    
+            Command = 0x2C,
         }
 
         #endregion
@@ -257,7 +257,7 @@ namespace LazyLib.Wow
         {
             Mask = 19,
             Offset2 = 0x14C,
-            Offset1 = 0x124  
+            Offset1 = 0x124
         }
 
         #endregion
@@ -361,7 +361,7 @@ namespace LazyLib.Wow
             AuraSpellId = 0x30,
             AuraStack = 0x39,
             TimeLeft = 0x40,
-            OwnerGUID = 0x20, 
+            OwnerGUID = 0x20,
         }
 
         #endregion
@@ -377,8 +377,8 @@ namespace LazyLib.Wow
             PlayerNameGUIDOffset = 0x010,
             PlayerNameStringOffset = 0x021,
             PlayerNameCachePointer = 0xD7BF94,
-            UnitName1 = 0xC38,                  
-            UnitName2 = 0x7C,         
+            UnitName1 = 0xC38,
+            UnitName2 = 0x7C,
         }
 
         #endregion
@@ -408,7 +408,7 @@ namespace LazyLib.Wow
             GameObjectX = 0x0140,
             GameObjectY = GameObjectX + 0x4,
             GameObjectZ = GameObjectX + 0x8,
-            GameObjectRotation = GameObjectX + 0x10,  
+            GameObjectRotation = GameObjectX + 0x10,
         }
 
         #endregion
@@ -453,7 +453,7 @@ namespace LazyLib.Wow
             FrameLeft = 0x6c,
             FrameTop = 0x70,
             FrameRight = 0x74,
-            CurrentFrameOffset = 0x88,  
+            CurrentFrameOffset = 0x88,
         }
         #endregion
     }

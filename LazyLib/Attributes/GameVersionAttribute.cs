@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace LazyLib
 {
@@ -32,7 +28,7 @@ namespace LazyLib
         /// Client Version, x.y.z
         /// </summary>
         public string ClientVersion => _clientVersion;
-        
+
         public ProcessorArchitecture Architecture => _architecture;
     }
 }

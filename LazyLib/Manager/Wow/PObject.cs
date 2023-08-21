@@ -6,26 +6,27 @@
     using System;
     using System.Drawing;
     using System.Reflection;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows.Forms;
+    using Unity;
 
-    [Obfuscation(Feature="renaming", ApplyToMembers=true)]
-    public class PObject<T> where T: struct, IEquatable<T>
+    [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
+    public class PObject
     {
         private static Point _oldPoint;
         private const int iRestore = 9;
         private const int iShow = 5;
-
+        private readonly IObjectManager _objectManager;
         public PObject(uint baseAddress)
         {
             this.BaseAddress = baseAddress;
+            _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
         }
 
-        private static bool DoSmallestSearch(T guid)
+        private static bool DoSmallestSearch<T>(T guid)
         {
-            if (ObjectManager<T>.ShouldDefend)
+            var _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            if (_objectManager.ShouldDefend)
                 return true;
             GamePosition.Findpos(Memory.WindowHandle);
             int xOffset = -40;
@@ -94,7 +95,7 @@
         {
             try
             {
-                return this.GetStorageField<T>((uint)field);
+                return this.GetStorageField((uint)field);
             }
             catch (Exception exception)
             {
@@ -123,7 +124,7 @@
 
         public bool InteractOrTarget(bool multiclick)
         {
-            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
             {
                 KeyHelper.SendKey("InteractWithMouseOver");
                 return true;
@@ -148,7 +149,7 @@
             Thread.Sleep(50);
             KeyHelper.SendKey("InteractWithMouseOver");
             Thread.Sleep(500);
-            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             return false;
         }
@@ -167,12 +168,12 @@
         }
 
         //TODO: Do something to this functions, its freaking ugly
-        private static bool LetsSearch(T guid, bool multiclick, bool click)
+        private static bool LetsSearch<T>(T guid, bool multiclick, bool click)
         {
             if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
             {
                 GamePosition.Findpos(Memory.WindowHandle);
-                if (!DoSmallestSearch(guid))
+                if (!DoSmallestSearch<T>(guid))
                     if (!Search(guid, GamePosition.Width / 16))
                         if (!Search(guid, GamePosition.Width / 12))
                             if (!Search(guid, GamePosition.Width / 10))
@@ -182,7 +183,7 @@
                                         // DoSmallSearch(guid);
                                     }
             }
-            if (ObjectManager<T>.GetAttackers.Count != 0 && ObjectManager<T>.ShouldDefend)
+            if (ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
                 return false;
             if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
             {
@@ -241,7 +242,7 @@
 
         private static bool Search(T guid, int yValue)
         {
-            if (ObjectManager<T>.ShouldDefend)
+            if (ObjectManager.ShouldDefend)
                 return true;
             int xOffset = 0;
             int yOffset = -yValue;
@@ -283,7 +284,7 @@
         }
 
 
-        
+
         private static void SetForGround()
         {
             IntPtr hwnd = Memory.WindowHandle;
@@ -294,39 +295,39 @@
             }
         }
 
-        public PGameObject<T> ToGameObject(PObject<T> obj)
+        public PGameObject ToGameObject(PObject obj)
         {
-            return new PGameObject<T>(obj.BaseAddress);
+            return new PGameObject(obj.BaseAddress);
         }
 
-        public PPlayer<T> ToPlayer(PItem<T> obj)
+        public PPlayer ToPlayer(PItem obj)
         {
-            return new PPlayer<T>(obj.BaseAddress);
+            return new PPlayer(obj.BaseAddress);
         }
 
-        public PPlayer<T> ToPlayer(PObject<T> obj)
+        public PPlayer ToPlayer(PObject obj)
         {
-            return new PPlayer<T>(obj.BaseAddress);
+            return new PPlayer(obj.BaseAddress);
         }
 
-        public PPlayer<T> ToPlayer(PPlayer<T> obj)
+        public PPlayer ToPlayer(PPlayer obj)
         {
-            return new PPlayer<T>(obj.BaseAddress);
+            return new PPlayer(obj.BaseAddress);
         }
 
-        public PPlayer<T> ToPlayer(PUnit<T> obj)
+        public PPlayer ToPlayer(PUnit obj)
         {
-            return new PPlayer<T>(obj.BaseAddress);
+            return new PPlayer(obj.BaseAddress);
         }
 
-        public PUnit<T> ToUnit(PItem<T> obj)
+        public PUnit ToUnit(PItem obj)
         {
-            return new PUnit<T>(obj.BaseAddress);
+            return new PUnit(obj.BaseAddress);
         }
 
-        public PUnit<T> ToUnit(PObject<T> obj)
+        public PUnit ToUnit(PObject obj)
         {
-            return new PUnit<T>(obj.BaseAddress);
+            return new PUnit(obj.BaseAddress);
         }
 
         internal void UpdateBaseAddress(uint address)
@@ -365,7 +366,7 @@
             {
                 if (this.IsValid)
                 {
-                    return this.GetStorageField<T>((uint)Descriptors.CGObjectData.Guid);
+                    return this.GetStorageField((uint)Descriptors.CGObjectData.Guid);
                 }
                 return new T();
             }
@@ -377,7 +378,7 @@
         {
             get
             {
-                if (!GUID.Equals(ObjectManager<T>.MyPlayer.GUID))
+                if (!GUID.Equals(ObjectManager.MyPlayer.GUID))
                 {
                     return false;
                 }

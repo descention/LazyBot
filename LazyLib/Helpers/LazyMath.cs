@@ -1,22 +1,22 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
 using LazyLib.Wow;
+using System;
 
 namespace LazyLib.Helpers
 {
@@ -25,7 +25,7 @@ namespace LazyLib.Helpers
         public static float NegativeValue(float value)
         {
             if (value < 0)
-                value = value*-1;
+                value = value * -1;
             return value;
         }
 
@@ -34,7 +34,7 @@ namespace LazyLib.Helpers
             //if the turning angle is negative
             if (angle < 0)
                 //add the maximum possible angle (PI x 2) to normalize the negative angle
-                angle += (float) (Math.PI*2);
+                angle += (float)(Math.PI * 2);
             return angle;
         }
 
@@ -44,7 +44,7 @@ namespace LazyLib.Helpers
             float dy = y1 - y2;
             float dz = z1 - z2;
 
-            return Math.Sqrt(((dx*dx) + (dy*dy) + (dz*dz)));
+            return Math.Sqrt(((dx * dx) + (dy * dy) + (dz * dz)));
         }
 
         public static Double Distance2D(float x1, float y1, float x2, float y2)
@@ -52,35 +52,35 @@ namespace LazyLib.Helpers
             float dx = x1 - x2;
             float dy = y1 - y2;
 
-            return Math.Sqrt(((dx*dx) + (dy*dy)));
+            return Math.Sqrt(((dx * dx) + (dy * dy)));
         }
 
         public static Double Distance3D(float x, float y, float z)
         {
-            float dx = x - ObjectManager<T>.MyPlayer.X;
-            float dy = y - ObjectManager<T>.MyPlayer.Y;
-            float dz = z - ObjectManager<T>.MyPlayer.Z;
+            float dx = x - ObjectManager.MyPlayer.X;
+            float dy = y - ObjectManager.MyPlayer.Y;
+            float dz = z - ObjectManager.MyPlayer.Z;
 
-            return Math.Sqrt(((dx*dx) + (dy*dy) + (dz*dz)));
+            return Math.Sqrt(((dx * dx) + (dy * dy) + (dz * dz)));
         }
 
         public static Double Distance2D(float x, float y)
         {
-            float dx = x - ObjectManager<T>.MyPlayer.X;
-            float dy = y - ObjectManager<T>.MyPlayer.Y;
+            float dx = x - ObjectManager.MyPlayer.X;
+            float dy = y - ObjectManager.MyPlayer.Y;
 
-            return Math.Sqrt(((dx*dx) + (dy*dy)));
+            return Math.Sqrt(((dx * dx) + (dy * dy)));
         }
 
         public static Double Distance2D(Location pos)
         {
-            return Distance2D(pos.X, pos.Y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
+            return Distance2D(pos.X, pos.Y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
         }
 
         public static Double Distance3D(Location pos)
         {
-            return Distance3D(pos.X, pos.Y, pos.Z, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y,
-                              ObjectManager<T>.MyPlayer.Z);
+            return Distance3D(pos.X, pos.Y, pos.Z, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y,
+                              ObjectManager.MyPlayer.Z);
         }
 
         public static Double Distance2D(Location from, Location to)
@@ -109,28 +109,28 @@ namespace LazyLib.Helpers
 
         public static Single CalculateFace(Single x, Single y)
         {
-            return CalculateFace(x, y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
+            return CalculateFace(x, y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
         }
 
         public static float CalculateFace(Location to)
         {
-            return CalculateFace(to.X, to.Y, ObjectManager<T>.MyPlayer.X, ObjectManager<T>.MyPlayer.Y);
+            return CalculateFace(to.X, to.Y, ObjectManager.MyPlayer.X, ObjectManager.MyPlayer.Y);
         }
 
         public static bool IsFacingH(float angle, float errorMarge)
         {
             float face;
 
-            if (NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing) < Math.PI)
+            if (NegativeAngle(angle - ObjectManager.MyPlayer.Facing) < Math.PI)
             {
-                face = NegativeAngle(angle - ObjectManager<T>.MyPlayer.Facing);
+                face = NegativeAngle(angle - ObjectManager.MyPlayer.Facing);
 
                 if (face < errorMarge)
                     return true;
             }
             else
             {
-                face = NegativeAngle(ObjectManager<T>.MyPlayer.Facing - angle);
+                face = NegativeAngle(ObjectManager.MyPlayer.Facing - angle);
 
                 if (face < errorMarge)
                     return true;

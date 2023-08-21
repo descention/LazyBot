@@ -1,31 +1,30 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.ActionBar;
+using LazyLib.Helpers;
+using LazyLib.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
-using LazyLib.ActionBar;
-using LazyLib.Helpers;
-using LazyLib.PInvoke;
 //using LazyLib.Helpers.DBCReads;
 
 #endregion
@@ -36,7 +35,7 @@ namespace LazyLib.Wow
     ///   Representing a unit ingame
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PUnit<T> : PObject<T> where T : struct, IEquatable<T>
+    public class PUnit : PObject
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PUnit" /> class.
@@ -57,8 +56,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (MoveHelper.NegativeAngle(Facing - ObjectManager<T>.MyPlayer.Facing) > 5.5 ||
-                    MoveHelper.NegativeAngle(Facing - ObjectManager<T>.MyPlayer.Facing) < 0.6)
+                if (MoveHelper.NegativeAngle(Facing - ObjectManager.MyPlayer.Facing) > 5.5 ||
+                    MoveHelper.NegativeAngle(Facing - ObjectManager.MyPlayer.Facing) < 0.6)
                     return true;
                 return false;
             }
@@ -74,7 +73,7 @@ namespace LazyLib.Wow
             {
                 float wowFacing =
                     MoveHelper.NegativeAngle(
-                        (float)Math.Atan2((Y - ObjectManager<T>.MyPlayer.Y), (X - ObjectManager<T>.MyPlayer.X)));
+                        (float)Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X)));
                 return wowFacing;
             }
         }
@@ -193,12 +192,12 @@ namespace LazyLib.Wow
                     case (uint)Constants.UnitRace.UnitRace_Pandaren:
                         race = @"Pandaren";
                         break;
-                   /* case (uint)Constants.UnitRace.UnitRace_PandarenHorde:
-                        race = @"PandarenHorde";
-                        break;
-                    case (uint)Constants.UnitRace.UnitRace_PandarenAlliance:
-                        race = @"PandarenAlliance";
-                        break;*/
+                    /* case (uint)Constants.UnitRace.UnitRace_PandarenHorde:
+                         race = @"PandarenHorde";
+                         break;
+                     case (uint)Constants.UnitRace.UnitRace_PandarenAlliance:
+                         race = @"PandarenAlliance";
+                         break;*/
                     default:
                         race = @"Unknown";
                         break;
@@ -435,7 +434,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return Wow.Faction.GetReaction<T>(ObjectManager<T>.MyPlayer, this);
+                return Wow.Faction.GetReaction(ObjectManager.MyPlayer, this);
             }
         }
 
@@ -446,7 +445,7 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if this instance is player; otherwise, <c>false</c>.</value>
         public bool IsPlayer
         {
-            get { return ObjectManager<T>.GetPlayers.Any(player => player.GUID.Equals(GUID)); }
+            get { return ObjectManager.GetPlayers.Any(player => player.GUID.Equals(GUID)); }
         }
 
         /// <summary>
@@ -475,7 +474,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return ObjectManager<T>.GetPlayers.Where(cur => cur.HasLivePet).Any(cur => cur.PetGUID.Equals(GUID));
+                    return ObjectManager.GetPlayers.Where(cur => cur.HasLivePet).Any(cur => cur.PetGUID.Equals(GUID));
                 }
                 catch
                 {
@@ -494,15 +493,15 @@ namespace LazyLib.Wow
         ///   Retuns the current Target of the unit
         ///   Return a new PUnit if null, you can check if the PUnit is valid using the IsValid property.
         /// </summary>
-        public virtual PUnit<T> Target
+        public virtual PUnit Target
         {
             get
             {
                 try
                 {
-                    if (TargetGUID.Equals(ObjectManager<T>.MyPlayer.GUID))
-                        return ObjectManager<T>.MyPlayer;
-                    foreach (PUnit<T> u in ObjectManager<T>.GetUnits)
+                    if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
+                        return ObjectManager.MyPlayer;
+                    foreach (PUnit u in ObjectManager.GetUnits)
                     {
                         try
                         {
@@ -517,7 +516,7 @@ namespace LazyLib.Wow
                 catch (Exception)
                 {
                 }
-                return new PUnit<T>(uint.MinValue);
+                return new PUnit(uint.MinValue);
             }
         }
 
@@ -527,9 +526,9 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (TargetGUID.Equals(ObjectManager<T>.MyPlayer.GUID))
+                    if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
                         return true;
-                    if (ObjectManager<T>.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
+                    if (ObjectManager.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
                     {
                         return true;
                     }
@@ -1003,7 +1002,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CharmedBy);
+                return base.GetStorageField((uint)Descriptors.CGUnitData.CharmedBy);
             }
         }
 
@@ -1014,7 +1013,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.SummonedBy);
+                return base.GetStorageField((uint)Descriptors.CGUnitData.SummonedBy);
             }
         }
 
@@ -1025,7 +1024,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CreatedBy);
+                return base.GetStorageField((uint)Descriptors.CGUnitData.CreatedBy);
             }
         }
 
@@ -1201,7 +1200,7 @@ namespace LazyLib.Wow
                 }
             }
         }
- 
+
 
         public int EnergyPercentage
         {
@@ -1718,7 +1717,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.Target);
+                return base.GetStorageField((uint)Descriptors.CGUnitData.Target);
             }
         }
 
@@ -1732,7 +1731,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (Target != null && Target.TargetGUID.Equals(ObjectManager<T>.MyPlayer.GUID))
+                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
                     return true;
                 return false;
             }
@@ -1748,8 +1747,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (!ObjectManager<T>.MyPlayer.HasLivePet) return false;
-                if (Target != null && Target.TargetGUID.Equals(ObjectManager<T>.MyPlayer.TargetGUID))
+                if (!ObjectManager.MyPlayer.HasLivePet) return false;
+                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.TargetGUID))
                     return true;
                 return false;
             }
@@ -1806,13 +1805,13 @@ namespace LazyLib.Wow
         /// <remarks>
         ///   Does not return non combat pets!
         /// </remarks>
-        public PUnit<T> Pet
+        public PUnit Pet
         {
             get
             {
                 try
                 {
-                    foreach (PUnit<T> obj in ObjectManager<T>.GetObjects.OfType<PUnit<T>>())
+                    foreach (PUnit obj in ObjectManager.GetObjects.OfType<PUnit>())
                     {
                         if (obj.SummonedBy.Equals(GUID))
                         {
@@ -1899,7 +1898,7 @@ namespace LazyLib.Wow
             try
             {
                 var auras = GetAuras;
-                return auras.Any(woWAura => buff == woWAura.SpellId && (woWAura.OwnerGUID.Equals(ObjectManager<T>.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager<T>.MyPlayer.PetGUID)));
+                return auras.Any(woWAura => buff == woWAura.SpellId && (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.PetGUID)));
             }
             catch
             {
@@ -1924,7 +1923,7 @@ namespace LazyLib.Wow
             }
             var auras = GetAuras;
             List<int> buf = BarMapper.GetIdsFromName(buff);
-            return auras.Any(woWAura => buf.Contains(woWAura.SpellId) && (woWAura.OwnerGUID.Equals(ObjectManager<T>.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager<T>.MyPlayer.PetGUID)));
+            return auras.Any(woWAura => buf.Contains(woWAura.SpellId) && (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.PetGUID)));
         }
 
         /// <summary>
@@ -1961,53 +1960,53 @@ namespace LazyLib.Wow
             }
         }
 
-          public IEnumerable<WoWAura> GetAuras
-          {
-              get
-              {
-                  var auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1);
-                  if (auraCount == -1)
-                  {
-                      auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount2);
-                  }
-                  var result = new List<WoWAura>();
-                  long frequency;
-                  long perfCount;
-                  Kernel32.QueryPerformanceFrequency(out frequency);
-                  Kernel32.QueryPerformanceCounter(out perfCount);
-                  long currentTime = (perfCount * 1000) / frequency;
-                  //Current time in ms
-                  for (uint i = 0; i < auraCount; i++)
-                  {
-                      int localSpellId;
-                      byte stackCount;
-                      uint timeLeft;
-                      T ownerGuid;
-                      if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
-                      {
-                          var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
-                          localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
-                          stackCount = Memory.Read<byte>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
-                          timeLeft = Memory.Read<uint>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                          ownerGuid = Memory.Read<T>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
-                      }
-                      else
-                      {
-                          localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
-                          stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
-                          timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                          ownerGuid = Memory.Read<T>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
-                      }
-                      if (localSpellId != 0)
-                      {
-                          timeLeft = (uint)(timeLeft - currentTime) / 1000;
-                          var aura = new WoWAura { SpellId = localSpellId, Stack = stackCount, SecondsLeft = timeLeft, OwnerGUID = ownerGuid };
-                          result.Add(aura);
-                      }
-                  }
-                  return result;
-              }
-          }
+        public IEnumerable<WoWAura> GetAuras
+        {
+            get
+            {
+                var auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1);
+                if (auraCount == -1)
+                {
+                    auraCount = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount2);
+                }
+                var result = new List<WoWAura>();
+                long frequency;
+                long perfCount;
+                Kernel32.QueryPerformanceFrequency(out frequency);
+                Kernel32.QueryPerformanceCounter(out perfCount);
+                long currentTime = (perfCount * 1000) / frequency;
+                //Current time in ms
+                for (uint i = 0; i < auraCount; i++)
+                {
+                    int localSpellId;
+                    byte stackCount;
+                    uint timeLeft;
+                    T ownerGuid;
+                    if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
+                    {
+                        var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
+                        localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
+                        stackCount = Memory.Read<byte>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
+                        timeLeft = Memory.Read<uint>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
+                        ownerGuid = Memory.Read(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
+                    }
+                    else
+                    {
+                        localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
+                        stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
+                        timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
+                        ownerGuid = Memory.Read((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
+                    }
+                    if (localSpellId != 0)
+                    {
+                        timeLeft = (uint)(timeLeft - currentTime) / 1000;
+                        var aura = new WoWAura { SpellId = localSpellId, Stack = stackCount, SecondsLeft = timeLeft, OwnerGUID = ownerGuid };
+                        result.Add(aura);
+                    }
+                }
+                return result;
+            }
+        }
 
         /// <summary>
         ///   Returns ArrayList with SpellID's of Auras on the unit
@@ -2040,7 +2039,7 @@ namespace LazyLib.Wow
         /// <returns>true if sucess</returns>
         public bool TargetFriend()
         {
-            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             // Logging.Write("[Unit]TargetingF: " + Name);
             if (IsDead)
@@ -2048,12 +2047,12 @@ namespace LazyLib.Wow
             Face();
             var timer = new Ticker(600);
             Thread.Sleep(500);
-            while (!ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID) && !timer.IsReady)
+            while (!ObjectManager.MyPlayer.TargetGUID.Equals(GUID) && !timer.IsReady)
             {
                 KeyHelper.SendKey("TargetFriend");
                 Thread.Sleep(1000);
             }
-            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
             {
                 Face();
                 return true;
@@ -2081,7 +2080,7 @@ namespace LazyLib.Wow
         /// <returns>true if sucess</returns>
         public bool TargetHostile()
         {
-            if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             Logging.Write("[Unit]TargetingH: " + Name);
             if (IsDead)
@@ -2098,7 +2097,7 @@ namespace LazyLib.Wow
             var t = new Ticker(4 * 1000);
             while (!t.IsReady)
             {
-                if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+                if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 {
                     return true;
                 }
@@ -2122,7 +2121,7 @@ namespace LazyLib.Wow
             var t = new Ticker(4 * 1000);
             while (!t.IsReady)
             {
-                if (ObjectManager<T>.MyPlayer.TargetGUID.Equals(GUID))
+                if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
                 {
                     return true;
                 }

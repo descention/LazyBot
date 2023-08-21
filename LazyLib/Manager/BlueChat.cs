@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LazyLib.Helpers;
+﻿using LazyLib.Helpers;
 using LazyLib.Wow;
+using System;
 
 namespace LazyEvo.Plugins.ExtraLazy
 {

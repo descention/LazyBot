@@ -3,15 +3,15 @@
 // MVID: A92FE1A9-C28E-4E6F-9BAC-5C48387A25CC
 // Assembly location: E:\VeryOldLazyBots\Lazy Evolution\LazyLib.dll
 
-using LazyLib;
 using LazyLib.Helpers;
+using LazyLib.PInvoke;
 using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
+using Unity;
 
 namespace LazyLib.ActionBar
 {
@@ -107,7 +107,8 @@ namespace LazyLib.ActionBar
             Spells.Clear();
             const int barSize = 0x60;
             int maxSlots = 60;
-            switch (ObjectManager<T>.MyPlayer.UnitClass)
+            
+            switch (ServiceManager.Container.Resolve<IObjectManager>().MyPlayer.UnitClass)
             {
                 case Constants.UnitClass.UnitClass_Warrior:
                     maxSlots = 0x60;
@@ -170,7 +171,7 @@ namespace LazyLib.ActionBar
             //Load all spells 
             Load();
             LoadedKeys.Reverse(); //Reverse the list to get bar 1 first
-            //Now lets find names and assign the correct once)
+                                  //Now lets find names and assign the correct once)
             foreach (WowKey wowKey in LoadedKeys)
             {
                 string name = String.Empty;
@@ -264,7 +265,7 @@ namespace LazyLib.ActionBar
             Spell.CastSpell();
         }
 
-        
+
 
 
         private static bool IsSpellReady(int spellidToCheck)
@@ -300,10 +301,10 @@ namespace LazyLib.ActionBar
             return true;
         }
 
-        public static bool HasBuff<T>(PUnit<T> check, string name)where T: struct, IEquatable<T>
+        public static bool HasBuff(PUnit check, string name) 
         {
             List<int> idsFromName = BarMapper.GetIdsFromName(name);
-            return ObjectManager<T>.Initialized && check.HasBuff(idsFromName);
+            return ObjectManager.Initialized && check.HasBuff(idsFromName);
         }
 
         public static bool DoesBuffExist(string name)

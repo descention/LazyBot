@@ -1,25 +1,25 @@
-﻿﻿/*
+﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Helpers.Mail;
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Helpers.Mail;
-using LazyLib.Wow;
 
 namespace LazyLib.Helpers.Vendor
 {
@@ -38,7 +38,7 @@ namespace LazyLib.Helpers.Vendor
                 //Target vendor TODO: Looking for a better solution
                 LazyLib.Helpers.KeyHelper.ChatboxSendText("/target " + unit_name);
                 Thread.Sleep(3000);
-                if (LazyLib.Wow.ObjectManager<T>.MyPlayer.Target.Name != unit_name)
+                if (LazyLib.Wow.ObjectManager.MyPlayer.Target.Name != unit_name)
                 {
                     Logging.Write("Could not target vendor: " + unit_name);
                     return;
@@ -67,7 +67,7 @@ namespace LazyLib.Helpers.Vendor
                 }
             }
         }
-        public static void DoSell<T>(PUnit<T> vendor) where T:struct, IEquatable<T>
+        public static void DoSell(PUnit vendor) 
         {
             try
             {
@@ -77,7 +77,7 @@ namespace LazyLib.Helpers.Vendor
                 vendor.Location.Face();
                 vendor.Interact(false);
                 Thread.Sleep(1000);
-                if (ObjectManager<T>.MyPlayer.Target != vendor)
+                if (ObjectManager.MyPlayer.Target != vendor)
                 {
                     vendor.Location.Face();
                     vendor.Interact(false);
@@ -112,7 +112,7 @@ namespace LazyLib.Helpers.Vendor
             LoadWowHead();
             SellLoop();
             /*
-            foreach (PItem<T> item in Inventory.GetItemsInBags)
+            foreach (PItem item in Inventory.GetItemsInBags)
             {
                 if (ItemDatabase.GetItem(item.EntryId.ToString()) != null)
                 {
@@ -153,7 +153,7 @@ namespace LazyLib.Helpers.Vendor
 
         private static void LoadWowHead()
         {
-            foreach (PItem<T> item in Inventory.GetItemsInBags)
+            foreach (PItem item in Inventory.GetItemsInBags)
             {
                 if (ItemDatabase.GetItem(item.EntryId.ToString()) == null)
                 {
@@ -245,7 +245,7 @@ namespace LazyLib.Helpers.Vendor
         {
             try
             {
-                foreach (PItem<T> item in Inventory.GetItemsInBags)
+                foreach (PItem item in Inventory.GetItemsInBags)
                 {
                     try
                     {

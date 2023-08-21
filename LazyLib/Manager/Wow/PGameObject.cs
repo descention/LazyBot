@@ -1,25 +1,25 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.Helpers;
 using System;
 using System.Reflection;
-using LazyLib.Helpers;
 
 #endregion
 
@@ -29,7 +29,7 @@ namespace LazyLib.Wow
     ///   Representing a game object (Nodes)
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PGameObject<T> : PObject<T> where T : struct, IEquatable<T>
+    public class PGameObject : PObject 
     {
         public PGameObject(uint baseAddress)
             : base(baseAddress)
@@ -49,7 +49,7 @@ namespace LazyLib.Wow
                     return
                         Memory.ReadUtf8(
                             Memory.Read<uint>(
-                                Memory.Read<uint>(BaseAddress + (uint) Pointers.UnitName.ObjectName1) + (uint)Pointers.UnitName.ObjectName2), 100);
+                                Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitName.ObjectName1) + (uint)Pointers.UnitName.ObjectName2), 100);
                 }
                 catch
                 {
@@ -89,7 +89,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return (Constants.GameObjectTypes)Memory.Read<Byte>(base.StorageField + 18);
+                return (Constants.GameObjectTypes)Memory.Read<byte>(base.StorageField + 18);
             }
         }
 
@@ -106,7 +106,7 @@ namespace LazyLib.Wow
         /// </summary>
         public override float X
         {
-            get { return Memory.Read<float>(BaseAddress + (uint) Pointers.WowObject.GameObjectX); }
+            get { return Memory.Read<float>(BaseAddress + (uint)Pointers.WowObject.GameObjectX); }
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace LazyLib.Wow
         /// </summary>
         public override float Y
         {
-            get { return Memory.Read<float>(BaseAddress + (uint) Pointers.WowObject.GameObjectY); }
+            get { return Memory.Read<float>(BaseAddress + (uint)Pointers.WowObject.GameObjectY); }
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace LazyLib.Wow
         /// </summary>
         public override float Z
         {
-            get { return Memory.Read<float>(BaseAddress + (uint) Pointers.WowObject.GameObjectZ); }
+            get { return Memory.Read<float>(BaseAddress + (uint)Pointers.WowObject.GameObjectZ); }
         }
 
 
@@ -157,7 +157,7 @@ namespace LazyLib.Wow
                     {
                         result = (float)(6.28 - -1 * result);
                     }
-                    return (float) result;
+                    return (float)result;
                 }
                 catch
                 {

@@ -1,26 +1,27 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Wow;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using LazyLib.Wow;
-using System;
+using Unity;
 
 namespace LazyLib.Helpers
 {
@@ -34,12 +35,13 @@ namespace LazyLib.Helpers
         private static readonly Ticker TimeOut = new Ticker(2000);
         public static bool FindBobberAndClick(bool waitForLoot)
         {
-            PGameObject<T> bobber = null;
+            PGameObject bobber = null;
             Thread.Sleep(1000);
             _triedWorldToScreen = false;
             _saidSomethingManager = false;
             _tryingSearch = false;
-            while(ObjectManager<T>.MyPlayer.IsCasting)
+            var _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            while (_objectManager.MyPlayer.IsCasting)
             {
                 if (bobber != null)
                 {
@@ -48,7 +50,7 @@ namespace LazyLib.Helpers
                         Logging.Write("Located bobber in objectmanager");
                         _saidSomethingManager = true;
                     }
-                    if(LazySettings.BackgroundMode)
+                    if (LazySettings.BackgroundMode)
                     {
                         if (bobber.IsBobbing)
                         {
@@ -56,13 +58,14 @@ namespace LazyLib.Helpers
                             Thread.Sleep(1500);
                             if (waitForLoot)
                             {
-                                while (ObjectManager<T>.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                                while (_objectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
                                     Thread.Sleep(100);
                                 Thread.Sleep(1300);
                             }
                             return true;
                         }
-                    } else
+                    }
+                    else
                     {
                         if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(bobber.GUID))
                         {
@@ -71,7 +74,8 @@ namespace LazyLib.Helpers
                                 Logging.Write("Trying world to screen");
                                 FindTheBobber(bobber.Location, bobber.GUID);
                                 _triedWorldToScreen = true;
-                            } else
+                            }
+                            else
                             {
                                 if (!_tryingSearch)
                                 {
@@ -81,7 +85,8 @@ namespace LazyLib.Helpers
                                 FindBobberSearch();
                             }
                             Thread.Sleep(100);
-                        } else
+                        }
+                        else
                         {
                             if (bobber.IsBobbing)
                             {
@@ -89,7 +94,7 @@ namespace LazyLib.Helpers
                                 Thread.Sleep(1500);
                                 if (waitForLoot)
                                 {
-                                    while (ObjectManager<T>.MyPlayer.LootWinOpen && !TimeOut.IsReady)
+                                    while (_objectManager.MyPlayer.LootWinOpen && !TimeOut.IsReady)
                                         Thread.Sleep(100);
                                     Thread.Sleep(1300);
                                 }
@@ -98,7 +103,8 @@ namespace LazyLib.Helpers
                         }
                     }
                     Thread.Sleep(1000);
-                } else
+                }
+                else
                 {
                     bobber = Bobber();
                 }
@@ -133,7 +139,7 @@ namespace LazyLib.Helpers
             }
         }
 
-        private static void FindTheBobber<T>(Location loc, T guid) where T:struct, IEquatable<T>
+        private static void FindTheBobber(Location loc, T guid) 
         {
             Point worldToScreen = Camera.World2Screen.WorldToScreen(loc, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);
@@ -182,8 +188,8 @@ namespace LazyLib.Helpers
             if (IsMouseOverBobber())
                 return;
 
-            int xOffset =  -60;
-            int yOffset =  -60;
+            int xOffset = -60;
+            int yOffset = -60;
             MoveMouse(worldToScreen.X, worldToScreen.Y);
             while (!IsMouseOverBobber())
             {
@@ -208,7 +214,7 @@ namespace LazyLib.Helpers
 
         private static bool IsMouseOverBobber()
         {
-            if(Memory.ReadRelative<uint>((uint) Pointers.Globals.CursorType) == 53)
+            if (Memory.ReadRelative<uint>((uint)Pointers.Globals.CursorType) == 53)
             {
                 return true;
             }
@@ -226,10 +232,10 @@ namespace LazyLib.Helpers
                 SetCursorPos(x, y);
             }
         }
-               
-        private static PGameObject<T> Bobber<T>() where T:struct, IEquatable<T>
+
+        private static PGameObject Bobber()
         {
-            return ObjectManager<T>.GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
+            return LazyLib.ServiceManager.Container.Resolve<IObjectManager>().GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
         }
     }
 }

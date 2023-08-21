@@ -14,6 +14,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
     You should have received a copy of the GNU General Public License
     along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,9 +22,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using LazyLib.Wow;
-using LazyLib;
-using LazyLib.Helpers;
 
 namespace LazyLib.Helpers
 {

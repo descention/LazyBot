@@ -1,26 +1,26 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 #region
 
+using LazyLib.Wow;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using LazyLib.Wow;
 
 #endregion
 
@@ -105,7 +105,8 @@ namespace LazyLib.Helpers
                     FindNewMessages();
                     _listLastChat = new List<string>(_listCurrentChat);
                 }
-            } catch {}
+            }
+            catch { }
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace LazyLib.Helpers
                     ChatMsg msg = ParseChatMsg(_listCurrentChat[i]);
                     if (NewChatMessage != null)
                     {
-                        NewChatMessage(this, new GChatEventArgs {Msg = msg});
+                        NewChatMessage(this, new GChatEventArgs { Msg = msg });
                     }
                     _listCompleteChat.Add(msg);
                     _listLastestChat.Add(msg);
@@ -142,7 +143,7 @@ namespace LazyLib.Helpers
                 int pos1 = strChatMsg.IndexOf("Type: [") + 7;
                 int pos2 = strChatMsg.IndexOf("]", pos1);
                 if (!(pos1 > 0 || pos2 > 0)) return new ChatMsg();
-                sMsg.Type = (Constants.ChatType) Int32.Parse(strChatMsg.Substring(pos1, pos2 - pos1));
+                sMsg.Type = (Constants.ChatType)Int32.Parse(strChatMsg.Substring(pos1, pos2 - pos1));
 
                 pos1 = strChatMsg.IndexOf("Channel: [") + 10;
                 pos2 = strChatMsg.IndexOf("]", pos1);

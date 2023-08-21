@@ -1,48 +1,45 @@
 ﻿
-﻿/*
+/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
-    LazyBot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   LazyBot is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    LazyBot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   LazyBot is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
-#region
 
+using LazyLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using LazyLib.Helpers;
-
-#endregion
-using LazyLib.Wow;
+using Unity;
 
 namespace LazyLib.Wow
 {
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public static class ObjectManager<T> where T : struct, IEquatable<T>
+    public class ObjectManager : IObjectManager 
     {
-        private static Process[] _wowProc = Process.GetProcessesByName("Wow");
+        private static Process[] _wowProc = GetProcesses().ToArray();
         private static int _processPid;
         private static Thread _refresher;
         private static Thread _monitor;
         private static bool _alearted;
         private static readonly object Locker = new object();
-        private static List<PObject<T>> ObjectList { get; set; }
-        private static Dictionary<T, PObject<T>> ObjectDictionary { get; set; }
-        public static IntPtr WowHandle { get; set; }
-        public static PPlayerSelf<T> MyPlayer { get; private set; }
+        private static List<PObject> ObjectList { get; set; }
+        private static Dictionary<T, PObject> ObjectDictionary { get; set; }
+        public IntPtr WowHandle { get; set; }
+        public PPlayerSelf MyPlayer { get; private set; }
         public static bool Initialized { get; private set; }
         public static bool Closing { get; set; }
         public static bool ForceIngame { get; set; }
@@ -64,7 +61,7 @@ namespace LazyLib.Wow
                         return true;
                     }
                     return Memory.ReadRelative<byte>((uint)GamePointers.InGame) == 1;
-                    //1 ingame 0 not ingame
+                    // 1 ingame 0 not ingame
                 }
                 catch
                 {
@@ -73,7 +70,7 @@ namespace LazyLib.Wow
             }
         }
 
-        public static bool ShouldDefend
+        public bool ShouldDefend
         {
             get
             {
@@ -89,15 +86,15 @@ namespace LazyLib.Wow
         ///<summary>
         ///  Returns the closest GUnit attacking you or you pet
         ///</summary>
-        public static PUnit<T> GetClosestAttacker
+        public static PUnit GetClosestAttacker
         {
             get
             {
-                PUnit<T> closestAttacker = null;
+                PUnit closestAttacker = null;
                 try
                 {
-                    List<PUnit<T>> units = GetAttackers;
-                    foreach (PUnit<T> u in units)
+                    List<PUnit> units = GetAttackers;
+                    foreach (PUnit u in units)
                     {
                         if (closestAttacker == null) closestAttacker = u;
                         else if (u.DistanceToSelf < closestAttacker.DistanceToSelf) closestAttacker = u;
@@ -113,11 +110,11 @@ namespace LazyLib.Wow
         ///<summary>
         ///  Returns a List of all units that are targeting you or your pet.
         ///</summary>
-        public static List<PUnit<T>> GetAttackers
+        public static List<PUnit> GetAttackers
         {
             get
             {
-                var returnList = new List<PUnit<T>>();
+                var returnList = new List<PUnit>();
                 try
                 {
                     returnList.AddRange(GetUnits.Where(AttackingMeOrPet));
@@ -133,13 +130,13 @@ namespace LazyLib.Wow
         ///   Gets the get objects.
         /// </summary>
         /// <value>The get objects.</value>
-        public static List<PObject<T>> GetObjects
+        public static List<PObject> GetObjects
         {
             get
             {
                 lock (Locker)
                 {
-                    return ObjectList.OfType<PObject<T>>().ToList();
+                    return ObjectList.OfType<PObject>().ToList();
                 }
             }
         }
@@ -148,13 +145,13 @@ namespace LazyLib.Wow
         ///   Gets the get items.
         /// </summary>
         /// <value>The get items.</value>
-        public static List<PContainer<T>> GetContainers
+        public static List<PContainer> GetContainers
         {
             get
             {
                 lock (Locker)
                 {
-                    return ObjectList.OfType<PContainer<T>>().ToList();
+                    return ObjectList.OfType<PContainer>().ToList();
                 }
             }
         }
@@ -163,13 +160,13 @@ namespace LazyLib.Wow
         ///   Gets the get items.
         /// </summary>
         /// <value>The get items.</value>
-        public static List<PItem<T>> GetItems
+        public static List<PItem> GetItems
         {
             get
             {
                 lock (Locker)
                 {
-                    return ObjectList.OfType<PItem<T>>().ToList();
+                    return ObjectList.OfType<PItem>().ToList();
                 }
             }
         }
@@ -178,13 +175,13 @@ namespace LazyLib.Wow
         ///   Gets the get players.
         /// </summary>
         /// <value>The get players.</value>
-        public static List<PPlayer<T>> GetPlayers
+        public static List<PPlayer> GetPlayers
         {
             get
             {
                 lock (Locker)
                 {
-                    return ObjectList.OfType<PPlayer<T>>().ToList();
+                    return ObjectList.OfType<PPlayer>().ToList();
                 }
             }
         }
@@ -193,14 +190,14 @@ namespace LazyLib.Wow
         ///   Gets the get units.
         /// </summary>
         /// <value>The get units.</value>
-        public static List<PUnit<T>> GetUnits
+        public List<PUnit> GetUnits
         {
             get
             {
                 lock (Locker)
                 {
                     return
-                        ObjectList.OfType<PUnit<T>>().ToList().Where(wowObject => !wowObject.GUID.Equals(MyPlayer.GUID)).
+                        ObjectList.OfType<PUnit>().ToList().Where(wowObject => !wowObject.GUID.Equals(MyPlayer.GUID)).
                             ToList();
                 }
             }
@@ -210,12 +207,12 @@ namespace LazyLib.Wow
         ///   Gets the get game object.
         /// </summary>
         /// <value>The get game object.</value>
-        public static List<PGameObject<T>> GetGameObject
+        public List<PGameObject> GetGameObject
         {
             get
             {
-                List<PObject<T>> objects = GetObjects;
-                return objects.OfType<PGameObject<T>>().ToList();
+                List<PObject> objects = GetObjects;
+                return objects.OfType<PGameObject>().ToList();
             }
         }
 
@@ -230,9 +227,14 @@ namespace LazyLib.Wow
         {
             lock (_wowProc)
             {
-                _wowProc = Process.GetProcessesByName("Wow");
+                _wowProc = GetProcesses().ToArray();
             }
             return _wowProc.Any(proc => proc.Id.Equals(pid));
+        }
+
+        public static IEnumerable<Process> GetProcesses()
+        {
+            return Process.GetProcesses().Where(t => t.ProcessName.Contains("Wow"));
         }
 
         #endregion
@@ -242,19 +244,19 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name="guid">The GUID.</param>
         /// <returns></returns>
-        public static PObject<T> GetObjectByGuid(T guid)
+        public static PObject GetObjectByGuid(T guid)
         {
             lock (Locker)
             {
-                return ObjectList.OfType<PObject<T>>().Where(wowObject => wowObject.GUID.Equals(guid)).FirstOrDefault();
+                return ObjectList.OfType<PObject>().Where(wowObject => wowObject.GUID.Equals(guid)).FirstOrDefault();
             }
         }
 
-        public static void MakeReady()
+        public void MakeReady()
         {
-            ObjectList = new List<PObject<T>>();
-            ObjectDictionary = new Dictionary<T, PObject<T>>();
-            MyPlayer = new PPlayerSelf<T>(0);
+            ObjectList = new List<PObject>();
+            ObjectDictionary = new Dictionary<T, PObject>();
+            MyPlayer = new PPlayerSelf(0);
             _monitor = new Thread(Monitor) { IsBackground = true };
             _monitor.Name = "ObjectManager";
             _monitor.Start();
@@ -276,9 +278,9 @@ namespace LazyLib.Wow
                     ReadObjectList();
 
                     // Clear out old references.
-                    List<T> toRemove = (from o in ObjectDictionary
-                                              where !o.Value.IsValid
-                                              select o.Key).ToList();
+                    List toRemove = (from o in ObjectDictionary
+                                        where !o.Value.IsValid
+                                        select o.Key).ToList();
                     foreach (T guid in toRemove)
                     {
                         ObjectDictionary.Remove(guid);
@@ -295,8 +297,8 @@ namespace LazyLib.Wow
 
         private static void ReadObjectList()
         {
-            var currentObject = new PObject<T>(Memory.Read<uint>(CurrentManager + (uint)GamePointers.FirstObject));
-            LocalGUID = Memory.Read<T>(CurrentManager + (uint)GamePointers.LocalGUID);
+            var currentObject = new PObject(Memory.Read<uint>(CurrentManager + (uint)GamePointers.FirstObject));
+            LocalGUID = Memory.Read(CurrentManager + (uint)GamePointers.LocalGUID);
             while (currentObject.BaseAddress != UInt32.MinValue &&
                    currentObject.BaseAddress % 2 == UInt32.MinValue)
             {
@@ -308,29 +310,29 @@ namespace LazyLib.Wow
                 }
                 if (!ObjectDictionary.ContainsKey(currentObject.GUID))
                 {
-                    PObject<T> obj = null;
+                    PObject obj = null;
                     // Add the object based on it's *actual* type. Note: WoW's Object descriptors for OBJECT_FIELD_TYPE
                     // is a bitmask. We want to use the type at 0x14, as it's an 'absolute' type.
                     switch (currentObject.Type)
                     {
                         // Belive it or not, the base Object class is hardly used in WoW.
                         case (int)Constants.ObjectType.Object:
-                            obj = new PObject<T>(currentObject.BaseAddress);
+                            obj = new PObject(currentObject.BaseAddress);
                             break;
                         case Constants.ObjectType.Unit:
-                            obj = new PUnit<T>(currentObject.BaseAddress);
+                            obj = new PUnit(currentObject.BaseAddress);
                             break;
                         case Constants.ObjectType.Player:
-                            obj = new PPlayer<T>(currentObject.BaseAddress);
+                            obj = new PPlayer(currentObject.BaseAddress);
                             break;
                         case Constants.ObjectType.GameObject:
-                            obj = new PGameObject<T>(currentObject.BaseAddress);
+                            obj = new PGameObject(currentObject.BaseAddress);
                             break;
                         case Constants.ObjectType.Item:
-                            obj = new PItem<T>(currentObject.BaseAddress);
+                            obj = new PItem(currentObject.BaseAddress);
                             break;
                         case Constants.ObjectType.Container:
-                            obj = new PContainer<T>(currentObject.BaseAddress);
+                            obj = new PContainer(currentObject.BaseAddress);
                             break;
                         // These two aren't used in most bots, as they're fairly pointless.
                         // They are AI and area triggers for NPCs handled by the client itself.
@@ -365,23 +367,28 @@ namespace LazyLib.Wow
         /// <param name = "pid">The World of Warcraft process ID.</param>
         public static void Initialize(int pid)
         {
-            ObjectList = new List<PObject<T>>();
+            ObjectList = new List<PObject>();
             if (DoesProcessExsist(pid))
             {
+                LazyLib.ServiceManager.Container.RegisterType<IObjectManager, LazyLib.Wow.ObjectManager>(lifetimeManager: TypeLifetime.Singleton);
+                var _objectManager = LazyLib.ServiceManager.Container.Resolve<IObjectManager>();
                 Memory.OpenProcess(pid);
                 _processPid = pid;
                 InterfaceHelper.StartUpdate();
+                
                 if (InGame)
                 {
                     try
                     {
                         CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint)GamePointers.CurMgrPointer) + (uint)GamePointers.CurMgrOffset);
+                        
                         LocalGUID = Memory.Read<T>(CurrentManager + (uint)GamePointers.LocalGUID);
+
                         //Logging.Write(string.Format("[Player] Local GUID: {0}", LocalGUID));
                         if (CurrentManager != UInt32.MinValue && CurrentManager != UInt32.MaxValue)
                         {
                             Initialized = true;
-                            WowHandle = Memory.ProcessHandle;
+                            _objectManager.WowHandle = Memory.ProcessHandle;
                         }
                         if (_refresher != null)
                             if (_refresher.IsAlive)
@@ -517,11 +524,11 @@ namespace LazyLib.Wow
         ///   Gets the closest hostile unit
         /// </summary>
         /// <returns></returns>
-        public static PUnit<T> GetClosestUnit(List<PUnit<T>> units)
+        public static PUnit GetClosestUnit(List<PUnit> units)
         {
-            PUnit<T> toReturn = null;
+            PUnit toReturn = null;
             double distance = double.MaxValue;
-            foreach (PUnit<T> selectMonster in units)
+            foreach (PUnit selectMonster in units)
             {
                 if (!selectMonster.Reaction.Equals(Reaction.Hostile))
                     continue;
@@ -557,7 +564,7 @@ namespace LazyLib.Wow
         ///   Gets the likely adds.
         /// </summary>
         /// <returns></returns>
-        public static List<PUnit<T>> GetLikelyAdds(int distance)
+        public static List<PUnit> GetLikelyAdds(int distance)
         {
             return
                 GetUnits.Where(
@@ -595,7 +602,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "u">The unit.</param>
         /// <returns></returns>
-        public static bool TargetingMeOrPet(PUnit<T> u)
+        public static bool TargetingMeOrPet(PUnit u)
         {
             if (u == null || MyPlayer == null)
             {
@@ -621,24 +628,24 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "u">The unit.</param>
         /// <returns></returns>
-        public static bool AttackingMeOrPet(PUnit<T> u)
+        public static bool AttackingMeOrPet(PUnit u)
         {
             //return TargetingMeOrPet(u) && u.InCombat && (u.IsAutoAttacking || u.IsCasting);
             return TargetingMeOrPet(u) && u.InCombat;
         }
 
         /// <summary>
-        ///   Gets the closest attacker other than the PUnit<T> specified. .
+        ///   Gets the closest attacker other than the PUnit specified. .
         /// </summary>
-        /// <param name = "exclude">The PUnit<T> to exclude.</param>
+        /// <param name = "exclude">The PUnit to exclude.</param>
         /// <returns></returns>
-        public static PUnit<T> GetClosestAttackerExclude(PUnit<T> exclude)
+        public static PUnit GetClosestAttackerExclude(PUnit exclude)
         {
-            PUnit<T> closestAttacker = null;
+            PUnit closestAttacker = null;
             try
             {
-                List<PUnit<T>> units = GetAttackers;
-                foreach (PUnit<T> u in units)
+                List<PUnit> units = GetAttackers;
+                foreach (PUnit u in units)
                 {
                     if (!u.GUID.Equals(exclude.GUID))
                     {
@@ -661,7 +668,7 @@ namespace LazyLib.Wow
         /// <returns>
         ///   <c>true</c> if [is it safe at] [the specified ignore]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsItSafeAt(ulong ignore, PUnit<T> u)
+        public static bool IsItSafeAt(ulong ignore, PUnit u)
         {
             return IsItSafeAt(ignore, u.Location);
         }
@@ -676,7 +683,7 @@ namespace LazyLib.Wow
         /// </returns>
         public static bool IsItSafeAt(ulong ignore, Location l)
         {
-            List<PUnit<T>> mobs = CheckForMobsAtLoc(l, 15.0f, false); // Setting for radius?
+            List<PUnit> mobs = CheckForMobsAtLoc(l, 15.0f, false); // Setting for radius?
             return mobs.Where(mob => !mob.GUID.Equals(ignore)).All(mob => mob.IsDead || mob.TargetGUID.Equals(0));
         }
 
@@ -687,10 +694,10 @@ namespace LazyLib.Wow
         /// <param name = "radius">The radius.</param>
         /// <param name = "includeFriendly">if set to <c>true</c> [include friendly units].</param>
         /// <returns></returns>
-        public static List<PUnit<T>> CheckForMobsAtLoc(Location l, float radius, bool includeFriendly)
+        public static List<PUnit> CheckForMobsAtLoc(Location l, float radius, bool includeFriendly)
         {
-            var returns = new List<PUnit<T>>();
-            List<PUnit<T>> mobs = GetUnits;
+            var returns = new List<PUnit>();
+            List<PUnit> mobs = GetUnits;
             if (l != null)
             {
                 if (mobs.Count > 0)
@@ -738,9 +745,9 @@ namespace LazyLib.Wow
             ReadObjectList();
 
             // Clear out old references.
-            List<T> toRemove = (from o in ObjectDictionary
-                                      where !o.Value.IsValid
-                                      select o.Key).ToList();
+            List toRemove = (from o in ObjectDictionary
+                                where !o.Value.IsValid
+                                select o.Key).ToList();
             foreach (T guid in toRemove)
             {
                 ObjectDictionary.Remove(guid);
