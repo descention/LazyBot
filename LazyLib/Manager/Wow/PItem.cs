@@ -31,7 +31,7 @@ namespace LazyLib.Wow
     ///   Contains all information related to a WowItem.
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PItem : PObject
+    public class PItem<T> : PObject<T>
     {
         public PItem(uint baseAddress)
             : base(baseAddress)

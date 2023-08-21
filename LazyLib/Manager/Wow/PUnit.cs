@@ -36,7 +36,7 @@ namespace LazyLib.Wow
     ///   Representing a unit ingame
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PUnit : PObject
+    public class PUnit<T> : PObject<T>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PUnit" /> class.

@@ -32,7 +32,7 @@ namespace LazyLib.Wow
     ///   Representing a player
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayer : PUnit
+    public class PPlayer<T> : PUnit<T>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PPlayer" /> class.

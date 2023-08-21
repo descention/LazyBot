@@ -33,7 +33,7 @@ namespace LazyLib.Wow
     ///   Representing us ingame
     /// </summary>
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
-    public class PPlayerSelf : PPlayer
+    public class PPlayerSelf<T> : PPlayer<T>
     {
         private readonly uint[] _healthStone = new uint[] {  0x901c, 0x901e, 0x901d, 0x9019, 0x901b, 0x901a, 0x5659, 0x5657, 0x5658, 0x24cd, 0x4a45, 0x4a44, 0x4a43, 0x4a42, 0x1586, 0x1585, 0x1587, 0x1588, 0x4a3d, 0x4a3c, 0x4a41, 0x4a40, 0x4a3f};
 
@@ -64,7 +64,7 @@ namespace LazyLib.Wow
 
         public bool HasAttackers
         {
-            get { return ObjectManager.GetAttackers.Count != 0; }
+            get { return ObjectManager<T>.GetAttackers.Count != 0; }
         }
 
         public int CoinAge
@@ -114,7 +114,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                PItem item = ObjectManager.MyPlayer.MainHand;
+                PItem<T> item = ObjectManager<T>.MyPlayer.MainHand;
                 if (item == null)
                     return true;
                 return item.TempEnchants.Any(oneEnchant => oneEnchant != 0);
@@ -125,7 +125,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                PItem item = ObjectManager.MyPlayer.OffHand;
+                PItem<T> item = ObjectManager<T>.MyPlayer.OffHand;
                 if (item == null)
                     return true;
                 foreach (uint oneEnchant in item.TempEnchants)
@@ -142,11 +142,11 @@ namespace LazyLib.Wow
             get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BagSlotFlags); }
         }
 
-        internal List<UInt128> GUIDOfItemsInBag
+        internal List<T> GUIDOfItemsInBag
         {
             get
             {
-                var guids = new List<UInt128>();
+                var guids = new List<T>();
                 const int numberOfItems = 16;
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
@@ -209,11 +209,11 @@ namespace LazyLib.Wow
         ///   Returns a item pointer to the mainhand
         /// </summary>
         /// <value>The main hand.</value>
-        public PItem MainHand
+        public PItem<T> MainHand
         {
             get
             {
-                foreach (PItem pItem in ObjectManager.GetItems)
+                foreach (PItem<T> pItem in ObjectManager<T>.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
