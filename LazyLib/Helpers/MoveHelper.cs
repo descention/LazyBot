@@ -298,7 +298,7 @@ namespace LazyLib.Helpers
             return _rotateLeft;
         }
 
-        public static bool MoveToUnit(PUnit targetObject, double distance, bool dummy)
+        public static bool MoveToUnit<T>(PUnit<T> targetObject, double distance, bool dummy) where T: struct, IEquatable<T>
         {
             return MoveToUnit(targetObject, distance);
         }
@@ -309,7 +309,7 @@ namespace LazyLib.Helpers
         /// <param name = "targetObject">The unit to approach.</param>
         /// <param name = "distance">The distance.</param>
         /// <returns>Returns true on sucess</returns>
-        public static bool MoveToUnit(PUnit targetObject, double distance)
+        public static bool MoveToUnit<T>(PUnit<T> targetObject, double distance) where T: struct, IEquatable<T>
         {
             //Start by facing
             Location oldPos = ObjectManager<T>.MyPlayer.Location;

@@ -83,9 +83,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Numerics">
-      <HintPath>..\..\..\..\cp\Downloads\System.Numerics.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Numerics"/>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -96,13 +94,8 @@
     <Compile Include="ActionBar\KeyType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\GameVersionAttribute.cs" />
+    <Compile Include="Attributes\*.cs" />
     <Compile Include="GeomertrySettings.cs" />
-    <Compile Include="Helpers\Camera.cs" />
-    <Compile Include="Helpers\ChatQueu.cs" />
-    <Compile Include="Helpers\XmlSerializer.cs" />
-    <Compile Include="Helpers\Timeout.cs" />
-    <Compile Include="Helpers\Fishing.cs" />
     <Compile Include="Helpers\Mail\MailFrame.cs" />
     <Compile Include="Helpers\Mail\MailList.cs" />
     <Compile Include="Helpers\Mail\MailManager.cs" />
@@ -111,35 +104,12 @@
     <Compile Include="Helpers\Vendor\ProtectedList.cs" />
     <Compile Include="Helpers\Vendor\VendorManager.cs" />
     <Compile Include="Helpers\Wowhead.cs" />
-    <Compile Include="Interfaces\IGamePointers.cs" />
+    <Compile Include="Interfaces\*.cs" />
     <Compile Include="LActivity\Resting.cs" />
-    <Compile Include="Combat\CombatEngine.cs" />
-    <Compile Include="ActionBar\BarItem.cs" />
-    <Compile Include="Combat\PAction.cs" />
-    <Compile Include="Combat\PDamageAction.cs" />
-    <Compile Include="Combat\PSelfBuffAction.cs" />
-    <Compile Include="Combat\PSelfHealAction.cs" />
-    <Compile Include="Helpers\Chat.cs" />
-    <Compile Include="Helpers\Inventory.cs" />
-    <Compile Include="Helpers\KeyBindings.cs" />
-    <Compile Include="Helpers\MicrosoftVirtualKeys.cs" />
-    <Compile Include="Helpers\GamePosition.cs" />
-    <Compile Include="IEngine\ILazyEngine.cs" />
-    <Compile Include="FSM\Engine.cs" />
-    <Compile Include="FSM\MainState.cs" />
-    <Compile Include="FSM\StateIdle.cs" />
-    <Compile Include="Helpers\Frame.cs" />
-    <Compile Include="Helpers\InterfaceHelper.cs" />
-    <Compile Include="Helpers\ItemHelper.cs" />
-    <Compile Include="Helpers\KeyHelper.cs" />
-    <Compile Include="Helpers\KeyWrapper.cs" />
-    <Compile Include="Helpers\Langs.cs" />
-    <Compile Include="Helpers\LazyMath.cs" />
-    <Compile Include="Helpers\KeyLowHelper.cs" />
-    <Compile Include="ActionBar\BarMapper.cs" />
-    <Compile Include="Helpers\MouseHelper.cs" />
-    <Compile Include="Helpers\MoveHelper.cs" />
-    <Compile Include="IPlugin\ILazyPlugin.cs" />
+    <Compile Include="Combat\*.cs" />
+    <Compile Include="IEngine\*.cs" />
+    <Compile Include="FSM\*.cs" />
+    <Compile Include="IPlugin\*.cs" />
     <Compile Include="LazyRadar\Drawer\DrawEnemies.cs" />
     <Compile Include="LazyRadar\Drawer\DrawFriends.cs" />
     <Compile Include="LazyRadar\Drawer\DrawObjects.cs" />
@@ -154,42 +124,12 @@
     </Compile>
     <Compile Include="Logging.cs" />
     <Compile Include="LogType.cs" />
-    <Compile Include="Manager\BlueChat.cs" />
-    <Compile Include="Manager\UNIT128.cs" />
-    <Compile Include="Manager\Constants.cs" />
-    <Compile Include="Manager\Descriptors.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Manager\Wow\DBC!1.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Manager\Wow\DBCHeader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Manager\Wow\Location.cs" />
-    <Compile Include="Helpers\Memory.cs" />
-    <Compile Include="Manager\ObjectManager.cs" />
-    <Compile Include="Manager\Wow\NodeType.cs" />
-    <Compile Include="Manager\Wow\PContainer.cs" />
-    <Compile Include="Manager\Wow\PGameObject.cs" />
-    <Compile Include="Manager\Wow\PItem.cs" />
-    <Compile Include="Manager\Wow\PObject.cs" />
-    <Compile Include="Manager\Wow\PPlayer.cs" />
-    <Compile Include="Manager\Wow\PPlayerSelf.cs" />
-    <Compile Include="Manager\Wow\PUnit.cs" />
-    <Compile Include="Manager\Wow\Faction.cs" />
-    <Compile Include="Manager\Pointers.cs" />
-    <Compile Include="Helpers\IniManager.cs" />
-    <Compile Include="ActionBar\BarSpell.cs" />
-    <Compile Include="Manager\Wow\Reaction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Manager\Wow\WoWClientDB.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PInvoke\User32.cs" />
+    <Compile Include="Helpers\*.cs" />
+    <Compile Include="Manager\*\*.cs" />
+    <Compile Include="Manager\**.cs" />
+    <Compile Include="ActionBar\*.cs" />
+    <Compile Include="PInvoke\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\Ticker.cs" />
     <Compile Include="LazySettings.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -203,7 +143,6 @@
     <Compile Include="UnhandledExceptionDlg\UnhandledExDlgForm.Designer.cs">
       <DependentUpon>UnhandledExDlgForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LazyRadar\RadarForm.resx">

@@ -264,19 +264,15 @@ namespace LazyLib.ActionBar
             Spell.CastSpell();
         }
 
-        [DllImport("KERNEL32")]
-        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-
-        [DllImport("Kernel32.dll")]
-        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
+        
 
 
         private static bool IsSpellReady(int spellidToCheck)
         {
             long frequency;
             long perfCount;
-            QueryPerformanceFrequency(out frequency);
-            QueryPerformanceCounter(out perfCount);
+            Kernel32.QueryPerformanceFrequency(out frequency);
+            Kernel32.QueryPerformanceCounter(out perfCount);
             //Current time in ms
             long currentTime = (perfCount * 1000) / frequency;
             //Get first list object
@@ -304,7 +300,7 @@ namespace LazyLib.ActionBar
             return true;
         }
 
-        public static bool HasBuff(PUnit check, string name)
+        public static bool HasBuff<T>(PUnit<T> check, string name)where T: struct, IEquatable<T>
         {
             List<int> idsFromName = BarMapper.GetIdsFromName(name);
             return ObjectManager<T>.Initialized && check.HasBuff(idsFromName);

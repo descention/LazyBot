@@ -53,7 +53,7 @@ namespace LazyLib.Combat
         {
         }
 
-        public abstract PullResult Pull(PUnit target);
+        public abstract PullResult Pull<T>(PUnit<T> target) where T: struct, IEquatable<T>;
 
         public virtual void Rest()
         {
@@ -63,7 +63,7 @@ namespace LazyLib.Combat
         {
         }
 
-        public abstract void Combat(PUnit target);
+        public abstract void Combat<T>(PUnit<T> target) where T: struct, IEquatable<T>;
         public abstract Form Settings();
 
         public virtual void OnRess()
@@ -123,7 +123,7 @@ namespace LazyLib.Combat
             }
         }
 
-        public virtual void LogicAttack(PUnit target, PPlayer<T> player = null)
+        public virtual void LogicAttack<T>(PUnit<T> target, PPlayer<T> player = null) where T:struct, IEquatable<T>
         {
             try
             {

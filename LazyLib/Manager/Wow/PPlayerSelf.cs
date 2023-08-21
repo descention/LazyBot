@@ -150,7 +150,7 @@ namespace LazyLib.Wow
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
                 {
-                    guids.Add(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
+                    guids.Add(GetStorageField<T>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
                     //Logging.Write(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i) + "");
                 }
                 return guids;

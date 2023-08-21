@@ -20,7 +20,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.Wow;
-using LazyLib.Manager;
 using System;
 
 namespace LazyLib.Helpers
@@ -134,7 +133,7 @@ namespace LazyLib.Helpers
             }
         }
 
-        private static void FindTheBobber(Location loc, UInt128 guid)
+        private static void FindTheBobber<T>(Location loc, T guid) where T:struct, IEquatable<T>
         {
             Point worldToScreen = Camera.World2Screen.WorldToScreen(loc, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);
@@ -228,7 +227,7 @@ namespace LazyLib.Helpers
             }
         }
                
-        private static PGameObject<T> Bobber()
+        private static PGameObject<T> Bobber<T>() where T:struct, IEquatable<T>
         {
             return ObjectManager<T>.GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
         }

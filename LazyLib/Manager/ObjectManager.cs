@@ -27,7 +27,6 @@ using LazyLib.Helpers;
 
 #endregion
 using LazyLib.Wow;
-using LazyLib.Manager;
 
 namespace LazyLib.Wow
 {

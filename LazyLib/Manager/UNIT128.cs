@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace LazyLib.Manager
 {
-    public struct UInt1281 : IFormattable, IComparable, IComparable<UInt1281>, IEquatable<UInt1281>
+    public struct UInt128 : IFormattable, IComparable, IComparable<UInt128>, IEquatable<UInt128>
     {
         private struct UInt256
         {

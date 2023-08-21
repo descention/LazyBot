@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using LazyLib.ActionBar;
 using LazyLib.Helpers;
+using LazyLib.PInvoke;
 //using LazyLib.Helpers.DBCReads;
 
 #endregion
@@ -434,7 +435,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return Wow.Faction.GetReaction(ObjectManager<T>.MyPlayer, this);
+                return Wow.Faction.GetReaction<T>(ObjectManager<T>.MyPlayer, this);
             }
         }
 
@@ -1972,8 +1973,8 @@ namespace LazyLib.Wow
                   var result = new List<WoWAura>();
                   long frequency;
                   long perfCount;
-                  QueryPerformanceFrequency(out frequency);
-                  QueryPerformanceCounter(out perfCount);
+                  Kernel32.QueryPerformanceFrequency(out frequency);
+                  Kernel32.QueryPerformanceCounter(out perfCount);
                   long currentTime = (perfCount * 1000) / frequency;
                   //Current time in ms
                   for (uint i = 0; i < auraCount; i++)

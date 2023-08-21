@@ -5,7 +5,7 @@ using LazyLib;
 
 namespace LazyLib.Wow
 {
-    internal class Faction<T> where T: struct, IEquatable<T>
+    internal class Faction<T>
     {
         private static Reaction CompareFactionHash(uint localBitHash, uint mobBitHash)
         {
@@ -29,7 +29,7 @@ namespace LazyLib.Wow
             return Reaction.Neutral;
         }
 
-        public static Reaction GetReaction(PUnit<T> localObj, PUnit<T> mobObj)
+        public Reaction GetReaction<T>(PUnit<T> localObj, PUnit<T> mobObj) where T: struct, IEquatable<T>
         {
             DBC<IntPtr> dbc = new DBC<IntPtr>((IntPtr)(uint)Pointers.Reaction.DBCPtrFactionTemplate);
             try

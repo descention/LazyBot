@@ -297,7 +297,7 @@ namespace LazyLib.Helpers.Mail
             return false;
         }
 
-        private static void RetryMailOpen(PGameObject<T> node)
+        private static void RetryMailOpen<T>(PGameObject<T> node) where T:struct, IEquatable<T>
         {
             MoveHelper.StrafeLeft(true);
             Thread.Sleep(500);

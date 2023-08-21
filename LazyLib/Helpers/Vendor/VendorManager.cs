@@ -67,7 +67,7 @@ namespace LazyLib.Helpers.Vendor
                 }
             }
         }
-        public static void DoSell(PUnit vendor)
+        public static void DoSell<T>(PUnit<T> vendor) where T:struct, IEquatable<T>
         {
             try
             {
