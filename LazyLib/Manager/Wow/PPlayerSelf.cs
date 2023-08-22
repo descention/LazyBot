@@ -141,7 +141,7 @@ namespace LazyLib.Wow
             get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BagSlotFlags); }
         }
 
-        internal List GUIDOfItemsInBag
+        internal List<T> GUIDOfItemsInBag
         {
             get
             {

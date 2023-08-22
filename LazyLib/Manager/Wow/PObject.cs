@@ -95,7 +95,7 @@
         {
             try
             {
-                return this.GetStorageField((uint)field);
+                return this.GetStorageField<T>((uint)field);
             }
             catch (Exception exception)
             {
@@ -117,6 +117,25 @@
             }
         }
 
+        /// <summary>
+        /// Get an array of object from storage fields
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        protected T[] GetStorageFields<T>(uint field) where T : struct
+        {
+            try
+            {
+                return (T[])Memory.ReadObject(this.StorageField + (field * 4), typeof(T[]));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("DO NOT POST THIS WARNING ON THE FORUM! ONLY DEBUG!: " + exception);
+                return default;
+            }
+        }
+
         public bool Interact(bool multiclick)
         {
             return InteractOrTarget(multiclick);
@@ -124,7 +143,7 @@
 
         public bool InteractOrTarget(bool multiclick)
         {
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
             {
                 KeyHelper.SendKey("InteractWithMouseOver");
                 return true;
@@ -149,7 +168,7 @@
             Thread.Sleep(50);
             KeyHelper.SendKey("InteractWithMouseOver");
             Thread.Sleep(500);
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             return false;
         }
@@ -240,7 +259,7 @@
             }
         }
 
-        private static bool Search(T guid, int yValue)
+        private static bool Search(byte[] guid, int yValue)
         {
             if (ObjectManager.ShouldDefend)
                 return true;
@@ -360,15 +379,16 @@
             }
         }
 
-        public virtual T GUID
+        public virtual byte[] GUID
         {
             get
             {
                 if (this.IsValid)
                 {
-                    return this.GetStorageField((uint)Descriptors.CGObjectData.Guid);
+                    return this.GetStorageField<byte[]>((uint)Descriptors.CGObjectData.Guid);
                 }
-                return new T();
+                var byteArraySize = ServiceManager.Container.Resolve<IGamePointers>()?.GuidByteArraySize ?? 8;
+                return new byte[byteArraySize];
             }
         }
 

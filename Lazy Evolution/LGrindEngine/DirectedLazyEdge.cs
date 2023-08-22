@@ -18,7 +18,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 using System;
 using System.Reflection;
 using LazyLib.Wow;
-using QuickGraph;
+using static LazyEvo.LGrindEngine.QuickGraph;
 
 namespace LazyEvo.LGrindEngine
 {

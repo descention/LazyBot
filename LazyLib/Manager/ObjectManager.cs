@@ -44,7 +44,7 @@ namespace LazyLib.Wow
         public static bool Closing { get; set; }
         public static bool ForceIngame { get; set; }
 
-        public static IGamePointers GamePointers { get; set; }
+        public static IGamePointers GamePointers => ServiceManager.Container.Resolve<IGamePointers>();
 
         /// <summary>
         ///   Gets a value indicating whether [in game].
@@ -60,7 +60,7 @@ namespace LazyLib.Wow
                     {
                         return true;
                     }
-                    return Memory.ReadRelative<byte>((uint)GamePointers.InGame) == 1;
+                    return Memory.ReadRelative<byte>((uint)GamePointers.GameState) == 1;
                     // 1 ingame 0 not ingame
                 }
                 catch
@@ -110,7 +110,7 @@ namespace LazyLib.Wow
         ///<summary>
         ///  Returns a List of all units that are targeting you or your pet.
         ///</summary>
-        public static List<PUnit> GetAttackers
+        public List<PUnit> GetAttackers
         {
             get
             {
@@ -130,7 +130,7 @@ namespace LazyLib.Wow
         ///   Gets the get objects.
         /// </summary>
         /// <value>The get objects.</value>
-        public static List<PObject> GetObjects
+        public List<PObject> GetObjects
         {
             get
             {
@@ -145,7 +145,7 @@ namespace LazyLib.Wow
         ///   Gets the get items.
         /// </summary>
         /// <value>The get items.</value>
-        public static List<PContainer> GetContainers
+        public List<PContainer> GetContainers
         {
             get
             {
@@ -160,7 +160,7 @@ namespace LazyLib.Wow
         ///   Gets the get items.
         /// </summary>
         /// <value>The get items.</value>
-        public static List<PItem> GetItems
+        public List<PItem> GetItems
         {
             get
             {
@@ -175,7 +175,7 @@ namespace LazyLib.Wow
         ///   Gets the get players.
         /// </summary>
         /// <value>The get players.</value>
-        public static List<PPlayer> GetPlayers
+        public List<PPlayer> GetPlayers
         {
             get
             {
@@ -244,7 +244,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name="guid">The GUID.</param>
         /// <returns></returns>
-        public static PObject GetObjectByGuid(T guid)
+        public static PObject GetObjectByGuid<T>(T guid)
         {
             lock (Locker)
             {

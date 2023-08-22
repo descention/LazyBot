@@ -11,5 +11,10 @@ namespace LazyLib
         bool ShouldDefend { get; }
         List<PUnit> GetUnits { get; }
         IntPtr WowHandle { get; set; }
+        List<PUnit> GetAttackers { get; }
+        List<PObject> GetObjects { get; }
+        List<PContainer> GetContainers { get; }
+        List<PItem> GetItems { get; }
+        List<PPlayer> GetPlayers { get; }
     }
 }
