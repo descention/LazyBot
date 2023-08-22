@@ -19,11 +19,14 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using LazyEvo.Forms.Helpers;
 using LazyLib;
 using LazyLib.Helpers;
+using LazyLib.Manager;
 using LazyLib.Wow;
 
 #endregion
@@ -32,8 +35,7 @@ namespace LazyEvo.Forms
 {
     internal partial class Selector : Office2007Form
     {
-        private Process[] _wowProc = Process.GetProcessesByName("Wow");
-
+        private Process[] _wowProc = Process.GetProcesses().Where(t => t.ProcessName.Contains("Wow")).ToArray();
         public Selector()
         {
             InitializeComponent();
@@ -64,7 +66,7 @@ namespace LazyEvo.Forms
         private void RefreshProcess()
         {
             SelectProcess.Items.Clear();
-            _wowProc = Process.GetProcessesByName("Wow");
+            _wowProc = Process.GetProcesses().Where(t => t.ProcessName.Contains("Wow")).ToArray();
             foreach (Process proc in _wowProc)
             {
                 GetName(proc);
@@ -76,20 +78,35 @@ namespace LazyEvo.Forms
 
         private void GetName(Process proc)
         {
+            var build = proc.MainModule.FileVersionInfo.FilePrivatePart;
             if (Memory.OpenProcess(proc.Id))
             {
                 string name = "Not ingame";
                 try
                 {
-                    if (Memory.Read<byte>(Memory.BaseAddress + (uint) PublicPointers.InGame.InGame) == 1)
+                    var matchingTypes = typeof(IGamePointers).Assembly
+                        .GetTypes()
+                        .Where(type =>
+                            typeof(IGamePointers).IsAssignableFrom(type) &&
+                            type.GetCustomAttributes(typeof(GameVersionAttribute), true).Cast<GameVersionAttribute>().SingleOrDefault()?.Build == build);
+                    if (matchingTypes?.Any() == true)
                     {
-                        try
+                        var pointerClass = (IGamePointers)Activator.CreateInstance(matchingTypes.SingleOrDefault());
+
+                        if (Memory.Read<byte>(Memory.BaseAddress + (uint)pointerClass.InGame) == 1)
                         {
-                            name = Memory.ReadUtf8(Memory.BaseAddress + (uint) PublicPointers.Globals.PlayerName, 256);
+                            try
+                            {
+                                name = Memory.ReadUtf8(Memory.BaseAddress + (uint)pointerClass.PlayerName, 256);
+                            }
+                            catch
+                            {
+                            }
                         }
-                        catch
-                        {
-                        }
+                    }
+                    else
+                    {
+                        name = $"Unsupported client {build}";
                     }
                 }
                 catch
