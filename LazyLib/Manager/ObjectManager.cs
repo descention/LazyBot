@@ -17,6 +17,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 */
 
 using LazyLib.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,14 +33,20 @@ namespace LazyLib.Wow
     {
         private static Process[] _wowProc = GetProcesses().ToArray();
         private static int _processPid;
-        private static Thread _refresher;
-        private static Thread _monitor;
+        private Thread _refresher = new Thread(Pulse) { 
+            IsBackground = true,
+            Name = "Pulse"
+        };
+        private Thread _monitor = new Thread(Monitor) { 
+            IsBackground = true, 
+            Name = "ObjectManager" 
+        };
+
         private static bool _alearted;
         private static readonly object Locker = new object();
-        private static List<PObject> ObjectList { get; set; }
-        private static Dictionary<T, PObject> ObjectDictionary { get; set; }
+        private static List<PObject> ObjectList { get; set; } = new List<PObject>();
         public IntPtr WowHandle { get; set; }
-        public PPlayerSelf MyPlayer { get; private set; }
+        public PPlayerSelf MyPlayer { get; private set; } = new PPlayerSelf(0);
         public static bool Initialized { get; private set; }
         public static bool Closing { get; set; }
         public static bool ForceIngame { get; set; }
@@ -86,7 +93,7 @@ namespace LazyLib.Wow
         ///<summary>
         ///  Returns the closest GUnit attacking you or you pet
         ///</summary>
-        public static PUnit GetClosestAttacker
+        public PUnit GetClosestAttacker
         {
             get
             {
@@ -254,11 +261,6 @@ namespace LazyLib.Wow
 
         public void MakeReady()
         {
-            ObjectList = new List<PObject>();
-            ObjectDictionary = new Dictionary<T, PObject>();
-            MyPlayer = new PPlayerSelf(0);
-            _monitor = new Thread(Monitor) { IsBackground = true };
-            _monitor.Name = "ObjectManager";
             _monitor.Start();
         }
 
@@ -266,51 +268,32 @@ namespace LazyLib.Wow
         {
             while (!Closing)
             {
+                var objectManager = ServiceManager.Container.Resolve<IObjectManager>();
                 lock (Locker)
                 {
-                    // Remove invalid objects.
-                    foreach (var o in ObjectDictionary)
-                    {
-                        o.Value.UpdateBaseAddress(uint.MinValue);
-                    }
-
                     // Fill the new list.
-                    ReadObjectList();
-
-                    // Clear out old references.
-                    List toRemove = (from o in ObjectDictionary
-                                        where !o.Value.IsValid
-                                        select o.Key).ToList();
-                    foreach (T guid in toRemove)
-                    {
-                        ObjectDictionary.Remove(guid);
-                    }
-
-                    // All done! Just make sure we pass up a valid list to the ObjectList.
-                    ObjectList = (from o in ObjectDictionary
-                                  where o.Value.IsValid
-                                  select o.Value).ToList();
+                    objectManager.Refresh();
                 }
                 Thread.Sleep(700);
             }
         }
 
-        private static void ReadObjectList()
+        private void ReadObjectList()
         {
-            var currentObject = new PObject(Memory.Read<uint>(CurrentManager + (uint)GamePointers.FirstObject));
-            LocalGUID = Memory.Read(CurrentManager + (uint)GamePointers.LocalGUID);
-            while (currentObject.BaseAddress != UInt32.MinValue &&
-                   currentObject.BaseAddress % 2 == UInt32.MinValue)
+            var currentObject = new PObject(Memory.Read<uint>(CurrentManager + GamePointers.EntityList));
+            LocalGUID = Memory.Read<byte[]>(CurrentManager + GamePointers.LocalPlayer);
+            while (currentObject.BaseAddress != uint.MinValue &&
+                   currentObject.BaseAddress % 2 == uint.MinValue)
             {
                 // Keep the static reference to the local player updated... at all times.
-                if (currentObject.GUID.Equals(LocalGUID))
+                if (currentObject.GUID.SequenceEqual(LocalGUID))
                 {
                     //MessageBox.Show("Found localplayer! 0x" + currentObject.ToString("X8"));
                     MyPlayer.UpdateBaseAddress(currentObject.BaseAddress);
                 }
-                if (!ObjectDictionary.ContainsKey(currentObject.GUID))
+                if (!ObjectList.Any(t=> t.GUID.SequenceEqual(currentObject.GUID)))
                 {
-                    PObject obj = null;
+                    PObject? obj = default;
                     // Add the object based on it's *actual* type. Note: WoW's Object descriptors for OBJECT_FIELD_TYPE
                     // is a bitmask. We want to use the type at 0x14, as it's an 'absolute' type.
                     switch (currentObject.Type)
@@ -340,22 +323,29 @@ namespace LazyLib.Wow
                         case Constants.ObjectType.AreaTrigger:
                             break;
                     }
-                    if (obj != null)
+
+                    if (obj?.IsValid == true)
                     {
                         // We have a valid object that isn't in the object list already.
                         // So lets add it.
-                        ObjectDictionary.Add(currentObject.GUID, obj);
+                        ObjectList.Add(obj);
                     }
                 }
                 else
                 {
-                    // The object already exists, just update the pointer.
-                    ObjectDictionary[currentObject.GUID].UpdateBaseAddress(currentObject.BaseAddress);
+                    var existingObject = ObjectList.SingleOrDefault(t => t.GUID.SequenceEqual(currentObject.GUID));
+                    if (existingObject?.IsValid == true)
+                    {
+                        // The object already exists, just update the pointer.
+                        ObjectList.SingleOrDefault(t => t.GUID.SequenceEqual(currentObject.GUID))?.UpdateBaseAddress(currentObject.BaseAddress);
+                    }
                 }
                 // We need the next object.
-                currentObject.BaseAddress =
-                    Memory.Read<uint>(currentObject.BaseAddress + (uint)GamePointers.NextObject);
+                currentObject.BaseAddress = Memory.Read<uint>(currentObject.BaseAddress + GamePointers.NextEntity);
             }
+
+            // remove all invalid objects
+            ObjectList = ObjectList.Where(t=>t.IsValid).ToList();
         }
 
         public static event EventHandler<NotifyEventAttach> Attach;
@@ -380,9 +370,9 @@ namespace LazyLib.Wow
                 {
                     try
                     {
-                        CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint)GamePointers.CurMgrPointer) + (uint)GamePointers.CurMgrOffset);
+                        CurrentManager = Memory.Read<uint>(Memory.ReadRelative<uint>((uint)ServiceManager.TestOffsets.ObjMgr) + (uint)ServiceManager.TestOffsets.CurMgr);
                         
-                        LocalGUID = Memory.Read<T>(CurrentManager + (uint)GamePointers.LocalGUID);
+                        LocalGUID = Memory.Read<byte[]>(CurrentManager + (uint)ServiceManager.TestOffsets.LocalGUID);
 
                         //Logging.Write(string.Format("[Player] Local GUID: {0}", LocalGUID));
                         if (CurrentManager != UInt32.MinValue && CurrentManager != UInt32.MaxValue)
@@ -396,8 +386,6 @@ namespace LazyLib.Wow
                                 _refresher.Abort();
                                 _refresher = null;
                             }
-                        _refresher = new Thread(Pulse) { IsBackground = true };
-                        _refresher.Name = "Pulse";
                         _refresher.Start();
                         if (Attach != null)
                         {
@@ -545,7 +533,7 @@ namespace LazyLib.Wow
         ///   GetNumAttackers - tells you how many attackers you have
         /// </summary>
         /// <returns></returns>
-        public static int GetNumAttackers()
+        public int GetNumAttackers()
         {
             return GetAttackers.Count;
         }
@@ -555,7 +543,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "pRangeToCheck">The p range to check.</param>
         /// <returns></returns>
-        public static int AttackersInRange(double pRangeToCheck)
+        public int AttackersInRange(double pRangeToCheck)
         {
             return GetAttackers.Count(attacker => attacker.Location.DistanceToSelf < pRangeToCheck);
         }
@@ -592,7 +580,7 @@ namespace LazyLib.Wow
         /// <returns>
         ///   <c>true</c> if this instance has attackers; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasAttackers()
+        public bool HasAttackers()
         {
             return GetAttackers.Count != 0;
         }
@@ -602,7 +590,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "u">The unit.</param>
         /// <returns></returns>
-        public static bool TargetingMeOrPet(PUnit u)
+        public bool TargetingMeOrPet(PUnit u)
         {
             if (u == null || MyPlayer == null)
             {
@@ -729,34 +717,14 @@ namespace LazyLib.Wow
 
         #region <Properties>
 
-        public static T LocalGUID { get; set; }
+        public static byte[] LocalGUID { get; set; }
 
         #endregion
 
-        public static void Refresh()
+        public void Refresh()
         {
-            // Remove invalid objects.
-            foreach (var o in ObjectDictionary)
-            {
-                o.Value.UpdateBaseAddress(uint.MinValue);
-            }
-
             // Fill the new list.
             ReadObjectList();
-
-            // Clear out old references.
-            List toRemove = (from o in ObjectDictionary
-                                where !o.Value.IsValid
-                                select o.Key).ToList();
-            foreach (T guid in toRemove)
-            {
-                ObjectDictionary.Remove(guid);
-            }
-
-            // All done! Just make sure we pass up a valid list to the ObjectList.
-            ObjectList = (from o in ObjectDictionary
-                          where o.Value.IsValid
-                          select o.Value).ToList();
         }
     }
 

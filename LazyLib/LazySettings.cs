@@ -16,10 +16,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using LazyLib.Helpers;
-using System;
-using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace LazyLib
 {
@@ -95,8 +92,8 @@ namespace LazyLib
 
         public static void LoadSettings()
         {
-            var executableFileInfo = new FileInfo(Application.ExecutablePath);
-            string executableDirectoryName = executableFileInfo.DirectoryName;
+            var executableFileInfo = "";// new FileInfo(Application.ExecutablePath);
+            string executableDirectoryName = "";// executableFileInfo.DirectoryName;
             OurDirectory = executableDirectoryName;
             var pIniManager = new IniManager(OurDirectory + SettingsName);
             SelectedEngine = pIniManager.GetString("Engine", "Selected", string.Empty);
@@ -162,8 +159,8 @@ namespace LazyLib
 
         public static void SaveSettings()
         {
-            var executableFileInfo = new FileInfo(Application.ExecutablePath);
-            string executableDirectoryName = executableFileInfo.DirectoryName;
+            var executableFileInfo = "";// new FileInfo(Application.ExecutablePath);
+            string executableDirectoryName = "";// executableFileInfo.DirectoryName;
             OurDirectory = executableDirectoryName;
             var pIniManager = new IniManager(OurDirectory + SettingsName);
             pIniManager.IniWriteValue("Engine", "Selected", SelectedEngine);

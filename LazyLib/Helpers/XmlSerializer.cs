@@ -5,9 +5,9 @@ namespace LazyLib.Helpers
 {
     public class XmlSerializer
     {
-        public static T Deserialize(string Path)
+        public static T Deserialize<T>(string Path)
         {
-            T local = Activator.CreateInstance();
+            T local = Activator.CreateInstance<T>();
             try
             {
                 FileStream stream = new FileStream(Path, FileMode.Open);
@@ -22,9 +22,9 @@ namespace LazyLib.Helpers
             }
         }
 
-        public static T DeserializeWithData(string Data)
+        public static T DeserializeWithData<T>(string Data)
         {
-            T local = Activator.CreateInstance();
+            T local = Activator.CreateInstance<T>();
             try
             {
                 StringReader textReader = new StringReader(Data);

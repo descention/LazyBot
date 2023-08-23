@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 
 #endregion
 
@@ -80,7 +79,7 @@ namespace LazyLib.FSM
                 States.Clear();
         }
 
-        private static void Run()
+        private static async Task Run()
         {
             try
             {
@@ -104,7 +103,12 @@ namespace LazyLib.FSM
                             Thread.Sleep(100);
                             _engine.Resume();
                         }
-                        foreach (MainState state in States.Where(state => state.NeedToRun))
+
+                        var needToRun = States
+                            .Where(state => state.NeedToRun)
+                            .OrderByDescending(t => t.Priority);
+
+                        foreach (MainState state in needToRun)
                         {
                             if (LastState != state)
                             {
@@ -114,7 +118,7 @@ namespace LazyLib.FSM
                                     Logging.Debug("State changed: " + state.Name());
                                 }
                             }
-                            state.DoWork();
+                            await state.DoWork();
                             LastState = state;
                             break;
                         }
@@ -134,8 +138,6 @@ namespace LazyLib.FSM
                         }
                         Thread.Sleep(4000);
                     }
-                    Thread.Sleep(1);
-                    Application.DoEvents();
                 }
             }
             catch (ThreadAbortException)

@@ -16,11 +16,8 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using LazyLib.FSM;
-using LazyLib.LazyRadar;
-using LazyLib.LazyRadar.Drawer;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace LazyLib.IEngine
 {
@@ -29,8 +26,6 @@ namespace LazyLib.IEngine
     {
         string Name { get; }
         List<MainState> States { get; }
-        Form Settings { get; }
-        Form ProfileForm { get; }
 
         /// <summary>
         /// Load the basic stuff that will not change and does not depend on attach state of the bot

@@ -63,7 +63,7 @@ namespace LazyLib.Wow
 
         public bool HasAttackers
         {
-            get { return ObjectManager.GetAttackers.Count != 0; }
+            get { return _objectManager.GetAttackers.Count != 0; }
         }
 
         public int CoinAge
@@ -113,7 +113,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                PItem item = ObjectManager.MyPlayer.MainHand;
+                PItem item = _objectManager.MyPlayer.MainHand;
                 if (item == null)
                     return true;
                 return item.TempEnchants.Any(oneEnchant => oneEnchant != 0);
@@ -124,7 +124,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                PItem item = ObjectManager.MyPlayer.OffHand;
+                PItem item = _objectManager.MyPlayer.OffHand;
                 if (item == null)
                     return true;
                 foreach (uint oneEnchant in item.TempEnchants)
@@ -141,16 +141,16 @@ namespace LazyLib.Wow
             get { return GetStorageField<int>((uint)Descriptors.CGPlayerData.BagSlotFlags); }
         }
 
-        internal List<T> GUIDOfItemsInBag
+        internal List<byte[]> GUIDOfItemsInBag
         {
             get
             {
-                var guids = new List();
+                var guids = new List<byte[]>();
                 const int numberOfItems = 16;
                 uint i;
                 for (i = 0; i < numberOfItems; i++)
                 {
-                    guids.Add(GetStorageField((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
+                    guids.Add(GetStorageFields<byte>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i));
                     //Logging.Write(GetStorageField<ulong>((uint)Descriptors.CGPlayerData.InvSlots + 0x8 * i) + "");
                 }
                 return guids;
@@ -212,7 +212,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                foreach (PItem pItem in ObjectManager.GetItems)
+                foreach (PItem pItem in _objectManager.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
@@ -233,7 +233,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                foreach (PItem pItem in ObjectManager.GetItems)
+                foreach (PItem pItem in _objectManager.GetItems)
                 {
                     if (
                         pItem.EntryId.Equals(
@@ -253,7 +253,7 @@ namespace LazyLib.Wow
         /// <value>The mage refreshment.</value>
         public int MageRefreshment
         {
-            get { return ObjectManager.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
+            get { return _objectManager.GetItems.Count(var => _mageFood.Contains(var.EntryId)); }
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace LazyLib.Wow
         /// <value>The health stone count.</value>
         public int HealthStoneCount
         {
-            get { return ObjectManager.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
+            get { return _objectManager.GetItems.Count(var => _healthStone.Contains(var.EntryId)); }
         }
 
         /// <summary>

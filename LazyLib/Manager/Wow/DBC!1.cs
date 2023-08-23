@@ -5,7 +5,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public class DBC : IEnumerable, IEnumerable where T : struct
+    public class DBC<T> : IEnumerable where T : struct
     {
         private readonly WoWClientDB m_dbInfo;
         private readonly DBCFile m_fileHdr;
@@ -80,7 +80,7 @@
             get
             {
                 IntPtr[] addresses = new IntPtr[] { this.GetRowPtr(index) };
-                return Memory.Read(addresses);
+                return Memory.Read<T>(addresses);
             }
         }
 
@@ -119,7 +119,7 @@
             else
             {
                 for (int i = 0; i < NumRows; ++i)
-                    yield return Memory.Read(new IntPtr(m_dbInfo.FirstRow.ToInt64() + (i * m_fileHdr.RecordSize)));
+                    yield return Memory.Read<T>(new IntPtr(m_dbInfo.FirstRow.ToInt64() + (i * m_fileHdr.RecordSize)));
             }
         }
 

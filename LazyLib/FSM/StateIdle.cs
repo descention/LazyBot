@@ -41,7 +41,7 @@ namespace LazyLib.FSM
          *
          */
 
-        public override void DoWork()
+        public override async Task DoWork()
         {
         }
 

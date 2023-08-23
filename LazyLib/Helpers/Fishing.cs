@@ -139,7 +139,7 @@ namespace LazyLib.Helpers
             }
         }
 
-        private static void FindTheBobber(Location loc, T guid) 
+        private static void FindTheBobber(Location loc)
         {
             Point worldToScreen = Camera.World2Screen.WorldToScreen(loc, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);
@@ -214,11 +214,12 @@ namespace LazyLib.Helpers
 
         private static bool IsMouseOverBobber()
         {
-            if (Memory.ReadRelative<uint>((uint)Pointers.Globals.CursorType) == 53)
-            {
-                return true;
-            }
-            return false;
+            throw new NotImplementedException();
+            //if (Memory.ReadRelative<uint>((uint)Pointers.Globals.CursorType) == 53)
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
         private static void MoveMouse(int x, int y)

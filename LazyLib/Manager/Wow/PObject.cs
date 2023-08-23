@@ -7,7 +7,6 @@
     using System.Drawing;
     using System.Reflection;
     using System.Threading;
-    using System.Windows.Forms;
     using Unity;
 
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
@@ -16,7 +15,7 @@
         private static Point _oldPoint;
         private const int iRestore = 9;
         private const int iShow = 5;
-        private readonly IObjectManager _objectManager;
+        protected readonly IObjectManager _objectManager;
         public PObject(uint baseAddress)
         {
             this.BaseAddress = baseAddress;
@@ -398,7 +397,7 @@
         {
             get
             {
-                if (!GUID.Equals(ObjectManager.MyPlayer.GUID))
+                if (!GUID.Equals(_objectManager.MyPlayer.GUID))
                 {
                     return false;
                 }

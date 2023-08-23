@@ -56,8 +56,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (MoveHelper.NegativeAngle(Facing - ObjectManager.MyPlayer.Facing) > 5.5 ||
-                    MoveHelper.NegativeAngle(Facing - ObjectManager.MyPlayer.Facing) < 0.6)
+                if (MoveHelper.NegativeAngle(Facing - _objectManager.MyPlayer.Facing) > 5.5 ||
+                    MoveHelper.NegativeAngle(Facing - _objectManager.MyPlayer.Facing) < 0.6)
                     return true;
                 return false;
             }
@@ -73,7 +73,7 @@ namespace LazyLib.Wow
             {
                 float wowFacing =
                     MoveHelper.NegativeAngle(
-                        (float)Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X)));
+                        (float)Math.Atan2((Y - _objectManager.MyPlayer.Y), (X - _objectManager.MyPlayer.X)));
                 return wowFacing;
             }
         }
@@ -434,7 +434,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return Wow.Faction.GetReaction(ObjectManager.MyPlayer, this);
+                return Wow.Faction.GetReaction(_objectManager.MyPlayer, this);
             }
         }
 
@@ -445,7 +445,7 @@ namespace LazyLib.Wow
         /// <value><c>true</c> if this instance is player; otherwise, <c>false</c>.</value>
         public bool IsPlayer
         {
-            get { return ObjectManager.GetPlayers.Any(player => player.GUID.Equals(GUID)); }
+            get { return _objectManager.GetPlayers.Any(player => player.GUID.Equals(GUID)); }
         }
 
         /// <summary>
@@ -474,7 +474,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    return ObjectManager.GetPlayers.Where(cur => cur.HasLivePet).Any(cur => cur.PetGUID.Equals(GUID));
+                    return _objectManager.GetPlayers.Where(cur => cur.HasLivePet).Any(cur => cur.PetGUID.Equals(GUID));
                 }
                 catch
                 {
@@ -499,9 +499,9 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
-                        return ObjectManager.MyPlayer;
-                    foreach (PUnit u in ObjectManager.GetUnits)
+                    if (TargetGUID.Equals(_objectManager.MyPlayer.GUID))
+                        return _objectManager.MyPlayer;
+                    foreach (PUnit u in _objectManager.GetUnits)
                     {
                         try
                         {
@@ -526,9 +526,9 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    if (TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
+                    if (TargetGUID.Equals(_objectManager.MyPlayer.GUID))
                         return true;
-                    if (ObjectManager.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
+                    if (_objectManager.GetUnits.Any(u => u.GUID.Equals(TargetGUID)))
                     {
                         return true;
                     }
@@ -1002,7 +1002,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField((uint)Descriptors.CGUnitData.CharmedBy);
+                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CharmedBy);
             }
         }
 
@@ -1013,7 +1013,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField((uint)Descriptors.CGUnitData.SummonedBy);
+                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.SummonedBy);
             }
         }
 
@@ -1024,7 +1024,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                return base.GetStorageField((uint)Descriptors.CGUnitData.CreatedBy);
+                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CreatedBy);
             }
         }
 
@@ -1731,7 +1731,7 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.GUID))
+                if (Target != null && Target.TargetGUID.Equals(_objectManager.MyPlayer.GUID))
                     return true;
                 return false;
             }
@@ -1747,8 +1747,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (!ObjectManager.MyPlayer.HasLivePet) return false;
-                if (Target != null && Target.TargetGUID.Equals(ObjectManager.MyPlayer.TargetGUID))
+                if (!_objectManager.MyPlayer.HasLivePet) return false;
+                if (Target != null && Target.TargetGUID.Equals(_objectManager.MyPlayer.TargetGUID))
                     return true;
                 return false;
             }
@@ -1811,7 +1811,7 @@ namespace LazyLib.Wow
             {
                 try
                 {
-                    foreach (PUnit obj in ObjectManager.GetObjects.OfType<PUnit>())
+                    foreach (PUnit obj in _objectManager.GetObjects.OfType<PUnit>())
                     {
                         if (obj.SummonedBy.Equals(GUID))
                         {
@@ -1898,7 +1898,7 @@ namespace LazyLib.Wow
             try
             {
                 var auras = GetAuras;
-                return auras.Any(woWAura => buff == woWAura.SpellId && (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.PetGUID)));
+                return auras.Any(woWAura => buff == woWAura.SpellId && (woWAura.OwnerGUID.Equals(_objectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(_objectManager.MyPlayer.PetGUID)));
             }
             catch
             {
@@ -1923,7 +1923,7 @@ namespace LazyLib.Wow
             }
             var auras = GetAuras;
             List<int> buf = BarMapper.GetIdsFromName(buff);
-            return auras.Any(woWAura => buf.Contains(woWAura.SpellId) && (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(ObjectManager.MyPlayer.PetGUID)));
+            return auras.Any(woWAura => buf.Contains(woWAura.SpellId) && (woWAura.OwnerGUID.Equals(_objectManager.MyPlayer.GUID)) || (woWAura.OwnerGUID.Equals(_objectManager.MyPlayer.PetGUID)));
         }
 
         /// <summary>
@@ -2039,7 +2039,7 @@ namespace LazyLib.Wow
         /// <returns>true if sucess</returns>
         public bool TargetFriend()
         {
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             // Logging.Write("[Unit]TargetingF: " + Name);
             if (IsDead)
@@ -2047,12 +2047,12 @@ namespace LazyLib.Wow
             Face();
             var timer = new Ticker(600);
             Thread.Sleep(500);
-            while (!ObjectManager.MyPlayer.TargetGUID.Equals(GUID) && !timer.IsReady)
+            while (!_objectManager.MyPlayer.TargetGUID.Equals(GUID) && !timer.IsReady)
             {
                 KeyHelper.SendKey("TargetFriend");
                 Thread.Sleep(1000);
             }
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
             {
                 Face();
                 return true;
@@ -2080,7 +2080,7 @@ namespace LazyLib.Wow
         /// <returns>true if sucess</returns>
         public bool TargetHostile()
         {
-            if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+            if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
                 return true;
             Logging.Write("[Unit]TargetingH: " + Name);
             if (IsDead)
@@ -2097,7 +2097,7 @@ namespace LazyLib.Wow
             var t = new Ticker(4 * 1000);
             while (!t.IsReady)
             {
-                if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+                if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
                 {
                     return true;
                 }
@@ -2121,7 +2121,7 @@ namespace LazyLib.Wow
             var t = new Ticker(4 * 1000);
             while (!t.IsReady)
             {
-                if (ObjectManager.MyPlayer.TargetGUID.Equals(GUID))
+                if (_objectManager.MyPlayer.TargetGUID.Equals(GUID))
                 {
                     return true;
                 }

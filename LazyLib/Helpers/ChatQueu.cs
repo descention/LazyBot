@@ -24,18 +24,17 @@ namespace LazyLib.Helpers
     [Obfuscation(Feature = "renaming", ApplyToMembers = true)]
     public class ChatQueu
     {
-        private static readonly List<string> Queue = new List<string>();
+        private static object LockObject = new object();
+        private static readonly Queue<string> Queue = new Queue<string>();
         public static string GetItem
         {
             get
             {
-                lock (Queue)
+                lock (LockObject)
                 {
-                    if (Queue.Count != 0)
+                    if (Queue.Any())
                     {
-                        string mes = Queue[0];
-                        Queue.RemoveAt(0);
-                        return mes;
+                        return Queue.Dequeue();
                     }
                 }
                 return "";
@@ -46,7 +45,7 @@ namespace LazyLib.Helpers
         {
             get
             {
-                lock (Queue)
+                lock (LockObject)
                 {
                     return Queue.Count;
                 }
@@ -55,9 +54,9 @@ namespace LazyLib.Helpers
 
         public static void AddChat(string message)
         {
-            lock (Queue)
+            lock (LockObject)
             {
-                Queue.Add(message);
+                Queue.Enqueue(message);
             }
         }
     }

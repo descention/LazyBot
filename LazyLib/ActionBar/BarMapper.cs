@@ -205,7 +205,7 @@ namespace LazyLib.ActionBar
                 if (wowKey.Type.Equals(KeyType.Item))
                 {
                     BarItems.Add(new BarItem(wowKey.ItemId, wowKey.Bar, wowKey.Key));
-                    Logging.Debug(string.Format("Found item: {0} : {1} : {2}", ItemHelper.GetNameById((uint)wowKey.ItemId), wowKey.Bar, wowKey.Key));
+                    //Logging.Debug(string.Format("Found item: {0} : {1} : {2}", ItemHelper.GetNameById((uint)wowKey.ItemId), wowKey.Bar, wowKey.Key));
                 }
             }
             LoadedKeys.Clear();

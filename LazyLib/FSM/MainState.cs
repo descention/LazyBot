@@ -52,7 +52,7 @@ namespace LazyLib.FSM
 
         #endregion
 
-        public abstract void DoWork();
+        public abstract Task DoWork();
 
         public abstract string Name();
 

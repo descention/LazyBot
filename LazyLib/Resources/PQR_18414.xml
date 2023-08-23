@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Offsets>
+	<CurrentWoWVersion>18414</CurrentWoWVersion>
+	<WoWVersionOffset>0xC7B6EF</WoWVersionOffset>
+	<PlayerName>0xEC4668</PlayerName>
+	<PlayerClass>0xEC47F1</PlayerClass>
+	<GetCurrentKeyBoardFocus>0xBB292C</GetCurrentKeyBoardFocus>
+	<GameState>0xD65B16</GameState>
+	<Lua_DoStringAddress>0x4FD12</Lua_DoStringAddress>
+	<Lua_GetLocalizedTextAddress>0x414267</Lua_GetLocalizedTextAddress>
+	<CVarBaseMgr>0xBA5DE8</CVarBaseMgr>
+	<CVarArraySize>0x400</CVarArraySize>
+	<ObjMgr>0xEC4628</ObjMgr>
+	<CurMgr>0x462C</CurMgr>
+	<ClntObjMgrGetActivePlayerObjAddress>0x4F84</ClntObjMgrGetActivePlayerObjAddress>
+	<LocalGUID>0xE8</LocalGUID>
+	<FirstObject>0xCC</FirstObject>
+	<NextObject>0x34</NextObject>
+	<Descriptors>0x4</Descriptors>
+	<Obj_TypeOffset>0xC</Obj_TypeOffset>
+	<Obj_X>0x838</Obj_X>
+	<Obj_TargetGUID>0x16</Obj_TargetGUID>
+	<ClickTerrain>0</ClickTerrain>
+</Offsets>
