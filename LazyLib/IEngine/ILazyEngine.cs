@@ -42,7 +42,5 @@ namespace LazyLib.IEngine
         void Close();
         void Pause();
         void Resume();
-        List<IDrawItem> GetRadarDraw();
-        List<IMouseClick> GetRadarClick();
     }
 }

@@ -1,5 +1,6 @@
 using LazyLib.Interfaces;
 using LazyLib.Pointers;
+using LazyLib.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,18 +12,24 @@ namespace LazyLib
 {
     public static class ServiceManager
     {
-        public static IUnityContainer Container = new UnityContainer();
-        
+        static IHost toast;
+        public static IServiceProvider Provider => toast.Services;
+
         public static IServiceCollection AddLibServices(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IObjectManager, Wow.ObjectManager>();
+                .AddSingleton<IObjectManager, Wow.ObjectManager>()
+                .AddHostedService<PulseWorker>();
         }
 
-        public static IConfigurationBuilder AddConfiguration(this IConfigurationBuilder builder)
+        public static IHost LibHostBuilder(string[] args)
         {
-            
-            return builder;
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+            builder.Services
+                .AddLibServices();
+
+            toast = builder.Build();
+            return toast;
         }
 
         private static IPqrOffsets? pqrOffsets = null;

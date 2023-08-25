@@ -998,33 +998,33 @@ namespace LazyLib.Wow
         /// <summary>
         ///   The GUID of the object this unit is charmed by.
         /// </summary>
-        public T CharmedBy
+        public byte[] CharmedBy
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CharmedBy);
+                return base.GetStorageFields<byte>((uint)Descriptors.CGUnitData.CharmedBy);
             }
         }
 
         /// <summary>
         ///   The GUID of the object this unit is summoned by.
         /// </summary>
-        public T SummonedBy
+        public byte[] SummonedBy
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.SummonedBy);
+                return base.GetStorageFields<byte>((uint)Descriptors.CGUnitData.SummonedBy);
             }
         }
 
         /// <summary>
         ///   The GUID of the object this unit was created by.
         /// </summary>
-        public T CreatedBy
+        public byte[] CreatedBy
         {
             get
             {
-                return base.GetStorageField<T>((uint)Descriptors.CGUnitData.CreatedBy);
+                return base.GetStorageFields<byte>((uint)Descriptors.CGUnitData.CreatedBy);
             }
         }
 
@@ -1713,11 +1713,11 @@ namespace LazyLib.Wow
         /// <summary>
         ///   The GUID of the object this unit is targeting.
         /// </summary>
-        public T TargetGUID
+        public byte[] TargetGUID
         {
             get
             {
-                return base.GetStorageField((uint)Descriptors.CGUnitData.Target);
+                return base.GetStorageFields<byte>((uint)Descriptors.CGUnitData.Target);
             }
         }
 
@@ -1760,7 +1760,7 @@ namespace LazyLib.Wow
         /// <remarks>
         ///   Does not look at non combat pets
         /// </remarks>
-        public virtual T PetGUID
+        public virtual byte[] PetGUID
         {
             get
             {
@@ -1772,7 +1772,7 @@ namespace LazyLib.Wow
                     }
                 }
                 catch { }
-                return new T();
+                return new byte[0];
             }
         }
 
@@ -1981,21 +1981,21 @@ namespace LazyLib.Wow
                     int localSpellId;
                     byte stackCount;
                     uint timeLeft;
-                    T ownerGuid;
+                    byte[] ownerGuid;
                     if (Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraCount1) == -1)
                     {
                         var auraTable = Memory.Read<uint>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable2);
                         localSpellId = Memory.Read<int>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
                         stackCount = Memory.Read<byte>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
                         timeLeft = Memory.Read<uint>((auraTable + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                        ownerGuid = Memory.Read(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
+                        ownerGuid = Memory.Read<byte[]>(auraTable + (uint)Pointers.UnitAuras.AuraSize * i);
                     }
                     else
                     {
                         localSpellId = Memory.Read<int>(BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + (uint)Pointers.UnitAuras.AuraSize * i + (int)Pointers.UnitAuras.AuraSpellId);
                         stackCount = Memory.Read<byte>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.AuraStack);
                         timeLeft = Memory.Read<uint>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)) + (uint)Pointers.UnitAuras.TimeLeft);
-                        ownerGuid = Memory.Read((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
+                        ownerGuid = Memory.Read<byte[]>((BaseAddress + (uint)Pointers.UnitAuras.AuraTable1 + ((uint)Pointers.UnitAuras.AuraSize * i)));
                     }
                     if (localSpellId != 0)
                     {
@@ -2105,7 +2105,8 @@ namespace LazyLib.Wow
                 {
                     Location.Face();
                 }
-                Memory.Write(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, GUID);
+                // TODO fix writing later
+                //Memory.Write(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, GUID);
                 Thread.Sleep(50);
                 KeyHelper.SendKey("InteractWithMouseOver");
                 Thread.Sleep(500);
@@ -2271,7 +2272,7 @@ namespace LazyLib.Wow
             public int SpellId;
             public short Stack;
             public uint SecondsLeft;
-            public T OwnerGUID;
+            public byte[] OwnerGUID;
         }
 
         internal enum UnitNPCFlags2 : uint

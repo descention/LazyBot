@@ -82,30 +82,30 @@ namespace LazyLib.Helpers
             return result;
         }
 
-        public static bool AutoLoot
-        {
-            get
-            {
+        //public static bool AutoLoot
+        //{
+        //    get
+        //    {
 
-                return
-                    Memory.Read<uint>(
-                        Memory.ReadRelative<uint>((uint)Pointers.AutoLoot.Pointer) +
-                        (uint)Pointers.AutoLoot.Offset) == 1;
+        //        return
+        //            Memory.Read<uint>(
+        //                Memory.ReadRelative<uint>((uint)Pointers.AutoLoot.Pointer) +
+        //                (uint)Pointers.AutoLoot.Offset) == 1;
 
-            }
-        }
+        //    }
+        //}
 
-        public static bool ClickToMove
-        {
-            get
-            {
+        //public static bool ClickToMove
+        //{
+        //    get
+        //    {
 
-                return
-                    Memory.Read<uint>(
-                        Memory.ReadRelative<uint>((uint)Pointers.ClickToMove.Pointer) +
-                        (uint)Pointers.ClickToMove.Offset) == 1;
+        //        return
+        //            Memory.Read<uint>(
+        //                Memory.ReadRelative<uint>((uint)Pointers.ClickToMove.Pointer) +
+        //                (uint)Pointers.ClickToMove.Offset) == 1;
 
-            }
-        }
+        //    }
+        //}
     }
 }

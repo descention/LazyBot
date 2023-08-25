@@ -124,7 +124,7 @@ namespace LazyLib.Wow
                     while (index != 0x00)
                     {
                         var next = Memory.Read<int>((uint)(index + 0x0));
-                        var guid = Memory.Read((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
+                        var guid = Memory.Read<byte[]>((uint)(index + (uint)Pointers.UnitName.PlayerNameGUIDOffset));
                         if (guid.Equals(GUID))
                         {
                             string name = Memory.ReadUtf8((uint)(index + (uint)Pointers.UnitName.PlayerNameStringOffset), 40);

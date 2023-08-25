@@ -40,7 +40,7 @@ namespace LazyLib.Helpers
             _triedWorldToScreen = false;
             _saidSomethingManager = false;
             _tryingSearch = false;
-            var _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            var _objectManager = ServiceManager.Provider.GetService<IObjectManager>();
             while (_objectManager.MyPlayer.IsCasting)
             {
                 if (bobber != null)
@@ -67,12 +67,12 @@ namespace LazyLib.Helpers
                     }
                     else
                     {
-                        if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(bobber.GUID))
+                        if (!Memory.ReadObject(Memory.BaseAddress + (uint)Wow.Pointers.Globals.MouseOverGUID, typeof(ulong)).Equals(bobber.GUID))
                         {
                             if (!_triedWorldToScreen)
                             {
                                 Logging.Write("Trying world to screen");
-                                FindTheBobber(bobber.Location, bobber.GUID);
+                                FindTheBobber(bobber.Location);
                                 _triedWorldToScreen = true;
                             }
                             else
@@ -236,7 +236,7 @@ namespace LazyLib.Helpers
 
         private static PGameObject Bobber()
         {
-            return LazyLib.ServiceManager.Container.Resolve<IObjectManager>().GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
+            return LazyLib.ServiceManager.Provider.GetService<IObjectManager>().GetGameObject.FirstOrDefault(pGameObject => pGameObject.DisplayId == 0x29c);
         }
     }
 }

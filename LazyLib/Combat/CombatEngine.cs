@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 
 #endregion
 
@@ -64,7 +63,6 @@ namespace LazyLib.Combat
         }
 
         public abstract void Combat(PUnit target) ;
-        public abstract Form Settings();
 
         public virtual void OnRess()
         {

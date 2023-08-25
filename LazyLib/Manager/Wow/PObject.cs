@@ -19,12 +19,12 @@
         public PObject(uint baseAddress)
         {
             this.BaseAddress = baseAddress;
-            _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            _objectManager = ServiceManager.Provider.GetService<IObjectManager>();
         }
 
         private static bool DoSmallestSearch<T>(T guid)
         {
-            var _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            var _objectManager = ServiceManager.Provider.GetService<IObjectManager>();
             if (_objectManager.ShouldDefend)
                 return true;
             GamePosition.Findpos(Memory.WindowHandle);
@@ -57,36 +57,36 @@
             Point worldToScreen = Camera.World2Screen.WorldToScreen(Location, true);
             MoveMouse(worldToScreen.X, worldToScreen.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y - 15);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 15);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             Thread.Sleep(50);
             MoveMouse(MouseHelper.MousePosition.X - 15, MouseHelper.MousePosition.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X + 15, MouseHelper.MousePosition.Y);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 35);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 40);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
             MoveMouse(MouseHelper.MousePosition.X, MouseHelper.MousePosition.Y + 45);
             Thread.Sleep(50);
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(GUID))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(GUID))
                 return;
         }
 
@@ -149,8 +149,9 @@
             }
             if (!LazySettings.BackgroundMode)
             {
-                _oldPoint.X = Cursor.Position.X;
-                _oldPoint.Y = Cursor.Position.Y;
+                User32.GetCursorPos(out POINT position);
+                _oldPoint.X = position.X;
+                _oldPoint.Y = position.Y;
                 MouseHelper.Hook();
                 if (!LazySettings.HookMouse)
                 {
@@ -162,8 +163,11 @@
                 MouseHelper.ReleaseMouse();
                 return toReturn;
             }
+
+            // TODO fix writing later
             //We are using background mode lets do it the easy way.
-            Memory.Write(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, GUID);
+
+            //Memory.Write(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, GUID);
             Thread.Sleep(50);
             KeyHelper.SendKey("InteractWithMouseOver");
             Thread.Sleep(500);
@@ -186,12 +190,12 @@
         }
 
         //TODO: Do something to this functions, its freaking ugly
-        private static bool LetsSearch<T>(T guid, bool multiclick, bool click)
+        private bool LetsSearch(byte[] guid, bool multiclick, bool click)
         {
-            if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
+            if (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(guid))
             {
                 GamePosition.Findpos(Memory.WindowHandle);
-                if (!DoSmallestSearch<T>(guid))
+                if (!DoSmallestSearch(guid))
                     if (!Search(guid, GamePosition.Width / 16))
                         if (!Search(guid, GamePosition.Width / 12))
                             if (!Search(guid, GamePosition.Width / 10))
@@ -201,9 +205,9 @@
                                         // DoSmallSearch(guid);
                                     }
             }
-            if (ObjectManager.GetAttackers.Count != 0 && ObjectManager.ShouldDefend)
+            if (_objectManager.GetAttackers.Count != 0 && _objectManager.ShouldDefend)
                 return false;
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(guid))
             {
                 if (click)
                 {
@@ -258,18 +262,18 @@
             }
         }
 
-        private static bool Search(byte[] guid, int yValue)
+        private bool Search(byte[] guid, int yValue)
         {
-            if (ObjectManager.ShouldDefend)
+            if (_objectManager.ShouldDefend)
                 return true;
             int xOffset = 0;
             int yOffset = -yValue;
             bool right = true;
-            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
+            while (!Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(guid))
             {
                 MoveMouse(GamePosition.GetCenterX + xOffset, GamePosition.GetCenterY + yOffset);
                 Thread.Sleep(10);
-                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
+                if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(guid))
                     break;
                 if (right)
                 {
@@ -296,7 +300,7 @@
                     right = false;
                 }
             }
-            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(T)).Equals(guid))
+            if (Memory.ReadObject(Memory.BaseAddress + (uint)Pointers.Globals.MouseOverGUID, typeof(byte[])).Equals(guid))
                 return true;
             return false;
         }
@@ -384,10 +388,9 @@
             {
                 if (this.IsValid)
                 {
-                    return this.GetStorageField<byte[]>((uint)Descriptors.CGObjectData.Guid);
+                    return this.GetStorageFields<byte>((uint)Descriptors.CGObjectData.Guid);
                 }
-                var byteArraySize = ServiceManager.Container.Resolve<IGamePointers>()?.GuidByteArraySize ?? 8;
-                return new byte[byteArraySize];
+                return new byte[0];
             }
         }
 

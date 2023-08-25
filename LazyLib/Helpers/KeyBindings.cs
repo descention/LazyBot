@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 This file is part of LazyBot - Copyright (C) 2011 Arutha
 
    LazyBot is free software: you can redistribute it and/or modify
@@ -15,10 +14,6 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
    You should have received a copy of the GNU General Public License
    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
-using LazyLib.Wow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LazyLib.Helpers
 {
@@ -34,20 +29,20 @@ namespace LazyLib.Helpers
         internal static void LoadBindings()
         {
             var result = new List<KeyBinding>();
-            var numOfBindings = Memory.ReadRelative<uint>((uint)Pointers.KeyBinding.NumKeyBindings);
-            var firstBind = Memory.Read<uint>(numOfBindings + (uint)Pointers.KeyBinding.First);
+            var numOfBindings = Memory.ReadRelative<uint>((uint)Wow.Pointers.KeyBinding.NumKeyBindings);
+            var firstBind = Memory.Read<uint>(numOfBindings + (uint)Wow.Pointers.KeyBinding.First);
             uint nextBind = firstBind;
             while (nextBind != 0)
             {
-                string key = Memory.ReadUtf8(Memory.Read<uint>(nextBind + (uint)Pointers.KeyBinding.Key), 100);
-                string command = Memory.ReadUtf8(Memory.Read<uint>(nextBind + (uint)Pointers.KeyBinding.Command), 100);
+                string key = Memory.ReadUtf8(Memory.Read<uint>(nextBind + (uint)Wow.Pointers.KeyBinding.Key), 100);
+                string command = Memory.ReadUtf8(Memory.Read<uint>(nextBind + (uint)Wow.Pointers.KeyBinding.Command), 100);
                 if (key.Length > 0 && command.Length > 0)
                 {
                     var newKey = new KeyBinding { Command = command, Key = key };
                     // Logging.Write(string.Format("Command: {0} Key {1}", command, key));
                     result.Add(newKey);
                 }
-                nextBind = Memory.Read<uint>(nextBind + Memory.Read<uint>(numOfBindings + (uint)Pointers.KeyBinding.Next) + 4);
+                nextBind = Memory.Read<uint>(nextBind + Memory.Read<uint>(numOfBindings + (uint)Wow.Pointers.KeyBinding.Next) + 4);
             }
             _bindings = result;
         }

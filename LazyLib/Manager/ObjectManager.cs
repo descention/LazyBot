@@ -17,6 +17,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 */
 
 using LazyLib.Helpers;
+using LazyLib.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,7 @@ namespace LazyLib.Wow
     {
         private static Process[] _wowProc = GetProcesses().ToArray();
         private static int _processPid;
-        private Thread _refresher = new Thread(Pulse) { 
-            IsBackground = true,
-            Name = "Pulse"
-        };
+        private static PulseWorker _pulseWorker;
         private Thread _monitor = new Thread(Monitor) { 
             IsBackground = true, 
             Name = "ObjectManager" 
@@ -51,7 +49,9 @@ namespace LazyLib.Wow
         public static bool Closing { get; set; }
         public static bool ForceIngame { get; set; }
 
-        public static IGamePointers GamePointers => ServiceManager.Container.Resolve<IGamePointers>();
+        public static IGamePointers GamePointers => ServiceManager.Provider.GetService<IGamePointers>();
+
+        public bool ShouldPulse => (ForceIngame || InGame);
 
         /// <summary>
         ///   Gets a value indicating whether [in game].
@@ -268,7 +268,7 @@ namespace LazyLib.Wow
         {
             while (!Closing)
             {
-                var objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+                var objectManager = ServiceManager.Provider.GetService<IObjectManager>();
                 lock (Locker)
                 {
                     // Fill the new list.
@@ -355,13 +355,12 @@ namespace LazyLib.Wow
         ///   Initializes the ObjectManager, attaching it to the selected process.
         /// </summary>
         /// <param name = "pid">The World of Warcraft process ID.</param>
-        public static void Initialize(int pid)
+        public void Initialize(int pid)
         {
-            ObjectList = new List<PObject>();
+            ObjectList.Clear();
             if (DoesProcessExsist(pid))
             {
-                LazyLib.ServiceManager.Container.RegisterType<IObjectManager, LazyLib.Wow.ObjectManager>(lifetimeManager: TypeLifetime.Singleton);
-                var _objectManager = LazyLib.ServiceManager.Container.Resolve<IObjectManager>();
+                var _objectManager = LazyLib.ServiceManager.Provider.GetService<IObjectManager>();
                 Memory.OpenProcess(pid);
                 _processPid = pid;
                 InterfaceHelper.StartUpdate();
@@ -380,13 +379,6 @@ namespace LazyLib.Wow
                             Initialized = true;
                             _objectManager.WowHandle = Memory.ProcessHandle;
                         }
-                        if (_refresher != null)
-                            if (_refresher.IsAlive)
-                            {
-                                _refresher.Abort();
-                                _refresher = null;
-                            }
-                        _refresher.Start();
                         if (Attach != null)
                         {
                             Attach(new object(), new NotifyEventAttach(pid));
@@ -413,7 +405,7 @@ namespace LazyLib.Wow
         /// <summary>
         ///   Monitors this instance.
         /// </summary>
-        private static void Monitor()
+        private void Monitor()
         {
             while (!Closing)
             {
@@ -427,7 +419,6 @@ namespace LazyLib.Wow
                     InterfaceHelper.StopUpdate();
                     Logging.Write(LogType.Info, "No wow process, cannot attach");
                     ObjectList.Clear();
-                    ObjectDictionary.Clear();
                     if (NoAttach != null)
                     {
                         NoAttach(new object(), new NotifyEventNoAttach("Not attached"));
@@ -435,19 +426,18 @@ namespace LazyLib.Wow
                     _alearted = true;
                 }
                 Initialized = false;
-                if (_refresher != null)
-                {
-                    if (_refresher.IsAlive)
-                    {
-                        _refresher.Abort();
-                        _refresher = null;
-                    }
-                }
+                //if (_refresher != null)
+                //{
+                //    if (_refresher.IsAlive)
+                //    {
+                //        _refresher.Abort();
+                //        _refresher = null;
+                //    }
+                //}
                 if (DoesProcessExsist(_processPid))
                 {
                     _alearted = false;
                     ObjectList.Clear();
-                    ObjectDictionary.Clear();
                     if (NoAttach != null)
                     {
                         NoAttach(new object(), new NotifyEventNoAttach("Not attached"));
@@ -475,35 +465,16 @@ namespace LazyLib.Wow
             }
         }
 
-        public static void Close()
+        public void Close()
         {
-            if (_monitor != null)
-            {
-                _monitor.Abort();
-                _monitor = null;
-            }
-            if (_refresher != null)
-            {
-                _refresher.Abort();
-                _refresher = null;
-            }
-            if (ObjectList != null)
-            {
-                ObjectList.Clear();
-                ObjectList = null;
-            }
-            if (ObjectDictionary != null)
-            {
-                ObjectDictionary.Clear();
-                ObjectDictionary = null;
-            }
+            ObjectList.Clear();
         }
 
         /// <summary>
         ///   GetNumAdds - tells you how many adds you have
         /// </summary>
         /// <returns></returns>
-        public static int GetNumAdds()
+        public int GetNumAdds()
         {
             return GetAttackers.Count - 1;
         }
@@ -552,7 +523,7 @@ namespace LazyLib.Wow
         ///   Gets the likely adds.
         /// </summary>
         /// <returns></returns>
-        public static List<PUnit> GetLikelyAdds(int distance)
+        public List<PUnit> GetLikelyAdds(int distance)
         {
             return
                 GetUnits.Where(
@@ -566,7 +537,7 @@ namespace LazyLib.Wow
         /// <returns>
         ///   <c>true</c> if you have adds; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasAdds()
+        public bool HasAdds()
         {
             if (GetNumAdds() > 1)
                 return true;
@@ -616,7 +587,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "u">The unit.</param>
         /// <returns></returns>
-        public static bool AttackingMeOrPet(PUnit u)
+        public bool AttackingMeOrPet(PUnit u)
         {
             //return TargetingMeOrPet(u) && u.InCombat && (u.IsAutoAttacking || u.IsCasting);
             return TargetingMeOrPet(u) && u.InCombat;
@@ -627,7 +598,7 @@ namespace LazyLib.Wow
         /// </summary>
         /// <param name = "exclude">The PUnit to exclude.</param>
         /// <returns></returns>
-        public static PUnit GetClosestAttackerExclude(PUnit exclude)
+        public PUnit GetClosestAttackerExclude(PUnit exclude)
         {
             PUnit closestAttacker = null;
             try
@@ -656,7 +627,7 @@ namespace LazyLib.Wow
         /// <returns>
         ///   <c>true</c> if [is it safe at] [the specified ignore]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsItSafeAt(ulong ignore, PUnit u)
+        public bool IsItSafeAt(ulong ignore, PUnit u)
         {
             return IsItSafeAt(ignore, u.Location);
         }
@@ -669,7 +640,7 @@ namespace LazyLib.Wow
         /// <returns>
         ///   <c>true</c> if [is it safe at] [the specified ignore]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsItSafeAt(ulong ignore, Location l)
+        public bool IsItSafeAt(ulong ignore, Location l)
         {
             List<PUnit> mobs = CheckForMobsAtLoc(l, 15.0f, false); // Setting for radius?
             return mobs.Where(mob => !mob.GUID.Equals(ignore)).All(mob => mob.IsDead || mob.TargetGUID.Equals(0));
@@ -682,7 +653,7 @@ namespace LazyLib.Wow
         /// <param name = "radius">The radius.</param>
         /// <param name = "includeFriendly">if set to <c>true</c> [include friendly units].</param>
         /// <returns></returns>
-        public static List<PUnit> CheckForMobsAtLoc(Location l, float radius, bool includeFriendly)
+        public List<PUnit> CheckForMobsAtLoc(Location l, float radius, bool includeFriendly)
         {
             var returns = new List<PUnit>();
             List<PUnit> mobs = GetUnits;

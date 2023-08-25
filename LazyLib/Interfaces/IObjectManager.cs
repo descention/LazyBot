@@ -16,6 +16,7 @@ namespace LazyLib
         List<PContainer> GetContainers { get; }
         List<PItem> GetItems { get; }
         List<PPlayer> GetPlayers { get; }
+        bool ShouldPulse { get; }
 
         void Refresh();
     }

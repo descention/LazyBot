@@ -28,7 +28,7 @@ namespace LazyLib.Wow
             return Reaction.Neutral;
         }
 
-        public Reaction GetReaction(PUnit localObj, PUnit mobObj) 
+        public static Reaction GetReaction(PUnit localObj, PUnit mobObj) 
         {
             DBC<IntPtr> dbc = new DBC<IntPtr>((IntPtr)(uint)Pointers.Reaction.DBCPtrFactionTemplate);
             try

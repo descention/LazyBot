@@ -150,9 +150,9 @@ namespace LazyLib.Wow
         ///   Gets the contained.
         /// </summary>
         /// <value>The contained.</value>
-        public T Contained
+        public byte[] Contained
         {
-            get { return GetStorageField((uint)Descriptors.CGItemData.ContainedIn); }
+            get { return GetStorageFields<byte>((uint)Descriptors.CGItemData.ContainedIn); }
         }
 
         /// <summary>

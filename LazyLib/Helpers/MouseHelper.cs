@@ -15,6 +15,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
    You should have received a copy of the GNU General Public License
    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
+using LazyLib.PInvoke;
 using System;
 using System.Drawing;
 using System.Reflection;
@@ -95,7 +96,8 @@ namespace LazyLib.Helpers
                     Point debug = GetPosFromDelegate();
                     return GetPosFromDelegate();
                 }
-                return Cursor.Position;
+                User32.GetCursorPos(out POINT pt);
+                return new Point(pt.X, pt.Y);
             }
         }
 

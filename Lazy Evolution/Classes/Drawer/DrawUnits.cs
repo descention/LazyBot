@@ -30,7 +30,7 @@ namespace LazyLib.LazyRadar.Drawer
 
         public void Draw(RadarForm form)
         {
-            var _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            var _objectManager = ServiceManager.Provider.GetService<IObjectManager>();
 
             const string othTop = "";
             string othBot;

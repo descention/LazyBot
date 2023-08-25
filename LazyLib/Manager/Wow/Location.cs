@@ -19,6 +19,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
 
 using LazyEvo.LGrindEngine;
 using LazyLib.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace LazyLib.Wow
     [Serializable]
     public class Location
     {
+        static IObjectManager _objectManager => ServiceManager.Provider.GetService<IObjectManager>();
+
         /// <summary>
         ///   Initializes a new instance of the <see cref = "Location" /> class.
         /// </summary>
@@ -85,7 +88,7 @@ namespace LazyLib.Wow
         /// <value>The bearing.</value>
         public float Bearing
         {
-            get { return NegativeAngle((float)Math.Atan2((Y - ObjectManager.MyPlayer.Y), (X - ObjectManager.MyPlayer.X))); }
+            get { return NegativeAngle((float)Math.Atan2((Y - _objectManager.MyPlayer.Y), (X - _objectManager.MyPlayer.X))); }
         }
 
 
@@ -93,8 +96,8 @@ namespace LazyLib.Wow
         {
             get
             {
-                if (LazyMath.NegativeAngle(Bearing - ObjectManager.MyPlayer.Facing) > 5.5 ||
-                    LazyMath.NegativeAngle(Bearing - ObjectManager.MyPlayer.Facing) < 0.6)
+                if (LazyMath.NegativeAngle(Bearing - _objectManager.MyPlayer.Facing) > 5.5 ||
+                    LazyMath.NegativeAngle(Bearing - _objectManager.MyPlayer.Facing) < 0.6)
                     return true;
                 return false;
             }
@@ -222,11 +225,11 @@ namespace LazyLib.Wow
         {
             float face;
 
-            if (LazyMath.NegativeAngle(AngleHorizontal - ObjectManager.MyPlayer.Facing) < Math.PI)
+            if (LazyMath.NegativeAngle(AngleHorizontal - _objectManager.MyPlayer.Facing) < Math.PI)
             {
-                face = LazyMath.NegativeAngle(AngleHorizontal - ObjectManager.MyPlayer.Facing);
+                face = LazyMath.NegativeAngle(AngleHorizontal - _objectManager.MyPlayer.Facing);
 
-                bool moving = ObjectManager.MyPlayer.IsMoving;
+                bool moving = _objectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -236,9 +239,9 @@ namespace LazyLib.Wow
             }
             else
             {
-                face = LazyMath.NegativeAngle(ObjectManager.MyPlayer.Facing - AngleHorizontal);
+                face = LazyMath.NegativeAngle(_objectManager.MyPlayer.Facing - AngleHorizontal);
 
-                bool moving = ObjectManager.MyPlayer.IsMoving;
+                bool moving = _objectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -251,10 +254,10 @@ namespace LazyLib.Wow
         public static void FaceAngle(float angle)
         {
             float face;
-            if (LazyMath.NegativeAngle(angle - ObjectManager.MyPlayer.Facing) < Math.PI)
+            if (LazyMath.NegativeAngle(angle - _objectManager.MyPlayer.Facing) < Math.PI)
             {
-                face = LazyMath.NegativeAngle(angle - ObjectManager.MyPlayer.Facing);
-                bool moving = ObjectManager.MyPlayer.IsMoving;
+                face = LazyMath.NegativeAngle(angle - _objectManager.MyPlayer.Facing);
+                bool moving = _objectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();
@@ -264,8 +267,8 @@ namespace LazyLib.Wow
             }
             else
             {
-                face = LazyMath.NegativeAngle(ObjectManager.MyPlayer.Facing - angle);
-                bool moving = ObjectManager.MyPlayer.IsMoving;
+                face = LazyMath.NegativeAngle(_objectManager.MyPlayer.Facing - angle);
+                bool moving = _objectManager.MyPlayer.IsMoving;
                 if (face > 1)
                 {
                     MoveHelper.ReleaseKeys();

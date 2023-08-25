@@ -63,7 +63,7 @@ namespace LazyLib.LazyRadar
             string executableDirectoryName = executableFileInfo.DirectoryName;
             OurDirectory = executableDirectoryName;
             pIniManager = new IniManager(OurDirectory + SettingsName);
-            _objectManager = ServiceManager.Container.Resolve<IObjectManager>();
+            _objectManager = ServiceManager.Provider.GetService<IObjectManager>();
         }
 
         public void Start()

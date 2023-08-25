@@ -78,7 +78,7 @@ namespace LazyLib.ActionBar
                 try
                 {
                     _spellDatabase = new Dictionary<int, string>();
-                    string[] spellsSplit = Resource.Spells.Split('\n');
+                    string[] spellsSplit = Properties.Resources.Spells.Split('\n');
                     foreach (string s in spellsSplit)
                     {
                         if (s.Contains(";"))
@@ -108,7 +108,7 @@ namespace LazyLib.ActionBar
             const int barSize = 0x60;
             int maxSlots = 60;
             
-            switch (ServiceManager.Container.Resolve<IObjectManager>().MyPlayer.UnitClass)
+            switch (ServiceManager.Provider.GetService<IObjectManager>().MyPlayer.UnitClass)
             {
                 case Constants.UnitClass.UnitClass_Warrior:
                     maxSlots = 0x60;
@@ -135,7 +135,7 @@ namespace LazyLib.ActionBar
                     currentBar++;
                     currentSlot = 1;
                 }
-                var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + barSize);
+                var actionId = Memory.ReadRelative<UInt32>((uint)Wow.Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + barSize);
 
                 if (actionId != 0)
                 {
@@ -143,12 +143,12 @@ namespace LazyLib.ActionBar
                 }
                 currentSlot++;
             }
-            var bonusBar = Memory.ReadRelative<Int32>((uint)Pointers.ActionBar.ActionBarBonus);
+            var bonusBar = Memory.ReadRelative<Int32>((uint)Wow.Pointers.ActionBar.ActionBarBonus);
             if (bonusBar == 0)
             {
                 for (uint i = 0; i < 12; i++)
                 {
-                    var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i));
+                    var actionId = Memory.ReadRelative<UInt32>((uint)Wow.Pointers.ActionBar.ActionBarFirstSlot + (8 * i));
                     if (actionId != 0)
                     {
                         LoadedKeys.Add(new WowKey(actionId, 0, (int)i + 1));
@@ -160,7 +160,7 @@ namespace LazyLib.ActionBar
             {
                 for (uint i = 0; i < 12; i++)
                 {
-                    var actionId = Memory.ReadRelative<UInt32>((uint)Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + (uint)barSize * 6 + (((uint)bonusBar - 1) * barSize));
+                    var actionId = Memory.ReadRelative<UInt32>((uint)Wow.Pointers.ActionBar.ActionBarFirstSlot + (8 * i) + (uint)barSize * 6 + (((uint)bonusBar - 1) * barSize));
                     if (actionId != 0)
                     {
                         LoadedKeys.Add(new WowKey(actionId, 0, (int)i + 1));
@@ -277,7 +277,7 @@ namespace LazyLib.ActionBar
             //Current time in ms
             long currentTime = (perfCount * 1000) / frequency;
             //Get first list object
-            var currentListObject = Memory.ReadRelative<uint>((uint)Pointers.SpellCooldown.CooldPown + 0x8);
+            var currentListObject = Memory.ReadRelative<uint>((uint)Wow.Pointers.SpellCooldown.CooldPown + 0x8);
             while ((currentListObject != 0) && ((currentListObject & 1) == 0))
             {
                 var spellId = Memory.Read<uint>(currentListObject + 0x8);

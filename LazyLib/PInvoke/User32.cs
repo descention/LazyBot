@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace LazyLib.PInvoke
@@ -15,5 +16,9 @@ namespace LazyLib.PInvoke
         public static extern bool SetCursorPos(int x, int y);
         [DllImport("user32.dll")]
         public static extern int SetForegroundWindow(IntPtr Hwnd);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetCursorPos(out POINT point);
     }
 }

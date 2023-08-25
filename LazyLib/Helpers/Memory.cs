@@ -148,25 +148,25 @@ namespace LazyLib.Helpers
                                               Marshal.GetLastWin32Error()));
         }
 
-        public static void Write<T>(uint address, T value)
-        {
-            if (value is string)
-            {
-                WriteBytes(address, Encoding.ASCII.GetBytes(value as string));
-            }
-            else
-            {
-                int numBytes = Marshal.SizeOf(value);
-                unsafe
-                {
-                    byte* bytes = stackalloc byte[numBytes];
-                    Marshal.StructureToPtr(value, (IntPtr) bytes, true);
-                    var writeBytes = new byte[numBytes];
-                    Marshal.Copy((IntPtr) bytes, writeBytes, 0, numBytes);
-                    WriteBytes(address, writeBytes);
-                }
-            }
-        }
+        //public static void Write<T>(uint address, T value)
+        //{
+        //    if (value is string)
+        //    {
+        //        WriteBytes(address, Encoding.ASCII.GetBytes(value as string));
+        //    }
+        //    else
+        //    {
+        //        int numBytes = Marshal.SizeOf(value);
+        //        unsafe
+        //        {
+        //            byte* bytes = stackalloc byte[numBytes];
+        //            Marshal.StructureToPtr(value, (IntPtr) bytes, true);
+        //            var writeBytes = new byte[numBytes];
+        //            Marshal.Copy((IntPtr) bytes, writeBytes, 0, numBytes);
+        //            WriteBytes(address, writeBytes);
+        //        }
+        //    }
+        //}
 
         #endregion
 
