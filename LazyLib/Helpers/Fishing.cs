@@ -16,6 +16,7 @@ This file is part of LazyBot - Copyright (C) 2011 Arutha
    along with LazyBot.  If not, see <http://www.gnu.org/licenses/>.
 */
 using LazyLib.Wow;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Drawing;
 using System.Linq;

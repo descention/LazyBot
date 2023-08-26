@@ -32,7 +32,7 @@ namespace LazyLib.LActivity
         private static readonly Ticker EatTimer = new Ticker(300 * 100);
         private static bool _bIsDrinking;
         private static bool _bIsEating;
-
+        
         public static Boolean NeedResting
         {
             get

@@ -3,6 +3,7 @@
     using LazyLib;
     using LazyLib.Helpers;
     using LazyLib.PInvoke;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Drawing;
     using System.Reflection;

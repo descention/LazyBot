@@ -115,7 +115,7 @@ namespace LazyLib.Helpers
         {
             get
             {
-                return Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Pointers.CgWorldFrameGetActiveCamera.CameraPointer) + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraOffset);
+                return Memory.Read<uint>(Memory.ReadRelative<uint>((uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraPointer) + (uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraOffset);
             }
         }
 
@@ -123,7 +123,7 @@ namespace LazyLib.Helpers
         {
             get
             {
-                return Memory.Read<float>(BaseAddress + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraX);
+                return Memory.Read<float>(BaseAddress + (uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraX);
             }
         }
 
@@ -131,7 +131,7 @@ namespace LazyLib.Helpers
         {
             get
             {
-                return Memory.Read<float>(BaseAddress + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraY);
+                return Memory.Read<float>(BaseAddress + (uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraY);
             }
         }
 
@@ -139,7 +139,7 @@ namespace LazyLib.Helpers
         {
             get
             {
-                return Memory.Read<float>(BaseAddress + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraZ);
+                return Memory.Read<float>(BaseAddress + (uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraZ);
             }
         }
 
@@ -148,7 +148,7 @@ namespace LazyLib.Helpers
             get
             {
 
-                byte[] bCamera = Memory.ReadBytes(BaseAddress + (uint)Pointers.CgWorldFrameGetActiveCamera.CameraMatrix, 36);
+                byte[] bCamera = Memory.ReadBytes(BaseAddress + (uint)Wow.Pointers.CgWorldFrameGetActiveCamera.CameraMatrix, 36);
 
                 return new Matrix(BitConverter.ToSingle(bCamera, 0), BitConverter.ToSingle(bCamera, 4), BitConverter.ToSingle(bCamera, 8),
                     BitConverter.ToSingle(bCamera, 12), BitConverter.ToSingle(bCamera, 16), BitConverter.ToSingle(bCamera, 20),
